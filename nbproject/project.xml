@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Do not use Project Properties customizer when editing this file manually. 
+ To prevent the customizer from showing, create nbproject/project.properties file and enter 
+auxiliary.show.customizer=false 
+property there. Adding 
+auxiliary.show.customizer.message=<message>
+ will show your customized message when someone attempts to open the customizer.  -->
+            <name>Ethical Control of Unmanned Systems</name>
+            <properties/>
+            <ide-actions/>
+            <view>
+                <items>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu/>
+            </view>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1"/>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>archivally</word>
+            <word>AVCL</word>
+            <word>AvclToLisp</word>
+            <word>AvclToProlog</word>
+            <word>AvclToTurtle</word>
+            <word>beaconing</word>
+            <word>Blais</word>
+            <word>Brutzman</word>
+            <word>DFDL</word>
+            <word>flyers</word>
+            <word>Metaquery</word>
+            <word>Norbraten</word>
+            <word>NPS</word>
+            <word>offboard</word>
+            <word>Ontologies</word>
+            <word>OODA</word>
+            <word>Prolog</word>
+            <word>Raytheon</word>
+            <word>recurse</word>
+            <word>Redistributions</word>
+            <word>Slidesets</word>
+            <word>SPARQL</word>
+            <word>stylesheet</word>
+            <word>stylesheets</word>
+            <word>TODO</word>
+            <word>validatable</word>
+            <word>warfighters</word>
+            <word>XSLT</word>
+        </spellchecker-wordlist>
+    </configuration>
+</project>

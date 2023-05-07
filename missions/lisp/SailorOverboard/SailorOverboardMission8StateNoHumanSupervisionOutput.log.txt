@@ -1,0 +1,26 @@
+; Fast loading C:\acl10.1express-new\2020 Code\SOB 11-20-19 Flowgraph 2020 8-state.fasl
+CG-USER(1): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+NIL
+CG-USER(2): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+NIL
+CG-USER(3): (repeat)
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and deploy recovery beacon!
+NIL
+CG-USER(4): (refine-last-command)
+NIL

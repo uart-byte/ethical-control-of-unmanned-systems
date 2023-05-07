@@ -1,0 +1,89 @@
+@prefix :     <https://savage.nps.edu/EthicalControl/missions#> .
+@prefix meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/EthicalControl/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/EthicalControl/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:HospitalShipEmDecoy3.Defender.EthicalControlOODA rdf:type owl:NamedIndividual , owl:Thing, meo:Mission ;
+  meo:startsWith :HSEMD.OODA.21 ;
+  rdfs:comment "AVCL mission where Orient-Observe-Decide-Act (OODA) loop tactics and Ethical Control constraints prevent automatic erroneous counterattack against 'false flag' placed on friendly ship, and thus improves defense." .
+
+:HSEMD.OODA.21 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.22 ;
+  meo:hasNextOnFailure :HSEMD.OODA.22 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Configure" ;
+  rdfs:comment "Attack Response Thresholds Set: Signal strength needed for close-proximity activation" .
+
+:HSEMD.OODA.22 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.23 ;
+  meo:hasNextOnFailure :HSEMD.OODA.23 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Configure" ;
+  rdfs:comment "Enable Robot Swarm: Close-in weapon system activated" .
+
+:HSEMD.OODA.23 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.24 ;
+  meo:hasNextOnFailure :HSEMD.OODA.24 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Observe" ;
+  rdfs:comment "Threat Signals Received: Above response threshold" .
+
+:HSEMD.OODA.24 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.27 ;
+  meo:hasNextOnFailure :HSEMD.OODA.27 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Orient" ;
+  rdfs:comment "Move to Threat: Group response" .
+
+:HSEMD.OODA.25 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.26 ;
+  meo:hasNextOnFailure :HSEMD.OODA.26 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Orient" ;
+  rdfs:comment "IFFNU: Identify Friend Foe Neutral Unknown" .
+
+:HSEMD.OODA.26 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.27 ;
+  meo:hasNextOnFailure :HSEMD.OODA.36 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Decide" ;
+  rdfs:comment "Confirm In-Port Counterattack? Rapid-response human checkpoint" .
+
+:HSEMD.OODA.27 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.99.0 ;
+  meo:hasNextOnFailure :HSEMD.OODA.99.0 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Act" ;
+  rdfs:comment "Robot Swarm versus Terrorists: Lethal force authorized" .
+
+:HSEMD.OODA.36 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.37 ;
+  meo:hasNextOnFailure :HSEMD.OODA.37 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Decide" ;
+  rdfs:comment "Hospital Ship Attack Denied: Lethal force NOT authorized" .
+
+:HSEMD.OODA.37 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.OODA.99.0 ;
+  meo:hasNextOnFailure :HSEMD.OODA.99.0 ;
+  meo:hasNextOnException :HSEMD.OODA.99.0 ;
+  meo:isPartOfPhase "Act" ;
+  rdfs:comment "Search for Intruders: All defense forces alerted" .
+
+:HSEMD.OODA.99.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Robot Recovery" ;
+  rdfs:comment "Proceed to recovery: Mission complete, prepare for pickup. Terminal condition." .
+

@@ -1,0 +1,39 @@
+; Fast loading C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\lisp\SailorOverboard\SailorOverboardMission.fasl
+CG-USER(1): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+"Phase 6 report: Vehicle recovered."
+CG-USER(2): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+"Phase 6 report: Vehicle recovered."
+CG-USER(3): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+"Phase 6 report: Vehicle recovered."
+CG-USER(4): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+"Phase 7 report: Vehicle lost."

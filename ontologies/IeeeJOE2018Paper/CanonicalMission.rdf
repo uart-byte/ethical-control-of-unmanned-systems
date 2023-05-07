@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#"
+     xml:base="https://www.nps.edu/ontologies/MissionExecutionOntology/missions"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:meo="https://www.nps.edu/ontologies/MissionExecutionOntology#">
+    <owl:Ontology rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions">
+        <owl:imports rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Abort -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Abort">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Abort the mission, immediately surface or scuttle.</rdfs:comment>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Canonical1 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Canonical1">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Canonical mission with constraint violations treated as failure.</rdfs:comment>
+        <meo:startsWith rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Complete -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Complete">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Complete the mission, conduct recovery procedure.</rdfs:comment>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint1 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint1">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Navigation accuracy within acceptable limits.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Canonical1"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint2 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint2">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>All vehicle safety equipment operational.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Canonical1"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint3 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint3">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>All vehicle mission equipment operational.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint4 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint4">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Distance from shipping lanes must exceed standoff distance.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint5 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint5">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Depth must exceed shiipping lane safety depth.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Canonical1"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint6 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint6">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3"/>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint7 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Constraint7">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>Maintain lateral separation from identified surface contacts.</rdfs:comment>
+        <meo:appliesTo rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal1">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:hasNextOnFailure rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3"/>
+        <meo:hasNextOnSuccess rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2"/>
+        <meo:hasNextOnException rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal2">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:hasNextOnFailure rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5"/>
+        <meo:hasNextOnSuccess rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3"/>
+        <meo:hasNextOnException rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal3">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:hasNextOnFailure rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+        <meo:hasNextOnSuccess rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+        <meo:hasNextOnException rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal4">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:hasNextOnFailure rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5"/>
+        <meo:hasNextOnSuccess rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5"/>
+        <meo:hasNextOnException rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5"/>
+    </owl:Thing>
+    
+
+
+    <!-- https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5 -->
+
+    <owl:Thing rdf:about="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Goal5">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <meo:hasNextOnFailure rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Abort"/>
+        <meo:hasNextOnSuccess rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Complete"/>
+        <meo:hasNextOnException rdf:resource="https://www.nps.edu/ontologies/MissionExecutionOntology/missions#Abort"/>
+    </owl:Thing>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

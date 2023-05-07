@@ -1,0 +1,102 @@
+Perform Mission Execution Ontology query queries/MissionQuery_01_GoalBranches.rq
+  using turtle form of AVCL mission      missions/turtle/PiratesSeizingMerchantDefenseConverted.ttl
+  to produce output log file             queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_01_GoalBranches.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_01_GoalBranches.rq
+# Query to list all Goals with corresponding description information and branching logic.
+
+###############################################
+
+SELECT ?goal ?nextOnSuccess ?nextOnFailure ?nextOnException ?isPartOfPhase ?description # ?GoalFound ?phase
+
+WHERE
+{ 
+    ?goal   a meo:Goal ;           # Shorthand expression: a = rdf:type
+            rdfs:comment           ?description ;
+            meo:isPartOfPhase      ?isPartOfPhase .
+
+    OPTIONAL                       # provide results even when no value is provided (by terminal goals)
+    {
+    ?goal   meo:hasNextOnSuccess   ?nextOnSuccess .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnFailure   ?nextOnFailure .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnException ?nextOnException .
+    }
+    # https://stackoverflow.com/questions/11234371/sparql-query-results-without-namespace
+#   BIND (strafter(xsd:string(?goal),"#")            AS ?GoalFound)
+#   BIND (strafter(xsd:string(?nextOnSuccess),"#")   AS ?GoalNextOnSuccess)
+#   BIND (strafter(xsd:string(?nextOnFailure),"#")   AS ?GoalNextOnFailure)
+#   BIND (strafter(xsd:string(?nextOnException),"#") AS ?GoalNextOnException)
+#   BIND (coalesce(?isPartOfPhase,"")                AS ?phase)
+}
+ORDER BY (?goal) # alphanumeric order results in order given by each name
+###############################################
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| goal      | nextOnSuccess | nextOnFailure | nextOnException | isPartOfPhase          | description                                                                                                       |
+============================================================================================================================================================================================================
+| :PSMD11.0 | :PSMD12.0     | :PSMD99.0     | :PSMD99.0       | "Launch"               | "Deploy, Launch: Commit to robot support"                                                                         |
+| :PSMD12.0 | :PSMD13.0     | :PSMD99.0     | :PSMD99.0       | "Transit"              | "Transit to hostile area: Proceed to estimated position"                                                          |
+| :PSMD13.0 | :PSMD13.1     | :PSMD21.0     | :PSMD99.0       | "Transit"              | "Locate Merchant: Use best search pattern, then follow moving ship and boats"                                     |
+| :PSMD13.1 | :PSMD13.2     | :PSMD13.2     | :PSMD99.0       | "Transit"              | "Report position: Alerts updated"                                                                                 |
+| :PSMD13.2 | :PSMD14.0     | :PSMD21.0     | :PSMD99.0       | "Transit"              | "Mark with Beacon: Monitor wind effects and ocean current"                                                        |
+| :PSMD14.0 | :PSMD14.1     | :PSMD14.1     | :PSMD99.0       | "Track"                | "Track Merchant: Monitor and communicate"                                                                         |
+| :PSMD14.1 | :PSMD14.2     | :PSMD14.2     | :PSMD99.0       | "Track"                | "Maintain proximity: Beyond range of small arms"                                                                  |
+| :PSMD14.2 | :PSMD14.3     | :PSMD14.3     | :PSMD99.0       | "Track"                | "Periodic reports: Situation reports, changing status"                                                            |
+| :PSMD14.3 | :PSMD14.9     | :PSMD21.0     | :PSMD99.0       | "Track"                | "Continue until further orders: Repeat until conditions change"                                                   |
+| :PSMD14.9 | :PSMD30.0     | :PSMD14.0     | :PSMD99.0       | "Track"                | "Check posture changed? Task update received?"                                                                    |
+| :PSMD21.0 | :PSMD12.0     | :PSMD99.0     | :PSMD99.0       | "Transit"              | "Request Guidance? Need updated position"                                                                         |
+| :PSMD22.0 | :PSMD22.1     | :PSMD22.1     | :PSMD99.0       | "Mission Finish"       | "Low Fuel: Make best effort possible"                                                                             |
+| :PSMD22.1 | :PSMD22.2     | :PSMD22.2     | :PSMD99.0       | "Mission Finish"       | "Remain with Merchant? Choices: land on boat, attach to boat, or adrift nearby"                                   |
+| :PSMD22.2 | :PSMD99.0     | :PSMD99.0     | :PSMD99.0       | "Mission Finish"       | "Beacon? While power remains"                                                                                     |
+| :PSMD30.0 | :PSMD31.0     | :PSMD31.0     | :PSMD99.0       | "Warning"              | "Warning Phase: Close interaction with pirates, merchant ship"                                                    |
+| :PSMD31.0 | :PSMD32.0     | :PSMD32.0     | :PSMD99.0       | "Warning"              | "Confirm Mission Authorities: Check constraints and defensive responses"                                          |
+| :PSMD32.0 | :PSMD32.1     | :PSMD32.1     | :PSMD99.0       | "Classify"             | "IFFNU: Identify Friend Foe Neutral Unknown"                                                                      |
+| :PSMD32.1 | :PSMD32.2     | :PSMD32.2     | :PSMD99.0       | "Classify"             | "Photograph all close contacts: Pass within range of small arms"                                                  |
+| :PSMD32.2 | :PSMD32.3     | :PSMD32.3     | :PSMD99.0       | "Classify"             | "Classify, send contact reports: Based on target behavior or signal/image match"                                  |
+| :PSMD32.3 | :PSMD33.0     | :PSMD14.0     | :PSMD99.0       | "Classify"             | "Confirm IFFNU classifications: Requires approval by human commander before proceeding further"                   |
+| :PSMD33.0 | :PSMD33.1     | :PSMD14.0     | :PSMD99.0       | "Engagement"           | "Commence Warnings: May provoke pirate response"                                                                  |
+| :PSMD33.1 | :PSMD34.0     | :PSMD14.0     | :PSMD99.0       | "Engagement"           | "Notify Merchant: Keep crew informed, even if they cannot transmit"                                               |
+| :PSMD34.0 | :PSMD34.1     | :PSMD34.1     | :PSMD99.0       | "Warning"              | "Send Warning Messages: Communicate to pirates, all parties"                                                      |
+| :PSMD34.1 | :PSMD34.2     | :PSMD34.2     | :PSMD99.0       | "Warning"              | "Send multiple message paths: Loudspeaker, flashing light, siren, drop smoke, bridge-bridge radio"                |
+| :PSMD34.2 | :PSMD34.3     | :PSMD34.3     | :PSMD99.0       | "Warning"              | "Maintain proximity: Just outside range of small arms"                                                            |
+| :PSMD34.3 | :PSMD34.4     | :PSMD34.4     | :PSMD99.0       | "Warning"              | "Periodic reports: Situation reports, changing status"                                                            |
+| :PSMD34.4 | :PSMD35.0     | :PSMD14.0     | :PSMD99.0       | "Warning"              | "Continue until further orders: First repeat for all designated pirates"                                          |
+| :PSMD35.0 | :PSMD35.1     | :PSMD35.1     | :PSMD99.0       | "Hostilities Imminent" | "Observe pirate response: Monitor and report back to own ship"                                                    |
+| :PSMD35.1 | :PSMD14.0     | :PSMD35.2     | :PSMD99.0       | "Hostilities Imminent" | "Pirates retreat? Stay with merchant, report if response changes"                                                 |
+| :PSMD35.2 | :PSMD40.0     | :PSMD35.3     | :PSMD99.0       | "Hostilities Imminent" | "Pirates attack? Stay with merchant, counterattack if response changes"                                           |
+| :PSMD35.3 | :PSMD35.4     | :PSMD35.4     | :PSMD99.0       | "Hostilities Imminent" | "Maintain proximity: Just outside range of small arms"                                                            |
+| :PSMD35.4 | :PSMD35.5     | :PSMD35.5     | :PSMD99.0       | "Hostilities Imminent" | "Periodic reports: Situation reports, changing status - note ship may have EMCON radio silence"                   |
+| :PSMD35.5 | :PSMD36.0     | :PSMD36.0     | :PSMD99.0       | "Hostilities Imminent" | "Continue until further orders: Repeat until conditions change"                                                   |
+| :PSMD36.0 | :PSMD37.0     | :PSMD35.0     | :PSMD14.0       | "Hostilities Imminent" | "Check posture changed? Task update received"                                                                     |
+| :PSMD37.0 | :PSMD31.0     | :PSMD31.0     | :PSMD99.0       | "Hostilities Imminent" | "Fire Warning Shot: Warning shots remain an available option for human commanders. Lethal force is authorized."   |
+| :PSMD40.0 | :PSMD41.0     | :PSMD41.0     | :PSMD99.0       | "Counter Attack"       | "Attack: Close interaction with pirates, merchant ship"                                                           |
+| :PSMD41.0 | :PSMD41.1     | :PSMD41.1     | :PSMD99.0       | "Counter Attack"       | "Attack Pirate Boats in priority order: Rapidly engage, shoot to disable or kill. Lethal force still authorized." |
+| :PSMD41.1 | :PSMD14.0     | :PSMD41.2     | :PSMD99.0       | "Counter Attack"       | "Pirates retreat? Stay with merchant, report if response changes"                                                 |
+| :PSMD41.2 | :PSMD41.3     | :PSMD41.3     | :PSMD42.0       | "Counter Attack"       | "Pirates attacking? Stay with merchant, counterattack if response changes"                                        |
+| :PSMD41.3 | :PSMD41.4     | :PSMD41.4     | :PSMD99.0       | "Counter Attack"       | "Maintain proximity: Just outside range of small arms"                                                            |
+| :PSMD41.4 | :PSMD41.5     | :PSMD41.5     | :PSMD99.0       | "Counter Attack"       | "Periodic reports: Situation reports, changing status - note ship may have EMCON radio silence"                   |
+| :PSMD41.5 | :PSMD36.0     | :PSMD36.0     | :PSMD99.0       | "Counter Attack"       | "Continue until further orders: Repeat until conditions change"                                                   |
+| :PSMD42.0 | :PSMD14.0     | :PSMD41.3     | :PSMD90.0       | "Counter Attack"       | "Low or no ammunition: need to disengage? Hold ammunition in reseve, or else fight to the finish"                 |
+| :PSMD43.0 | :PSMD14.0     | :PSMD41.0     | :PSMD90.0       | "Counter Attack"       | "Check for guidance, resume tracking or continue attacking? Humans monitoring attack can interrupt or override"   |
+| :PSMD90.0 | :PSMD14.0     | :PSMD14.0     | :PSMD99.0       | "Mission Finish"       | "Check relieved by other asset: Continue tracking merchant unless further task update recieved"                   |
+| :PSMD99.0 | :PSMD99.1     | :PSMD99.2     | :PSMD99.3       | "Recover Robot"        | "Proceed to recovery: Mission complete, prepare for pickup"                                                       |
+| :PSMD99.1 |               |               |                 | "Recover Robot"        | "Halt and prepare for recovery: Operations completed, final success state"                                        |
+| :PSMD99.2 |               |               |                 | "Recover Robot"        | "Halt and deploy recovery beacon: Unable to operate, final failure state"                                         |
+| :PSMD99.3 |               |               |                 | "Recover Robot"        | "Halt and await further orders: Unplanned failure, final exception state"                                         |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,61 @@
+@prefix :     <https://savage.nps.edu/EthicalControl/missions#> .
+@prefix meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/EthicalControl/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/EthicalControl/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:HospitalShipEmDecoy2.Defender.SenseDecideAct rdf:type owl:NamedIndividual , owl:Thing, meo:Mission ;
+  meo:startsWith :HSEMD.reflex.11 ;
+  rdfs:comment "AVCL mission where immediate reaction using Sense-Decide-Act cycle results in blue-on-blue robot swarm attack and unintended war crime." .
+
+:HSEMD.reflex.11 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.reflex.12 ;
+  meo:hasNextOnFailure :HSEMD.reflex.12 ;
+  meo:hasNextOnException :HSEMD.reflex.99.0 ;
+  meo:isPartOfPhase "Configure" ;
+  rdfs:comment "Attack Response Thresholds Set: Signal strength needed for close-proximity activation" .
+
+:HSEMD.reflex.12 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.reflex.13 ;
+  meo:hasNextOnFailure :HSEMD.reflex.13 ;
+  meo:hasNextOnException :HSEMD.reflex.99.0 ;
+  meo:isPartOfPhase "Configure" ;
+  rdfs:comment "Enable Robot Swarm: Close-in weapon system activated" .
+
+:HSEMD.reflex.13 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.reflex.14 ;
+  meo:hasNextOnFailure :HSEMD.reflex.14 ;
+  meo:hasNextOnException :HSEMD.reflex.99.0 ;
+  meo:isPartOfPhase "Sense" ;
+  rdfs:comment "Threat Signals Received: Above response threshold" .
+
+:HSEMD.reflex.14 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.reflex.17 ;
+  meo:hasNextOnFailure :HSEMD.reflex.17 ;
+  meo:hasNextOnException :HSEMD.reflex.99.0 ;
+  meo:isPartOfPhase "Decide" ;
+  rdfs:comment "Move to Threat: Group response" .
+
+:HSEMD.reflex.17 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.reflex.99.0 ;
+  meo:hasNextOnFailure :HSEMD.reflex.99.0 ;
+  meo:hasNextOnException :HSEMD.reflex.99.0 ;
+  meo:isPartOfPhase "Act" ;
+  rdfs:comment "Robot Swarm Counterattack: Lethal force authorized" .
+
+:HSEMD.reflex.99.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Robot Recovery" ;
+  rdfs:comment "Proceed to recovery: Mission complete, prepare for pickup. Terminal condition." .
+

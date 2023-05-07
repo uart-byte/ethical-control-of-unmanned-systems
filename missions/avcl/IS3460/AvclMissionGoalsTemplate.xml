@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://gitlab.nps.edu/Savage/EthicalControl/-/raw/master/schemas/AVCL.3.1.xsd">
+	<!-- xsi:noNamespaceSchemaLocation="C:\x-nps-gitlab\EthicalControl\schemas/AVCL.3.1.xsd" -->
+	<!-- xsi:noNamespaceSchemaLocation="https://savage.nps.edu/EthicalControl/schemas/AVCL.3.1.xsd" -->
+	<head>
+		<meta name="title" content="AvclMissionGoalsTemplate.xml"/>
+		<meta name="description" content="Example mission to serve as template for new versions."/>
+		<meta name="created" content="4 August 2022"/>
+		<meta name="modified" content="31 August 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://www.savage.nps.edu/EthicalControl"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="identifier" content="TODO"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<UnitsOfMeasure distance="yards" angle="degrees" mass="kilograms" time="seconds"/>
+		<!-- TODO Vehicle vehicleName="RescueDrone" vehicleType="UAV" -->
+		<MissionAgenda description=".">
+			<GoalList>
+				<Goal id="Goal0" title="Deploy, Launch" description="Launch robot" phase="Launch" nextOnSuccess="Goal1" nextOnFailure="Goal99" nextOnException="Goal99">
+					<Reposition description="Leave dock, proceed to basin"/>
+					<!-- TODO Risk personnel clear -->
+				</Goal>
+				<Goal id="Goal1" title="New Goal Name" description="provide a description" phase="Transit" nextOnSuccess="Goal2" nextOnFailure="Goal99" nextOnException="Goal99">
+					<SpecialGoal description="TODO"/>
+				</Goal>
+				<Goal id="Goal2" title="New Goal Name" description="provide a description" phase="Retrieval" nextOnSuccess="Goal3" nextOnFailure="Goal99" nextOnException="Goal99">
+					<SpecialGoal description="TODO"/>
+				</Goal>
+				<Goal id="Goal3" title="New Goal Name" description="provide a description" phase="Retrieval" nextOnSuccess="Goal4" nextOnFailure="Goal99" nextOnException="Goal99">
+					<SpecialGoal description="TODO"/>
+				</Goal>
+				<Goal id="Goal4" title="New Goal Name" description="provide a description" phase="Retrieval" nextOnSuccess="Goal99" nextOnFailure="Goal99" nextOnException="Goal99">
+					<SpecialGoal description="TODO"/>
+				</Goal>
+				<Goal id="Goal99" title="Return and recover" description="Retrieve if possible" phase="Recover Robot" nextOnSuccess="Goal99.1_TerminalSuccess" nextOnFailure="Goal99.2_TerminalFailute" nextOnException="Goal99.3_TerminalFailure">
+					<Reposition description="Return to dock for recovery"/>
+					<!-- TODO Risk personnel clear -->
+				</Goal>
+				<Goal id="Goal99.1_TerminalSuccess" title="Halt and perform post-mission shutdown" phase="Recover Robot" description="Operations complete, final success state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+				<Goal id="Goal99.2_TerminalFailute" title="Halt and activate recovery beacon" phase="Recover Robot" description="Unable to continue, final failure state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+				<Goal id="Goal99.3_TerminalFailure" title="Halt and await further orders" phase="Recover Robot" description="Unexpected problem, final exception state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+				<Duration value="6000"/>
+			</GoalList>
+			<LaunchPosition id="LaunchPosition" description="Ship position when robot is launched">
+				<LatitudeLongitude id="MemsStation" latitude="N33°12.889'" longitude="W117°23.915'"/>
+			</LaunchPosition>
+			<RecoveryPosition id="RecoveryPosition" description="Ship position when ready to recover robot">
+				<!-- TODO refid="MemsStation" not working since latitude, longitude are required attributes -->
+				<LatitudeLongitude id="MemsStation2" latitude="N33°12.889'" longitude="W117°23.915'"/>
+			</RecoveryPosition>
+		</MissionAgenda>
+	</body>
+</AVCL>

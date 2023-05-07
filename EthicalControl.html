@@ -1,0 +1,1470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>Ethical Control of Unmanned Systems</title>
+        <meta name="description" content="Public website page for Ethical Control of Unmanned Systems"/>
+        <meta name="author"      content="Donald P. Brutzman"/>
+        <meta name="created"     content="15 February 2020"/>
+        <meta name="modified"    content="see version control"/>
+        <meta name="title"       content="EthicalControl.html"/>
+        <meta name="identifier"  content="https://savage.nps.edu/EthicalControl/EthicalControl.html"/>
+        <meta name="reference"   content="https://gitlab.nps.edu/Savage/EthicalControl/EthicalControl.html"/>
+        <meta name="reference"   content="https://gitlab.nps.edu/Savage/EthicalControl"/>
+        <meta name="generator"   content="X3D-Edit, https://savage.nps.edu/X3D-Edit"/>
+        <meta name="license"     content="https://savage.nps.edu/EthicalControl/license.html"/>
+        <link rel="icon" href="documentation/images/SavageLogo.ico" title="NPS"/>
+    </head>
+    <body>
+        <!-- =========================================================== -->
+
+        <table border="0" cellspacing="0" cellpadding="0" summary="" align="center">
+              <tr align="center">
+                  <td><a href="https://savage.nps.edu/Savage/developers.html" target="_blank"><img src="documentation/images/SavageLogo.png" width="83" height="100" border="0" title="configuration information" alt="configuration information"/></a></td>
+                  <td><pre>   </pre></td>
+                  <td><h1> Ethical Control of Unmanned Systems </h1></td>
+                  <td><pre>   </pre></td>
+                  <td><a href="https://www.nps.edu" target="_blank"><img src="documentation/images/nps_logo.jpg" width="126" height="90" border="0" title="to NPS home page" alt="to NPS home page"/></a></td>
+              </tr>
+        </table>
+
+        <p align="center">
+            Ethical control of unmanned systems can be accomplished through structured mission definitions that are
+            consistently readable, validatable and understandable by humans and robots.
+            Responsible&nbsp;humans must remain in charge of lethal/lifesaving&nbsp;force, and then human-robot teams become more effective.
+        </p>
+        <!-- =========================================================== -->
+        
+        <blockquote width="70%">
+            <p align="center"><small>
+                <a href="#Synopsis">Synopsis</a> |
+                <a href="#Briefings">Briefings</a> |
+                <a href="#Design">Design Overview</a> |
+                <a href="#Documentation">Documentation</a> |
+                <a href="#Download">Download</a> |
+                <a href="#Missions">Missions</a> |
+                <a href="#Ontologies">Ontologies</a> |
+                <a href="documentation/owldoc/index.html" title="OWL documentation for ontology" alt="OWL documentation for ontology" target="_blank">OwlDoc</a> |
+                <a href="#Queries">Queries</a> |
+                <a href="#Resources">Resources</a> |
+                <a href="https://Savage.nps.edu/developers.html" title="configuration information" alt="configuration information" target="_blank">Savage Developers Guide</a> |
+                <a href="#Visualization">Visualization</a> |
+                <a href="#Contact">Contact</a>
+            </small></p>
+        </blockquote>
+        
+        <!-- =========================================================== -->
+        
+        <hr />
+
+        <h2> 
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Synopsis">&#128278;</a>
+            <a name="Synopsis">Project Synopsis</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        
+        <p>
+            <!-- 3456x2304 -->
+            <a href="documentation/flyers/EthicalControlUnmannedSystemsQuadChartCRUSER.png"><img src="documentation/flyers/EthicalControlUnmannedSystemsQuadChartCRUSER.png" title="Ethical Control of Unmanned Systems - Project Quad Chart" width="15%" border="1" align="right"/></a><!--  style="padding-left:4px;"  style="float:right" -->
+            <b>Project Motivation</b>: ethically constrained control of unmanned systems
+            and robot missions by human supervisors and warfighters.
+        </p>
+        <p>
+            <b>Precept:</b> 
+            well-structured mission orders can be syntactically and semantically validated
+            to give human commanders confidence that offboard systems
+            <em>will do what they are told to do</em>,
+            and further
+            <em>will not do what they are forbidden to do</em>.
+        </p>
+        <p>
+            <b>Project Goal:</b> 
+            apply Semantic Web ontology to scenario goals and constraints
+            for logical validation that human-approved mission orders for robots are
+            semantically coherent, precise, unambiguous, and without internal contradictions.
+        </p>
+        <p>
+            <b>Long-term Objective:</b>
+            demonstrate that no technological limitations exist that prevent
+            applying the same kind of ethical constraints on robots and unmanned vehicles that
+            already apply to human beings.
+        </p>
+        <p>
+            <b>Design heuristics for new mission capabilities:</b>
+            <ol type="a">
+                <li>
+                    <i>How do humans accomplish such goal tasks today?</i>
+                </li>
+                <li>
+                    <i>How might unmanned systems accomplish similar tasks in the future?</i>
+                </li>
+                <li>
+                    <i>How can human commanders safely direct and supervise such systems, 
+                    <!-- with distant communications across space and time, -->
+                       retaining moral and legal authority over operations?</i>
+                </li>
+            </ol>
+        </p>
+        <p>
+            <b>Abstract.</b>
+Ethical human supervision of unmanned maritime systems is foundational
+in future naval warfare. Forward-deployed unmanned systems in the
+human-machine team must comply with their Commander's intent throughout the duration
+of their existence in potential future conflicts. Maritime deployment includes harsh physical domains,
+long distances from each Commander, and prolonged on-station  time, all of which can significantly stress the capabilities
+of the unmanned systems and limit their operator's control. Therefore, in order to
+apply ethical control of unmanned systems in future undersea warfare, we develop
+an ontology for unmanned systems mission execution and design. This project is studying multiple
+canonical missions for unmanned maritime systems, with progressive sophistication, in order
+to test and evaluate Ethical Control design on the autonomy of the unmanned systems.
+The goals of this research are to ensure unmanned maritime systems comply with
+existing policy guidance of the U.S. Department of Defense and relevant international
+organizations, further providing inputs to emerging policy guidance. Our vision is for
+Commanders to be confident in authorizing life-saving or lethal force from
+unmanned systems that operate under ethical control in collaboration with human forces.
+Simulation playback of multiple key scenarios demonstrates these principles in action, 
+and building a TestDevOps architecture offers potential for establishing virtual/actual testbeds 
+to confirm and certify effective robot operations.
+Thus, from a broad perspective, Ethical Control enables human teams to perform 
+more-effective supervision of operations involving lethal or life-saving force. 
+        </p>
+
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Briefings">&#128278;</a>
+            <a name="Schedule"></a>
+            <a name="Briefings">Briefings</a>
+            <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        
+        <p>
+                Comprehensive presentation:
+                <a href="documentation/presentations/EthicalControlUnmannedSystemsOverview.pdf" target="_blank">Ethical Control of Unmanned Systems overview</a>
+                describes all aspects of this project, along with related work and relevant resources.
+        </p>
+
+        <p>
+            We are now briefing research progress publicly, with all work available under an
+            <a href="license.html">open-source&nbsp;license</a>.
+        </p>
+
+        <table border="1" align="center">
+            <tr>
+                <th align="center">
+                    Videos
+                </th>
+                <th align="left">
+                    &nbsp;Dates, Events, Slidesets, Descriptions
+                </th>
+            </tr>
+            <tr>
+                <td id="AAAISpringSymposium2022EthicalComputingMetrics" align="center" valign="middle">
+                    <a href="https://drive.google.com/file/d/1J9_G48_OOjKD9kVdhFO-Xsnw2jRvRSAI/view" target="_blank">
+                        <!-- 382 x 234 -->
+                        <img src="documentation/images/RaytheonTieredApproachEthicalAIEvaluationMetricsPeggyWuMarch2022.png" width="240" border="1" title="Presentation briefing"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#AAAISpringSymposium2022EthicalComputingMetrics">&#128278;</a>
+                        <a href="https://aaai.org/Symposia/Spring/sss22symposia.php#ss06" target="AAAI2022">Ethical Computing: Metrics for Measuring AI's Proficiency and Competency for Ethical Reasoning</a>
+                    </p>
+                    <p>
+                        <i>Symposium workshop overview.</i>
+                        The prolific deployment of Artificial Intelligence (AI) across different applications have introduced novel challenges 
+                        for AI developers and researchers. AI is permeating decision making for the masses: from self-driving automobiles, 
+                        to financial loan approval, to military applications. Ethical decisions have largely been made by humans 
+                        with vested interest in, and close temporal and geographical proximity to the decision points. 
+                        With AI making decisions, those ethical responsibilities are now being pushed to AI designers 
+                        who may be far-removed from how, where, and when the ethical dilemma occurs. 
+                        Such systems may deploy global "ethical" rules with unanticipated or unintended local effects or vice versa.
+                        While explainability is desirable, it is likely not sufficient for creating "ethical AI", 
+                        i.e. machines that can make ethical decisions. These systems will require the 
+                        invention of new evaluation techniques around the AI's proficiency and competency in its own ethical reasoning. Using traditional software and system testing methods on ethical AI algorithms may not be feasible because what is considered "ethical" often consists of judgements made within situational contexts. The question of what is ethical has been studied for centuries. This symposium invites interdisciplinary methods for characterizing and measuring ethical decisions as applied to ethical AI.
+                    </p>
+                    <p>
+                        This event is one of nine workshops for
+                        <a href="https://aaai.org/Symposia/Spring/sss22symposia.php" target="AAAI2022">Association for Advancement of Artificial Intelligence (AAAI) Spring Symposium</a>, 
+                        21-23&nbsp;March&nbsp;2022,
+                        and is organized by our collaborating colleagues at Raytheon.
+                        Work building on these capabilities is presented in three sessions.
+                       (<a href="https://sites.google.com/view/aaai-ethicalcomputingapproach/schedule" target="_blank">schedule</a>)
+                    </p>
+                   <ul>
+                       <li>
+                           <p>
+                            <a href="documentation/papers/SSS-22_paper_117_TieredApproachEthicalAIEvaluationMetrics.pdf" target="_blank">A Tiered Approach for Ethical AI Evaluation Metrics</a>,
+                            <br />
+                            Peggy Wu, Brett Israelsen, Kunal Srivastava, Hsin-Fu "Sinker" Wu, and Robert Grabowski.
+                           </p>
+                           <p>
+                               <i>Abstract.</i>
+Advances in machine learning are enabling autonomy to operate 
+in environments of increasing complexity, including 
+scenarios with ethical concerns. For many Artificial Intelligence (AI) 
+systems, decisions are driven by the goal to maximize reward. 
+Policies may contain unintended consequences 
+known as reward hacking. The AI is optimizing within the 
+constraints defined by the domain and goals and does not 
+have the capability to distinguish between benign and 
+negative consequences beyond specifications. This paper 
+describes an ongoing effort to develop an application-agnostic
+framework for AI systems to simulate actions, characterize 
+potential outcomes, and perform introspection to articulate 
+the motivations for action. Such a framework provides the 
+foundational work for higher-level ethical reasoning using 
+consequential and deontological ethics than other approaches
+in AI ethics. This enables metrics from consequential ethics 
+to be used to assign ethical value of actions based on outcomes. 
+Simultaneously, metrics from deontological ethics 
+can be applied to evaluate the universality of its motivations.
+A Trolley Problem -inspired maritime search-and-rescue scenario 
+is used to operationalize and demonstrate this framework.
+                           </p>
+                       </li>
+                       <li>
+                           <p>
+                            <a href="documentation/papers/SSS-22_paper_118_DoctrineEthicsCompliantAutonomyOntologicalFramework.pdf" target="_blank">Doctrine and Ethics Compliant Autonomy Using An Ontological Framework</a>,
+                            <br />
+                            Don Brutzman,  Curt Blais, Hsin-Fu "Sinker" Wu, Richard Markeloff, and Carl Andersen.
+                           </p>
+                           <p>
+                               <i>Abstract.</i>
+Ensuring ethical robot behavior requires complex representations 
+and methodologies designed to guarantee it. Our approach extends 
+frameworks already used by the U.S. military
+to ensure human ethical and doctrinal behavior by human beings. 
+These have built in advantages of being able to express
+complex plans and constraints, yet remaining intelligible to
+humans, a requirement for ethical responsibility and liability. 
+To extend the framework to machines, mission constructs
+are expressed using an Autonomous Vehicle Command Language (AVCL) 
+expressing mission actions and outcomes that
+can readily be translated to runnable source code in several
+programming languages. Missions written in AVCL can be
+validated via translation to an RDF/OWL Mission Execution
+Ontology (MEO) supporting queried proofs of ethical correctness. 
+MEO ensures that missions are both semantically
+valid and compliant with ethical constraints. These technologies 
+implement a simulation, testing, and certification regime
+that can serve as a foundation for human authority over and
+trust in robots capable of lethal force.
+                           </p>
+                           <p>
+                               This paper is dedicated to the memory of Rich Markeloff who made substantial contributions
+                               towards our understanding, adaptation and usage of advanced Semantic Web capabilities
+                               supporting ethical control of unmanned systems.
+                           </p>
+                       </li>
+                       <li>
+                           <p>
+                           <a href="documentation/papers/SSS-22_paper_122_MeaningfulMetricsDemonstratingEthicalSupervision.pdf" target="_blank">Meaningful Metrics for Demonstrating Ethical Supervision of Unmanned Systems</a>,
+                           <br />
+                           Don Brutzman and Curt Blais.
+                           </p>
+                           <p>
+                               <i>Abstract.</i>
+Metrics for AI are important, as illustrated by the workshop topics of interest. We note that 
+commonplace gaps in applied AI derive from “Here are the measurements we know how to take” which are too 
+easily over-extrapolated into conclusions of interest. In other words, such precise metrics are necessary and 
+appealing but may not broadly apply to general situations. We assert that necessary subsequent questions are 
+“How do we define meaningful objectives and outcomes for a current unmanned system,” “How do we measure 
+those characteristics that indicate expected success/failure,” and “Once we can measure meaningful results, 
+how do we assemble exemplars into test suites that confirm successful completion across ongoing system life
+cycles?”
+                           </p>
+                           <p>
+This discussion session seeks to find common threads among all workshop contributions that may help advance
+progress on these fundamental challenges.
+                           </p>
+                       </li>
+                   </ul>
+                </td>
+            </tr>
+            <tr>
+                <td id="EthicalControlUnmannedSystemsDataStrategy" align="center" valign="middle">
+                    <a href="https://savage.nps.edu/EthicalControl/documentation/videos/EthicalControlUnmannedSystemsDataStrategy.CruserDecember2021.mp4" target="_blank">
+                        <!-- 382 x 234 -->
+                        <img src="documentation/presentations/EthicalControlUnmannedSystemsDataStrategy.Cruser2021December.speakers.png" width="240" border="1" title="Presentation briefing"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#EthicalControlUnmannedSystemsDataStrategy">&#128278;</a>
+                        <b> Ethical Control of Unmanned Systems: Repeatable Mission Evaluation through Unmanned Systems Data Strategy</b>
+                        <!--
+                        (<a href="documentation/presentations/EthicalControlUnmannedSystemsDataStrategy.Cruser2021December.pptx" target="_blank">slideset&nbsp;pptx</a>,
+                         <a href="documentation/presentations/EthicalControlUnmannedSystemsDataStrategy.Cruser2021December.pdf" target="_blank">slideset&nbsp;pdf</a>,
+                         <a href="https://savage.nps.edu/EthicalControl/documentation/videos/ScanEagle-KLV-3D-2021-10-13.mov" target="_blank">KLV&nbsp;DIS&nbsp;X3D&nbsp;demo&nbsp;video</a>)
+                        -->
+                    </p>
+                    <p>
+                        Humans must be able to effectively control unmanned systems holding the capacity for lethal and life-saving force.
+                        Trust can only be achieved if robots can provably follow human orders, both for what to do and what not to do, 
+                        over long distances in space and long durations of time.
+                        Semantic Web techniques provide a scalable framework for comprehensive progress that can demonstrate compatibility with policy, law, and treaty obligations.
+                        Building best-practice workflows for data and metadata from unmanned systems can leverage both field experimentation (FX) and 
+                        simulation to support archival data re-use and repeatable analysis. 
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                <a href="https://savage.nps.edu/EthicalControl/documentation/videos/ScanEagle-KLV-3D-2021-10-13.mov" target="_blank"><img src="documentation/videos/ScanEagle-KLV-3D-2021-10-13.png" width="240" border="1" align="right" valign="middle" title="ScanEagle KLV Telemetry Decoded by DFDL, DIS track replay using Xj3D"/></a>
+                                CRUSER 2021 project briefing:
+                                <a href="https://savage.nps.edu/EthicalControl/documentation/videos/EthicalControlUnmannedSystemsDataStrategy.CruserDecember2021.mp4" target="_blank">session video</a>,
+                                <a href="documentation/presentations/EthicalControlUnmannedSystemsDataStrategy.Cruser2021December.pptx" target="_blank">slideset&nbsp;pptx</a>,
+                                and 
+                                <a href="documentation/presentations/EthicalControlUnmannedSystemsDataStrategy.Cruser2021December.pdf" target="_blank">slideset&nbsp;pdf</a>.
+                            </p> 
+                            <ul>
+                                <li>
+                                    <i>10 December 2021, duration&nbsp;1:12:33</i>.
+                                </li>
+                                <li>
+                                    (0:05) Welcome, speaker introductions, agenda
+                                </li>
+                                <li>
+                                    (2:55) Curtis Blais: Data modeling and formal ontology development,
+                                    Mission Execution Ontology (MEO), and C2SIM standard with NATO.
+                                </li>
+                                <li>
+                                    (21:30) Kristen Fletcher: Legal and ethical policies, ramifications for unmanned systems in a rapidly evolving world.
+                                </li>
+                                <li>
+                                    (31:55) Terry Norbraten: Software design development and testing, 
+                                    data conversion using Data Format Description Language (DFDL).
+                                </li>
+                                <li>
+                                    (44:50) Don Brutzman: DFDL significance, unmanned systems data strategy, readiness to scale up,
+                                    establishing NPS experimentation as a DoD Test Range.
+                                </li>
+                                <li>
+                                    (53:15) Speaker summaries and student reactions.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                           <a href="https://savage.nps.edu/EthicalControl/documentation/videos/ScanEagle-KLV-3D-2021-10-13.mov" target="_blank">KLV&nbsp;DIS&nbsp;X3D&nbsp;demo&nbsp;video</a>
+                        </li>
+                    </ul>
+                    <p>
+                        Although many component capabilities can be found today, the overall picture for common practice remains incomplete. 
+                        We have achieved useful progress on multiple missing capabilities: 
+                        regularization of data-collection workflows by operators of unmanned systems,
+                        ability to parse and formally define collected information for re-use, plus
+                        ability to replay streams for unit-test assessment and TestDevOps.
+                        We are ready to move to the next level: scaling up to archivally support all NPS field experimentation (FX), 
+                        establishing an unclassified defense test range useful to all services, industry partners, and allied nations.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td id="PythonMissionEvaluationVideo" align="center" valign="middle">
+                    <a href="https://savage.nps.edu/EthicalControl/documentation/videos/EthicalControlUnmannedSystems.PythonMissionTestingDemoCefaluDecember2020.mp4" target="_blank">
+                        <!-- 382 x 234 -->
+                        <img src="documentation/videos/EthicalControlUnmannedSystems.PythonMissionTestingDemoCefaluDecember2020.png" width="240" border="1" title="Python Mission Evaluation, Exhaustive Test Analysis and Connecting to AI-based Opponent Systems, demo video 16 December 2020"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#PythonMissionEvaluationVideo">&#128278;</a>
+                        <b> Python Mission Evaluation, Exhaustive Test Analysis and Connecting to AI-based Opponent Systems</b>
+                        (<a href="documentation/presentations/MissionExecutionAutomaton_vs_GPT-3-basedComputerGame.pdf" target="_blank">slideset</a>)
+                    </p>
+                    <p>
+                            Implementation Demonstration and Discussion Video,
+                            <a href="mailto:jon@neurobinder.com%20(Jon%20Cefalu),?subject=feedback:%20Ethical%20Control%20Python%20Testing%20Video">Jon Cefalu</a>,
+                            <a href="https://neurobinder.com" target="_blank">neurobinder.com</a>
+                    </p>
+                    <ul>
+                        <li>
+                            <i>16 December 2020, duration&nbsp;59:41</i>.
+                        </li>
+                        <li>
+                            (0:00) Attendee introductions,
+                        </li>
+                        <li>
+                            (4:30) Ethical Control of Unmanned Systems context,
+                        </li>
+                        <li>
+                            (6:00) Jon shows new capabilities include a Python implementation for exercising decision logic in Autonomous Vehicle Command Language (AVCL) mission.  Additional features include the ability to exhaustively test mission variations, checking functional mission correctness and detecting decision loops.
+                        </li>
+                        <li>
+                             (20:00) Mission testing considerations appear to provide an initial basis for evaluating human-machine mission logic and
+                             <a href="https://en.wikipedia.org/wiki/Code_coverage" target="_blank">code coverage</a>,
+                             building stepping stones towards
+                             <a href="https://en.wikipedia.org/wiki/Model-based_testing" target="_blank">model-based testing</a>
+                             as well as
+                             <a href="https://en.wikipedia.org/wiki/Verification_and_validation" target="_blank">verification and validation</a>,
+                        </li>
+                        <li>
+                            (27:30) Jon also demonstrated cross-connecting the Pirate mission to
+                            <a href="https://play.aidungeon.io" target="_blank">AI Dungeon</a>
+                           (<a href="https://en.wikipedia.org/wiki/AI_Dungeon" target="_blank">Wikipedia</a>),
+                           a text-based adventure game engine based on the
+                            <a href="https://en.wikipedia.org/wiki/GPT-3" target="_blank">Generative Pre-trained Transformer 3 (GPT-3)</a>
+                            language-prediction model by
+                            <a href="https://en.wikipedia.org/wiki/OpenAI" target="_blank">OpenAI</a>
+                            that uses deep learning to produce human-like text responses.
+                            Despite only superficial configuration, scenario exploration became possible
+                            using interesting (and occasionally outlandish) text responses from the tool.
+                        </li>
+                        <li>
+                            (48:30) Group discussion on future design considerations for connecting human-machine teaming systems
+                            with realistic wargaming systems for
+                            <a href="https://en.wikipedia.org/wiki/Sensitivity_analysis" target="_blank">sensitivity analysis</a>,
+                            massively repeatable testing, and
+                            <a href="https://en.wikipedia.org/wiki/Analysis_of_Alternatives" target="_blank">analysis of alternatives</a>.
+                        </li>
+                    </ul>
+                    <p>
+                        Further reading: David Walton,
+                        <a href="https://www.pyrsf.com/forthcoming/three-laws-lethal/" target="_blank">Three Laws Lethal</a>,
+                        Pyr publishing, Hoboken New Jersey, 2019
+                       (<a href="https://www.goodreads.com/en/book/show/42278924-three-laws-lethal" target="_blank">reviews</a>).
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td id="NdiaUswVirtualConference" align="center" valign="middle">
+                    <a href="https://savage.nps.edu/EthicalControl/documentation/videos/EthicalControlUnmannedSystems.NdiaUnderseaWarfare.September2020.mp4" target="_blank">
+                        <!-- 382 x 234 -->
+                        <img src="documentation/videos/NDIA_USW_undersea_2020_airforce-blue_web2.png" width="240" border="1" title="Ethical Control Unmanned Systems Overview, NDIA USW video 4 September 2020"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#NdiaUswVirtualConference">&#128278;</a>
+                        <b>Ethical Control of Unmanned Systems using Formal Mission Ontologies for Undersea Warfare</b>
+                       (<a href="documentation/presentations/EthicalControlUnmannedSystemsOverviewNdiaUnderseaWarfareSeptember2020.reduced.pdf" target="_blank">slideset</a>)
+                    </p>
+                    <ul>
+                        <li>
+                            <i>4 September 2020, duration&nbsp;1:06:20</i>.
+                            <a href="https://www.ndia.org/events/2020/9/22/2020-usw-virtual-conference" target="_blank">National Defense Industry Association (NDIA) Undersea Warfare (USW) Virtual Conference</a>
+                            with follow-on discussion.  Event dates 22-23 September 2020.
+                        </li>
+                        <li>
+                            Where must we go next:
+                            <ul>
+                                <li>
+                                    Massive testing of unmanned hardware + software ability to follow both orders and constraints in physically realistic virtual environments.
+                                </li>
+                                <li>
+                                    Certify capabilities via field experimentation (FX), confirmed by USW range exercises and regular force operations.
+                                </li>
+                                <li>
+                                    Human warfighters and commanders (not just engineers) review and approve unmanned systems as&hellip; <i>qualified</i>.
+                                </li>
+                                <li>
+                                    New normal will be human + machine teaming. Mainstream capabilities in all aspects of acquisition and deployment.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                        <p>
+                            Thanks to <a href="https://rtx.com" target="_blank">Raytheon Technologies</a>
+                            for 
+                            <a href="https://nps.edu/web/research/partnerships-/-agreements" target="_blank">Cooperative Research and Development Agreement (CRADA)</a> support.
+                            Research results and insights are available in jointly approved Technical Report NPS-USW-20-001,
+                            <a href="https://calhoun.nps.edu/handle/10945/65637" target="_blank">Ethical&nbsp;Control of Unmanned Systems: lifesaving/lethal scenarios for naval operations</a>,
+                            August&nbsp;2020.
+                        </p>
+                </td>
+            </tr>
+            <tr>
+                <td id="NpsCruserBriefing" align="center" valign="middle">
+                    <a href="documentation/videos/EthicalControlUnmannedSystemsOverview.Cruser.2020May4.mp4" target="_blank">
+                        <img src="documentation/presentations/EthicalControlUnmannedSystemsOverview.CruserCoverSlide.2020May4.800x449.png" width="240" height="135" border="1" title="Ethical Control Unmanned Systems Overview, CRUSER video 4 May 2020"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#NpsCruserBriefing">&#128278;</a>
+                        <b>NPS CRUSER Overview, Ethical Control of Unmanned Systems</b>
+                       (<a href="documentation/presentations/EthicalControlUnmannedSystemsOverview.Cruser.2020May4.pdf" target="_blank">slideset</a>)
+                    </p>
+                    <ul>
+                        <li>
+                            <i>4 May 2020, duration&nbsp;21:10</i>.
+                            NPS Consortium for Robotics and Unmanned Systems Education and Research (<a href="https://cruser.nps.edu">CRUSER</a>)
+                            monthly meeting, 91 people.
+                        </li>
+                        <li>
+                            Mission orders must be understandable by both humans and machines.
+                            Logical testing and command trust are possible using Semantic Web standards.
+                        </li>
+                        <li>
+                            Thanks to CRUSER and Raytheon for strong support during this many-year project.
+                            NPS-Raytheon CRADA partnership offers new possibilities for influence.
+                        </li>
+                        <li>
+                            Research insight: our university needs to establish a cross-disciplinary, cross-service <i>NPS Center for Ethical Warfare</i>.
+                        </li>
+                    </ul>
+                    <p>
+                        Your NPS efforts matter. 
+                        Talk to us about a potential thesis!
+                        This work holds multiple opportunities for applied student research in any major.
+                    </p>
+                </td>
+            </tr>
+            <tr id="DataCentricSecurity">
+                <td align="center" valign="middle">
+                    <a href="documentation/videos/EthicalControlUnmannedSystems.DataCentricSecurity.2020April16.mp4" target="_blank">
+                        <!-- 2667 X 1500 -->
+                        <img src="documentation/presentations/EthicalControlUnmannedSystems.DataCentricSecurityCoverSlide.2020April16.png" width="267" height="150" border="1" title="Ethical Control Unmanned Systems, Data-Centric Security video 16 Aprll 2020"/>
+                    </a>
+                </td>
+                <td>
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#DataCentricSecurity">&#128278;</a>
+                        <b>Data-Centric Security for Ethical Control of Unmanned Systems</b>
+                       (<a href="documentation/presentations/EthicalControlUnmannedSystems.DataCentricSecurity.2020April16.pdf" target="_blank">slideset</a>)
+                    </p>
+                    <ul>
+                        <li>
+                            <i>16&nbsp;April&nbsp;2020, duration&nbsp;22:08</i>.
+                            Briefing to Raytheon and NPS colleagues.
+                        </li>
+                        <li>
+                            Data-centric security enables strong command authority and trust
+                            between deployed commands and remote unmanned systems.
+                        </li>
+                        <li>
+                            Trusted communications must occur
+                            regardless of intervening challenges to network connections
+                            by the ocean-atmosphere environment or hostile countermeasures.
+                        </li>
+                        <li>
+                            Ethical control of unmanned systems requires reliable message exchange across long distances and durations of time.
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td id="MissionDesignExemplars" rowspan="3" align="center" valign="middle">
+                    <a href="documentation/videos/EthicalControlUnmannedSystemsOverview.UVAS2020Reprise.2020April6.mp4" target="_blank">
+                        <!-- 2667 X 1500 -->
+                        <img src="documentation/presentations/EthicalControlUnmannedSystemsOverview.UVAS2020RepriseCoverSlide.2020April6.png" width="267" height="150" border="1" title="Ethical Control Unmanned Systems Overview, reprise video 6 Aprll 2020"/>
+                    </a>
+                </td>
+                <td rowspan="3">
+                    <p>
+                        <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                        <a href="#MissionDesignExemplars">&#128278;</a>
+                        <b>Mission Design and Semantic Web Exemplars  for Human Supervision of Lethal/Lifesaving Autonomy</b>
+                       (<a href="documentation/presentations/EthicalControlUnmannedSystemsOverview.UVAS2020.pdf" target="_blank">slideset</a>)
+                    </p>
+                    <ol style="list-style-type: lower-alpha;">
+                        <li>
+                            <i>6 April 2020, duration&nbsp;1:01:31</i>.
+                            Project briefings reprised to Raytheon colleagues,
+                            providing project overview of sponsored work performed as part of an
+                            NPS-Raytheon Cooperative Research and Development Agreement (CRADA).
+                        </li>
+                        <li>
+                            <i>25 March 2020</i>.
+                            Online brief to Naval Unmanned Vehicle and Autonomous Systems (UVAS) Working Group,
+                            providing project overview with emphasis on relevance to much naval research and future operations.
+                        </li>
+                        <li>
+                            <i>9&#8209;11&nbsp;March&nbsp;2020</i>.
+                            <i>Conference panel.</i>
+                            <a href="https://us2ts.org" target="_blank">US Semantic Technologies Symposium (US2TS)</a>
+                            panel session: 
+                            <a href="https://us2ts.org/2020/program-hybrid-ai" target="_blank">Hybrid AI for Context Understanding</a>,
+                            North Carolina State University, Raleigh, NC.
+                            Also presented  related work
+                            <a href="https://us2ts.org/2020/lightning-talks#x3dontology" target="_blank">X3D Ontology for Semantic Web</a>
+                            as a "Lightning Talk" there.
+                           (<a href="documentation/presentations/EthicalControlUnmannedSystemsOverview.US2TS2020.pdf" target="_blank">slideset</a>)
+                        </li>
+                    </ol>
+                </td>
+            </tr>
+                <!-- presentation column -->
+                <!-- video column -->
+                <!-- event column -->
+            <!--
+            <tr>
+                <td>
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+            -->
+        </table>
+        
+        <ul>
+            <li>
+                <i>Event cancelled due to COVID lockdown.</i>
+                29 March - 1 April 2020, 
+                <a href="https://www.ndia.org/events/2020/3/30/2020-usw-spring-conference" target="_blank">NDIA 2020 Undersea Warfare (USW) Spring Conference</a>,
+                Admiral Kidd Conference Center, San Diego CA.
+                See 
+                <a href="#NdiaUswVirtualConference">follow-on NDIA event</a> in September 2020.
+            </li>
+        </ul>
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Design">&#128278;</a>
+            <a name="Design">Design Overview</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        
+        <p>
+            The essence of this work is defining missions that are clear, unambiguous, 
+            validatable as syntactically correct, and verifiable as logically correct.
+        </p>
+        
+        <p>
+            Key insights:
+        </p>
+        <ol type="a">
+            <li>
+                Humans in military units are able to deal with moral challenges without ethical quandaries,
+                using formally qualified experience and by following mission orders that
+                comply with
+                <a href="https://en.wikipedia.org/wiki/Rules_of_engagement" target="_blank">Rules of Engagement (ROE)</a>
+                and
+                <a href="https://en.wikipedia.org/wiki/International_humanitarian_law" target="_blank">Laws of Armed Conflict (LOAC)</a>.
+            </li>
+            <li>
+                Ethical behaviors don't define the mission plan.  Instead, ethical constraints inform the mission plan.
+            </li>
+            <li>
+                Naval forces can only command mission orders that are 
+                understandable by (legally culpable) humans, then 
+                reliably and safely executed by robots.
+            </li>
+        </ol>
+        <p>
+            Design and development of these capabilities has been ongoing for many years.
+            Key language components include:
+        </p>
+        <ul>
+            <li>
+                <b>Autonomous Vehicle Command Language</b>
+                is an XML-based language for defining unmanned-system missions.
+            </li>
+            <li>
+                <b>RDF/OWL</b> are standardized Semantic Web languages to express properties and logical relationships.
+            </li>
+            <li>
+                <b>Terse Triple Language (Turtle)</b> is a concise syntax for RDF/OWL.
+            </li>
+            <li>
+                <b>SPARQL</b> is a standardized query language that enables us to write semantic tests.
+            </li>
+        </ul>
+        <p>
+            Life-saving missions and missions with lethal force are complementary.
+            Human-robot activity can result in lethal or life-saving outcomes.
+        </p>
+        <p>
+            In this work, ethical theory meets professional practice.
+            Each step must work for human commanders and unmanned systems alike.
+        </p>
+        <p>
+            Numerous assets are provided here to explain how this approach works and continues to mature.
+        </p>
+        
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Documentation">&#128278;</a>
+            <a name="Documentation">Documentation</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+
+        <ul>
+            <li>
+                Synopsis report:
+                Donald P. Brutzman, Curtis L. Blais, and Hsin-Fu Wu (Raytheon),
+                <a href="documentation/reports/EthicalControlRaytheonNpsCradaProjectFinalReportAugust2020.pdf" target="_blank">Ethical Control of Unmanned Systems: Lifesaving/Lethal Scenarios for Naval Operations</a>,
+                Technical Report NPS-USW-2020-001, Naval Postgraduate School (NPS), Monterey California, August 2020.
+                Prepared for 
+                <a href="https://www.rtx.com" target="_blank">Raytheon Missiles &amp; Defense</a>
+                under NCRADA-NPS-19-0227.
+                Now available in
+                <a href="https://calhoun.nps.edu/handle/10945/65637" target="_blank">NPS Dudley Knox Library Calhoun Digital Archive</a>.
+            </li>
+            <li>
+                Comprehensive presentation:
+                <a href="documentation/presentations/EthicalControlUnmannedSystemsOverview.pdf" target="_blank">Ethical Control of Unmanned Systems overview</a>
+                describes all aspects of this project, along with related work and relevant resources.
+            </li>
+            <li>
+                <a href="documentation/ETHICAL%20MISSION%20DEFINITION%20AND%20EXECUTION%20FOR%20MARITIME%20ROBOTS.2019March2.png" target="_blank">Ethical Control flyer</a>
+                and
+                <a href="documentation/flyers/EthicalControlUnmannedSystemsQuadChartCRUSER.png">project quad chart</a>
+               (<a href="documentation/flyers/EthicalControlUnmannedSystemsQuadChartCRUSER.pdf">.pdf</a>).
+            </li>
+            <li>
+                <a href="https://wiki.nps.edu/display/NOW/Network+Optional+Warfare" target="_blank">Network Optional Warfare (NOW)</a>
+                 for deliberate, stealthy, minimalist tactical communications.
+            </li>
+            <li>
+                <a href="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems" target="_blank">Network Optional Warfare (NOW): Ethical Control of Unmanned Systems</a>
+                overview
+            </li>
+        </ul>
+        <p>
+            Presentations, papers, figures, flyers and reports are all available in the
+            <a href="documentation/"><code>documentation</code></a>
+            section of the project archive.
+            Also available:
+            <a href="missions/diagrams/">mission diagrams</a>
+           (<a href="missions/diagrams/EthicalControlCanonicalMissions.pdf">.pdf</a>).
+        </p>
+        <p>
+            Data model documentation:
+        </p>
+        <ul>
+            <li>
+                <a href="documentation/schemas/AVCL.3.0/AVCL.3.0.html">AVCL 3.0 Schema documentation</a>
+                (and
+                <a href="schemas/AVCL.3.0.changes.txt">AVCL.3.0.changes.txt</a>)
+                for Autonomous Vehicle Command Language (AVCL)
+            </li>
+            <li>
+                <a href="documentation/ontologies/owldoc/index.html">Protege Owldoc</a> for Mission Execution Ontology (MEO)
+            </li>
+        </ul>
+
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Download">&#128278;</a>
+            <a name="Download">Download</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+
+        <p>
+            <a href="https://savage.nps.edu/EthicalControl/EthicalControlArchive.zip" target="_blank">EthicalControlArchive.zip</a> (120MB)
+            provides full website for download and local testing.
+        </p>
+        
+        <p>
+            <a href="https://gitlab.nps.edu/Savage/EthicalControl" target="_blank">Version control</a>
+            for all project assets is publicly available at
+            <a href="https://gitlab.nps.edu/Savage/EthicalControl" target="_blank">https://gitlab.nps.edu/Savage/EthicalControl</a>
+        </p>
+        <a href="access.properties"></a>
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Missions">&#128278;</a>
+            <a name="Missions">Missions</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        <p>
+            Unmanned systems working in tandem with human forces, authorized by commander for life-saving or lethal force,
+            can handle progressive challenges in distance and time.
+        </p>
+        <p>
+            The following missions carefully define and test such capabilities.
+        </p>
+        <ul>
+            <li>
+                <b>Sailor Overboard.</b>
+                Perform SAILOR OVERBOARD operations, carried out in concert with shipboard emergency procedures.
+            </li>
+            <li>
+                <b>Lifeboat Tracking.</b>
+                Provide remote presence for locating, tracking, communications and beaconing an adrift lifeboat.
+            </li>
+            <li>
+                <b>Pirate Boats Attack.</b>
+                Overtake pirate small-boat gang attempting to capture threatened merchant ship, 
+                provide warning and counterattack if escalation of hostilities is warranted.
+            </li>
+            <li>
+                <b>Hospital Ship EM&nbsp;Decoy: Sense-Decide-Act Loop.</b>
+                Immediate reaction using Sense-Decide-Act cycle results in blue-on-blue robot swarm attack and war crime.
+            </li>
+            <li>
+                <b>Hospital Ship EM&nbsp;Decoy: OODA&nbsp;Loop.</b>
+                Orient-Observe-Decide-Act (OODA) loop tactics and Ethical Control constraints prevent automatic erroneous counterattack against
+                <a href="https://en.wikipedia.org/wiki/False_flag">false flag</a> placed on friendly ship, and thus improves defense.
+            </li>
+        </ul>
+
+        <table border="1" align="center">
+            <tr>
+                <th>
+                    Exemplar Missions
+                </th>
+                <th>
+                    Sailor Overboard
+                </th>
+                <th>
+                    Lifeboat Tracking
+                </th>
+                <th>
+                    Pirate Boats Attack
+                </th>
+                <th>
+                    Hospital Ship EM&nbsp;Decoy
+                    <br />
+                    Sense-Decide-Act Loop
+                </th>
+                <th>
+                    Hospital Ship  EM&nbsp;Decoy
+                    <br />
+                    OODA&nbsp;Loop
+                </th>
+                <th style="text-align:center">
+                    Descriptions
+                </th>
+            </tr>
+            <tr id="Diagrams">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#Diagrams">&#128278;</a>&nbsp;Diagrams
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/diagrams/SailorOverboard8PhaseMission.png" target="_blank"><img width="150px" src="missions/diagrams/SailorOverboard8PhaseMission.png" border="0" title="mission diagram" alt="mission diagram"/></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/diagrams/LifeboatTrackingMission.png" target="_blank"><img width="150px" src="missions/diagrams/LifeboatTrackingMission.png" border="0" title="mission diagram" alt="mission diagram"/></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/diagrams/PirateBoatsSeizingMerchantMission.1.ApproachPhases.png" target="_blank"><img width="50px" src="missions/diagrams/PirateBoatsSeizingMerchantMission.1.ApproachPhases.png" border="0" title="part 1" alt="part 1"/></a>
+                    <hr />
+                    <a href="missions/diagrams/PirateBoatsSeizingMerchantMission.2.EscalationPhases.png" target="_blank"><img width="50px" src="missions/diagrams/PirateBoatsSeizingMerchantMission.2.EscalationPhases.png" border="0" title="part 2" alt="part 2"/></a>
+                    <hr />
+                    <a href="missions/diagrams/PirateBoatsSeizingMerchantMission.3.CounterAttackPhase.png" target="_blank"><img width="50px" src="missions/diagrams/PirateBoatsSeizingMerchantMission.3.CounterAttackPhase.png" border="0" title="part 3" alt="part 3"/></a>
+                </td>
+                <!-- the following 2 diagrams are identical, this layout seems preferable -->
+                <td style="text-align:center">
+                    <a href="missions/diagrams/HospitalShipEmDecoyRobotResponses.png" target="_blank"><img width="150px" src="missions/diagrams/HospitalShipEmDecoyRobotResponses.png" border="0" title="mission diagram" alt="mission diagram"/></a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/diagrams/HospitalShipEmDecoyRobotResponses.png" target="_blank"><img width="150px" src="missions/diagrams/HospitalShipEmDecoyRobotResponses.png" border="0" title="mission diagram" alt="mission diagram"/></a>
+                </td>
+                <td style="text-align:left">
+                    <p>
+                        AVCL mission diagrams show ternary logic for decision flow.
+                        Each goal can only result in success, failure or exception.
+                        Visual representations are quite useful for checking mission logic.
+                    <p>
+                    </p>
+                        This carefully designed mission structure is able to express all possible orders
+                        while retaining traceable logic and accountability with rules of engagement (ROE).
+                    </p>
+                </td>
+            </tr>
+            <tr id="AVCL">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#AVCL">&#128278;</a>&nbsp;AVCL XML&nbsp;Missions
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/avcl/SailorOverboard.xml" target="_blank">SailorOverboard.xml</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/avcl/LifeboatTracking.xml" target="_blank">LifeboatTracking.xml</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/avcl/PiratesSeizingMerchantDefense.xml" target="_blank">PiratesSeizing MerchantDefense.xml</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/avcl/HospitalShipEmDecoy2.Defender.SenseDecideAct.xml" target="_blank">HospitalShipEmDecoy2. Defender. SenseDecideAct.xml</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/avcl/HospitalShipEmDecoy3.Defender.EthicalControlOODA.xml" target="_blank">HospitalShipEmDecoy3. Defender. EthicalControlOODA.xml</a>
+                </td>
+                <td style="text-align:left">
+                    AVCL XML documents define machine-readable and human-readable missions in a manner that can be syntactically validated as well-formed and well-structured,
+                    using strictly controlled terms of reference.
+                </td>
+            </tr>
+            <tr id="TurtleTriples">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#TurtleTriples">&#128278;</a>&nbsp;Turtle Triples
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/turtle/SailorOverboardConverted.ttl" target="_blank">SailorOverboard Converted.ttl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/turtle/LifeboatTrackingConverted.ttl" target="_blank">LifeboatTracking Converted.ttl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/turtle/PiratesSeizingMerchantDefenseConverted.ttl" target="_blank">PiratesSeizing MerchantDefense Converted.ttl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/turtle/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.ttl" target="_blank">HospitalShipEmDecoy2. Defender. SenseDecideAct Converted.ttl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/turtle/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.ttl" target="_blank">HospitalShipEmDecoy3. Defender. EthicalControlOODA Converted.ttl</a>
+                </td>
+                <td style="text-align:left">
+                    Turtle triples are created by a 
+                    <a href="stylesheets/AvclToTurtle.xslt" target="_blank">AvclToTurtle.xslt</a>
+                    conversion stylesheet that essentially "explodes" a mission into each component relationship.
+                    This form allows semantic queries and reasoning to occur.
+                </td>
+            </tr>
+            <tr id="Lisp">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#Lisp">&#128278;</a>&nbsp;Lisp Test&nbsp;Programs
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/lisp/SailorOverboardConverted.cl" target="_blank">SailorOverboard Converted.cl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/lisp/LifeboatTrackingConverted.cl" target="_blank">LifeboatTracking Converted.cl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/lisp/PiratesSeizingMerchantDefenseConverted.cl" target="_blank">PiratesSeizing MerchantDefense Converted.cl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/lisp/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.cl" target="_blank">HospitalShipEmDecoy2. Defender. SenseDecideAct Converted.cl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/lisp/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.cl" target="_blank">HospitalShipEmDecoy3. Defender. EthicalControlOODA Converted.cl</a>
+                </td>
+                <td style="text-align:left">
+                    <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)" target="_blank">Lisp</a>
+                    is a functional programming language for AI research.  The
+                    <a href="stylesheets/AvclToLisp.xslt" target="_blank">AvclToLisp.xslt</a>
+                    conversion stylesheet reads AVCL XML to produce Lisp source code,
+                    encouraging AVCL support in multiple robots.
+                </td>
+            </tr>
+            <tr id="Prolog">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#Prolog">&#128278;</a>&nbsp;Prolog Test&nbsp;Programs
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/prolog/SailorOverboardConverted.pl" target="_blank">SailorOverboard Converted.pl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/prolog/LifeboatTrackingConverted.pl" target="_blank">LifeboatTracking Converted.pl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/prolog/PiratesSeizingMerchantDefenseConverted.pl" target="_blank">PiratesSeizing MerchantDefense Converted.pl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/prolog/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.pl" target="_blank">HospitalShipEmDecoy2. Defender. SenseDecideAct Converted.pl</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="missions/prolog/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.pl" target="_blank">HospitalShipEmDecoy3. Defender. EthicalControlOODA Converted.pl</a>
+                </td>
+                <td style="text-align:left">
+                    <a href="https://en.wikipedia.org/wiki/Prolog_(programming_language)" target="_blank">Prolog</a>
+                    is a logic programming language associated with AI research and computational linguistics.  The
+                    <a href="stylesheets/AvclToProlog.xslt" target="_blank">AvclToProlog.xslt</a>
+                    conversion stylesheet reads AVCL XML to produce Prolog source code,
+                    encouraging AVCL support in multiple robots.
+                </td>
+            </tr>
+            <tr id="Python">
+                <th style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#Python">&#128278;</a>&nbsp;Python Test&nbsp;Programs
+                </th>
+                <td style="text-align:center">
+                    <a href="missions/python/README.md" target="_blank">README.md</a>
+                    and
+                    <a href="missions/python/MissionExecutionEngine.py" target="_blank">MissionExecutionEngine.py</a>
+                </td>
+                <td style="text-align:left" colspan="4">
+                    <ul>
+                        <li>
+                            <a href="test.all.missions.python.log.txt" target="_blank">test.all.missions.python.log.txt</a>
+                            exhaustively tests all XML mission definitions
+                        </li>
+                        <li>
+                            Video:
+                            <a href="#PythonMissionEvaluationVideo">Python mission evaluation demonstration</a>
+                            shows how a mission execution engine can&nbsp;read and simulate AVCL XML missions
+                            for individual runs or exhaustive testing.
+                        </li>
+                        <li>
+                            <a href="missions/python/SailorOverboardMission8State.py" target="_blank">SailorOverboardMission8State.py</a> 
+                            example single mission
+                        </li>
+                        <li>
+                            <a href="missions/python/SailorOverboardMission8StateInitialRun.txt" target="_blank">SailorOverboardMission8StateInitialRun.txt</a>
+                        </li>
+                        <li>
+                            <a href="missions/python/SailorOverboardMission8StatePythonSyntaxHighlighted.html" target="_blank">SailorOverboardMission8StatePythonSyntaxHighlighted.html</a>
+                        </li>
+                    </ul>
+                </td>
+                <td style="text-align:left">
+                    <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank">Python</a>
+                    is a strictly defined high-level, general-purpose programming language.
+                </td>
+            </tr>
+        </table>
+        
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Ontologies">&#128278;</a>
+            <a name="Ontologies">Ontologies</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        
+        <p>
+            The Mission Execution Ontology (MEO) is available in
+            <a href="ontologies/MissionExecutionOntology3.0.ttl">Turtle</a>
+            and
+            <a href="ontologies/MissionExecutionOntology3.0.ttl">RDF XML</a> forms.
+        </p>
+        <table align="center">
+            <tr>
+                <th>
+                    Latest Revision
+                </th>
+                <th>
+                    Current Version
+                </th>
+                <th>
+                    Original Version
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <a href="documentation/images/MissionExecutionOntologyClassesProperties.png"><img src="documentation/images/MissionExecutionOntologyClassesProperties.png" title="Mission Execution Ontology (MEO) Concepts and Roles" height="250px" border="1"/></a>
+                </td>
+                <td>
+                    <a href="documentation/images/MissionExecutionOntologyProtegeOntoGraph.png"><img src="documentation/images/MissionExecutionOntologyProtegeOntoGraph.png" title="Mission Execution Ontology (MEO) Concepts and Roles" height="250px" border="1"/></a>
+                </td>
+                <td>
+                    <a href="documentation/images/MissionExecutionOntologyConceptsRolesOriginal2014.png"><img src="documentation/images/MissionExecutionOntologyConceptsRolesOriginal2014.png" title="Mission Execution Ontology (MEO) Concepts and Roles" height="250px" border="1"/></a>
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            The
+            <a href="https://protege.stanford.edu" target="_blank">Prot&eacute;g&eacute;</a>
+            tool is used to create
+            <a href="documentation/owldoc/index.html" title="OWL documentation for ontology" alt="OWL documentation for ontology" target="_blank">OwlDoc</a>
+            that fully documents internal ontology relationships.
+        </p>
+                
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Queries">&#128278;</a>
+            <a name="Queries">Queries</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+                
+        <p>
+            Initial queries are checking the soundness of this approach.
+            Future queries will perform in-depth analysis of structural soundness 
+            and perform diagnosis that necessary ethical constraints are indeed present
+            for valid mission definitions of arbitrary complexity.
+        </p>
+                
+        <p>
+            Please see
+            <a href="queries/ExampleReasoningQueryingProtege.pptx">ExampleReasoningQueryingProtege.pptx</a>
+           (<a href="queries/ExampleReasoningQueryingProtege.pdf">.pdf</a>)
+            for further details on design and debugging of these SPARQL queries.
+        </p>
+        
+
+        <table border="1" align="center">
+            <tr>
+                <th colspan="2">
+                    SPARQL Queries on each Mission
+                </th>
+                <th>
+                    Sailor Overboard
+                </th>
+                <th>
+                    Lifeboat Tracking
+                </th>
+                <th>
+                    Pirate Boats Attack
+                </th>
+                <th>
+                    Hospital Ship EM&nbsp;Decoy
+                    <br />
+                    Sense-Decide-Act Loop
+                </th>
+                <th>
+                    Hospital Ship  EM&nbsp;Decoy
+                    <br />
+                    OODA&nbsp;Loop
+                </th>
+                <th style="text-align:center">
+                    Description
+                </th>
+            </tr>
+            <tr id="MissionExecutionOntologyQuery_01">
+                <td style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#MissionExecutionOntologyQuery_01">&#128278;</a>
+                </td>
+                <th style="text-align:left">
+                    <a href="queries/MissionExecutionOntologyQuery_01.rq">MissionExecutionOntologyQuery_01.rq</a>
+                </th>
+                <td style="text-align:center" colspan="5">
+                    <a href="queries/MissionExecutionOntologyQuery_01.rq.txt">Metaquery response</a>
+                    on Mission Execution Ontology (MEO) itself.
+                </td>
+                <td style="text-align:left">
+                    Metaquery to list all properties with corresponding domains and ranges in Mission Execution Ontology (MEO).
+                </td>
+            </tr>
+            <tr id="MissionQuery_01_GoalBranches">
+                <td style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#MissionQuery_01_GoalBranches">&#128278;</a>
+                </td>
+                <th style="text-align:left">
+                    <a href="queries/MissionQuery_01_GoalBranches.rq">MissionQuery_01_GoalBranches.rq</a>
+                </th>
+                <td style="text-align:center">
+                    <a href="queries/SailorOverboardConverted.MissionQuery_01_GoalBranches.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/LifeboatTrackingConverted.MissionQuery_01_GoalBranches.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_01_GoalBranches.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.MissionQuery_01_GoalBranches.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.MissionQuery_01_GoalBranches.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:left">
+                    Query to list all Goals with corresponding description information and branching logic..
+                </td>
+            </tr>
+            <tr id="MissionQuery_02_InitialGoal">
+                <td style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#MissionQuery_02_InitialGoal">&#128278;</a>
+                </td>
+                <th style="text-align:left">
+                    <a href="queries/MissionQuery_02_InitialGoal.rq">MissionQuery_02_InitialGoal.rq</a>
+                </th>
+                <td style="text-align:center">
+                    <a href="queries/SailorOverboardConverted.MissionQuery_02_InitialGoal.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/LifeboatTrackingConverted.MissionQuery_02_InitialGoal.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_02_InitialGoal.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.MissionQuery_02_InitialGoal.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.MissionQuery_02_InitialGoal.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:left">
+                   Query Mission to find initial Goal that it startsWith.
+                </td>
+            </tr>
+            <tr id="MissionQuery_03_GoalFollowsItself">
+                <td style="text-align:center">
+                    <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+                    <a href="#MissionQuery_03_GoalFollowsItself">&#128278;</a>
+                </td>
+                <th style="text-align:left">
+                    <a href="queries/MissionQuery_03_GoalFollowsItself.rq">MissionQuery_03_GoalFollowsItself.rq</a>
+                </th>
+                <td style="text-align:center">
+                    <a href="queries/SailorOverboardConverted.MissionQuery_03_GoalFollowsItself.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/LifeboatTrackingConverted.MissionQuery_03_GoalFollowsItself.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_03_GoalFollowsItself.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy2.Defender.SenseDecideActConverted.MissionQuery_03_GoalFollowsItself.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:center">
+                    <a href="queries/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.MissionQuery_03_GoalFollowsItself.rq.txt">query<br />response</a>
+                </td>
+                <td style="text-align:left">
+                    Find Goal individuals that follow themselves, potentially creating loops in the Goal tree.
+                    Requires active reasoner.
+                </td>
+            </tr>
+        </table>
+                
+        <p>
+            <a href="https://Savage.nps.edu/developers.html#Ant" title="Ant" alt="Ant" target="_blank">Ant</a>
+            is invoked via
+            <a href="build.xml" target="_blank">build.xml</a>
+            targets to perform all queries.
+            The test framework is sufficiently mature that addition of new diagnostic queries is relatively straightforward.
+        </p>
+        
+        <p>
+            Log file 
+            <a href="build.all.log.txt" target="_blank">build.all.log.txt</a>
+            is maintained as a log of all conversions, queries and responses
+            Tracking
+            <a href="https://gitlab.nps.edu/Savage/EthicalControl/blob/master/build.all.log.txt" target="_blank">version control</a>
+            history for all assets is an excellent form of regression testing to confirm that
+            corrections and improvements are confirmable in future builds.
+        </p>
+        
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Resources">&#128278;</a>
+            <a name="Resources">Resources</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        <p>
+            The 
+            <a href="https://Savage.nps.edu/developers.html" title="configuration information" alt="configuration information" target="_blank">Savage Developers Guide</a>
+            describes how to install and configure commonly used software-development tools
+            Ant, Java, Netbeans and XMLSpy.
+        </p>
+        <p>
+            Additional tools include the following.
+        </p>
+        <ul>
+                        <li>
+                <a href="https://franz.com/products/allegro-common-lisp" target="_blank">Allegro Common Lisp</a>
+                by Franz&nbsp;Inc. is a development system for both Lisp and also
+                <a href="https://franz.com/support/tech_corner/prolog-071504.lhtml" target="_blank">Prolog</a>
+                with a free edition available.
+            </li>
+            <li>
+                <a href="https://jena.apache.org/documentation/query" target="_blank">Apache ARQ</a>
+                is an open-source query engine for SPARQL.
+            </li>
+            <li>
+                <a href="https://common-lisp.net/project/armedbear" target="_blank">Armed Bear Common List (ABCL)</a>
+                 is a full implementation of the Common Lisp language, written in open-source Java and
+                 runnable via both command line and Ant.
+            </li>
+            <li>
+                <a href="https://protege.stanford.edu" target="_blank">Prot&eacute;g&eacute;</a>
+                is a free, open-source ontology editor and framework for building intelligent systems.
+            </li>
+            <li>
+                <a href="http://www.gprolog.org" target="_blank">GNU Prolog</a>
+                is a free open-source compiler for the ISO-standard Prolog programming language.
+            </li>
+            <li>
+                <a href="https://robot.obolibrary.org" target="_blank">ROBOT is an OBO Tool (ROBOT)</a>
+          (with <a href="https://github.com/rctauber/robot-tutorial" target="_blank">tutorial</a>)
+                is a free open-source command-line tool for working with Semantic Web languages.
+            </li>
+        </ul>
+
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Visualization">&#128278;</a>
+            <a name="Visualization">Visualization</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+
+        <p>
+            We are also working to show visualization capabilities using the
+            <a href="https://savage.nps.edu/AuvWorkbench" target="_blank">AUV Workbench</a>
+            so that human operators might rehearse and replay missions for meaningful assessment.
+            Initial exemplar follows.
+        </p>
+        <p>
+            <a href="documentation/images/AuvWorkbenchDemoModeMEAMission2020March7.jpg" target="_blank"><img width="600px" src="documentation/images/AuvWorkbenchDemoModeMEAMission2020March7.jpg" border="1" title="AUV Workbench simulation" alt="AUV Workbench simulation"/></a>
+        </p>
+        
+        <h3>How can we rapidly test missions and visualize their progress?</h3>
+        <ul>
+            <li>
+                <a href="https://savage.nps.edu/AuvWorkbench" target="_blank">AUV Workbench</a>
+                Demo mode resets each goal's Search type to EXPANDINGSQUARE.
+            </li>
+            <li>
+                Slight change in criteria: reaching the center of the goal is sufficient to declare goal success,
+                skipping the actual search.
+            </li>
+            <li>
+                Demo mode thus lets a mission proceed as written in rapid fashion to illustrate decision-tree logic checking.
+            </li>
+        </ul>
+        
+        <h3>Demo: 2D map display above shows</h3>
+        <ul>
+            <li>
+                Green arrows are nextOnSuccess, 
+            </li>
+            <li>
+                Orange arrows are nextOnFailure, 
+            </li>
+            <li>
+                Bolded arrows indicate which of choices was taken during mission conduct. 
+            </li>
+            <li>
+                _S_uccess _F_ailure letters (upper-left panel) also report results of each Goal's conduct.
+            </li>
+        </ul>
+        
+        <h3>Goal-by-goal narrative of completed mission conduct</h3>
+        <ul>
+            <li>
+                [0] Launch from launch position.
+            </li>
+            <li>
+                [6] Avoid first obstacle, next proceed to goalA boundary and then center.
+            </li>
+            <li>
+                [2] Once at center: success goalA (Search), next proceed to goalB boundary and then center.
+            </li>
+            <li>
+                [3] Once at center: success goalB (Sample Environment), next proceed to goalC boundary and then center.
+            </li>
+            <li>
+                [4] Once at center: failure goalC (Search), next proceed to goalD boundary and then center.
+            </li>
+            <li>
+                [5] Immediate failure without transit to goalD (Rendezvous) since capability is declared as not supported by robot controller.
+            </li>
+            <li>
+                [1] Proceed directly to nextOnSuccess Recovery Position, once there finished in terminal state.
+            </li>
+        </ul>
+        
+        <h3>Methodology summary</h3>
+        <ul>
+            <li>
+                Read an AVCL mission document
+            </li>
+            <li>
+                Test decision logic using a virtual Software In The Loop (SITL) robot controller, 
+            </li>
+            <li>
+                Run within an evaluation virtual environment (AUV Workbench).
+            </li>
+            <li>
+                Human evaluators then evaluate proper execution of the AVCL ethical mission,
+                specifically assessing that robot-controller SITL within the AUV Workbench virtual environment.
+            </li>
+        </ul>
+
+        <!-- =========================================================== -->
+
+        <hr />
+
+        <h2>
+            <!-- Unicode Character 'BOOKMARK' (U+1F516) https://www.fileformat.info/info/unicode/char/1f516/index.htm -->
+            <a href="#Contact">&#128278;</a>
+            <a name="Contact">Contact</a>
+             <a href="#">
+                  <!-- width="83" height="100" -->
+                  <img src="documentation/images/SavageLogo.png" width="42" height="50" border="0" title="to top" alt="to top" align="right"/>
+             </a>
+        </h2>
+        
+        <p>
+            Questions, suggestions, additions and comments about this 
+            Ethical Control of Unmanned Systems page are welcome.
+            Please send them to
+            <a href="https://faculty.nps.edu/brutzman" target="_blank">Don&nbsp;Brutzman</a>
+            and
+            <a href="https://nps.edu/faculty-profiles/-/cv/clblais" target="_blank">Curt&nbsp;Blais</a>
+            (email&nbsp;<a href="mailto:brutzman@__nps.edu%20(Don%20Brutzman),clblais@__nps.edu%20(Curt%20Blais),?subject=feedback:%20Ethical%20Control%20of%20Unmanned%20Systems%20"><i>brutzman&nbsp;at&nbsp;nps.edu</i> and <i>clblais&nbsp;at&nbsp;nps.edu</i></a>).
+        </p>
+
+        <p>
+            Master version of this page is available online at
+            <br />
+            <a href="https://savage.nps.edu/EthicalControl" target="_blank">https://savage.nps.edu/EthicalControl</a>
+            and available in
+            <a href="https://gitlab.nps.edu/Savage/EthicalControl" target="_blank">GitLab version control</a>.
+        </p>
+        
+        <p>
+            Updated: 20 March 2022
+        </p>
+    </body>
+</html>

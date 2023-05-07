@@ -1,0 +1,356 @@
+@prefix :     <https://savage.nps.edu/EthicalControl/missions#> .
+@prefix meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/EthicalControl/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/EthicalControl/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:PiratesSeizingMerchantDefense rdf:type owl:NamedIndividual , owl:Thing, meo:Mission ;
+  meo:startsWith :PSMD11.0 ;
+  rdfs:comment "AVCL mission to overtake pirate small-boat gang attempting to capture threatened merchant ship, provide warning and counterattack if escalation of hostilities is warranted." .
+
+:PSMD11.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD12.0 ;
+  meo:hasNextOnFailure :PSMD99.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Launch" ;
+  rdfs:comment "Deploy, Launch: Commit to robot support" .
+
+:PSMD12.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD13.0 ;
+  meo:hasNextOnFailure :PSMD99.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Transit to hostile area: Proceed to estimated position" .
+
+:PSMD13.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD13.1 ;
+  meo:hasNextOnFailure :PSMD21.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Locate Merchant: Use best search pattern, then follow moving ship and boats" .
+
+:PSMD13.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD13.2 ;
+  meo:hasNextOnFailure :PSMD13.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Report position: Alerts updated" .
+
+:PSMD13.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD21.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Mark with Beacon: Monitor wind effects and ocean current" .
+
+:PSMD14.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.1 ;
+  meo:hasNextOnFailure :PSMD14.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Track Merchant: Monitor and communicate" .
+
+:PSMD14.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.2 ;
+  meo:hasNextOnFailure :PSMD14.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Maintain proximity: Beyond range of small arms" .
+
+:PSMD14.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.3 ;
+  meo:hasNextOnFailure :PSMD14.3 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Periodic reports: Situation reports, changing status" .
+
+:PSMD14.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.9 ;
+  meo:hasNextOnFailure :PSMD21.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Continue until further orders: Repeat until conditions change" .
+
+:PSMD14.9 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD30.0 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Check posture changed? Task update received?" .
+
+:PSMD21.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD12.0 ;
+  meo:hasNextOnFailure :PSMD99.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Request Guidance? Need updated position" .
+
+:PSMD22.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD22.1 ;
+  meo:hasNextOnFailure :PSMD22.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Low Fuel: Make best effort possible" .
+
+:PSMD22.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD22.2 ;
+  meo:hasNextOnFailure :PSMD22.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Remain with Merchant? Choices: land on boat, attach to boat, or adrift nearby" .
+
+:PSMD22.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD99.0 ;
+  meo:hasNextOnFailure :PSMD99.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Beacon? While power remains" .
+
+:PSMD30.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD31.0 ;
+  meo:hasNextOnFailure :PSMD31.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Warning Phase: Close interaction with pirates, merchant ship" .
+
+:PSMD31.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD32.0 ;
+  meo:hasNextOnFailure :PSMD32.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Confirm Mission Authorities: Check constraints and defensive responses" .
+
+:PSMD32.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD32.1 ;
+  meo:hasNextOnFailure :PSMD32.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Classify" ;
+  rdfs:comment "IFFNU: Identify Friend Foe Neutral Unknown" .
+
+:PSMD32.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD32.2 ;
+  meo:hasNextOnFailure :PSMD32.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Classify" ;
+  rdfs:comment "Photograph all close contacts: Pass within range of small arms" .
+
+:PSMD32.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD32.3 ;
+  meo:hasNextOnFailure :PSMD32.3 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Classify" ;
+  rdfs:comment "Classify, send contact reports: Based on target behavior or signal/image match" .
+
+:PSMD32.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD33.0 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Classify" ;
+  rdfs:comment "Confirm IFFNU classifications: Requires approval by human commander before proceeding further" .
+
+:PSMD33.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD33.1 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Engagement" ;
+  rdfs:comment "Commence Warnings: May provoke pirate response" .
+
+:PSMD33.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD34.0 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Engagement" ;
+  rdfs:comment "Notify Merchant: Keep crew informed, even if they cannot transmit" .
+
+:PSMD34.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD34.1 ;
+  meo:hasNextOnFailure :PSMD34.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Send Warning Messages: Communicate to pirates, all parties" .
+
+:PSMD34.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD34.2 ;
+  meo:hasNextOnFailure :PSMD34.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Send multiple message paths: Loudspeaker, flashing light, siren, drop smoke, bridge-bridge radio" .
+
+:PSMD34.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD34.3 ;
+  meo:hasNextOnFailure :PSMD34.3 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Maintain proximity: Just outside range of small arms" .
+
+:PSMD34.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD34.4 ;
+  meo:hasNextOnFailure :PSMD34.4 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Periodic reports: Situation reports, changing status" .
+
+:PSMD34.4 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD35.0 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Warning" ;
+  rdfs:comment "Continue until further orders: First repeat for all designated pirates" .
+
+:PSMD35.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD35.1 ;
+  meo:hasNextOnFailure :PSMD35.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Observe pirate response: Monitor and report back to own ship" .
+
+:PSMD35.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD35.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Pirates retreat? Stay with merchant, report if response changes" .
+
+:PSMD35.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD40.0 ;
+  meo:hasNextOnFailure :PSMD35.3 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Pirates attack? Stay with merchant, counterattack if response changes" .
+
+:PSMD35.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD35.4 ;
+  meo:hasNextOnFailure :PSMD35.4 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Maintain proximity: Just outside range of small arms" .
+
+:PSMD35.4 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD35.5 ;
+  meo:hasNextOnFailure :PSMD35.5 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Periodic reports: Situation reports, changing status - note ship may have EMCON radio silence" .
+
+:PSMD35.5 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD36.0 ;
+  meo:hasNextOnFailure :PSMD36.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Continue until further orders: Repeat until conditions change" .
+
+:PSMD36.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD37.0 ;
+  meo:hasNextOnFailure :PSMD35.0 ;
+  meo:hasNextOnException :PSMD14.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Check posture changed? Task update received" .
+
+:PSMD37.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD31.0 ;
+  meo:hasNextOnFailure :PSMD31.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Hostilities Imminent" ;
+  rdfs:comment "Fire Warning Shot: Warning shots remain an available option for human commanders. Lethal force is authorized." .
+
+:PSMD40.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD41.0 ;
+  meo:hasNextOnFailure :PSMD41.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Attack: Close interaction with pirates, merchant ship" .
+
+:PSMD41.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD41.1 ;
+  meo:hasNextOnFailure :PSMD41.1 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Attack Pirate Boats in priority order: Rapidly engage, shoot to disable or kill. Lethal force still authorized." .
+
+:PSMD41.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD41.2 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Pirates retreat? Stay with merchant, report if response changes" .
+
+:PSMD41.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD41.3 ;
+  meo:hasNextOnFailure :PSMD41.3 ;
+  meo:hasNextOnException :PSMD42.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Pirates attacking? Stay with merchant, counterattack if response changes" .
+
+:PSMD41.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD41.4 ;
+  meo:hasNextOnFailure :PSMD41.4 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Maintain proximity: Just outside range of small arms" .
+
+:PSMD41.4 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD41.5 ;
+  meo:hasNextOnFailure :PSMD41.5 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Periodic reports: Situation reports, changing status - note ship may have EMCON radio silence" .
+
+:PSMD41.5 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD36.0 ;
+  meo:hasNextOnFailure :PSMD36.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Continue until further orders: Repeat until conditions change" .
+
+:PSMD42.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD41.3 ;
+  meo:hasNextOnException :PSMD90.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Low or no ammunition: need to disengage? Hold ammunition in reseve, or else fight to the finish" .
+
+:PSMD43.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD41.0 ;
+  meo:hasNextOnException :PSMD90.0 ;
+  meo:isPartOfPhase "Counter Attack" ;
+  rdfs:comment "Check for guidance, resume tracking or continue attacking? Humans monitoring attack can interrupt or override" .
+
+:PSMD90.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD14.0 ;
+  meo:hasNextOnFailure :PSMD14.0 ;
+  meo:hasNextOnException :PSMD99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Check relieved by other asset: Continue tracking merchant unless further task update recieved" .
+
+:PSMD99.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :PSMD99.1 ;
+  meo:hasNextOnFailure :PSMD99.2 ;
+  meo:hasNextOnException :PSMD99.3 ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Proceed to recovery: Mission complete, prepare for pickup" .
+
+:PSMD99.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and prepare for recovery: Operations completed, final success state" .
+
+:PSMD99.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and deploy recovery beacon: Unable to operate, final failure state" .
+
+:PSMD99.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and await further orders: Unplanned failure, final exception state" .
+

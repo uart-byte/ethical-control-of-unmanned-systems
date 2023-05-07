@@ -1,0 +1,61 @@
+Perform Mission Execution Ontology query queries/MissionQuery_01_GoalBranches.rq
+  using turtle form of AVCL mission      missions/turtle/SailorOverboardConverted.ttl
+  to produce output log file             queries/SailorOverboardConverted.MissionQuery_01_GoalBranches.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_01_GoalBranches.rq
+# Query to list all Goals with corresponding description information and branching logic.
+
+###############################################
+
+SELECT ?goal ?nextOnSuccess ?nextOnFailure ?nextOnException ?isPartOfPhase ?description # ?GoalFound ?phase
+
+WHERE
+{ 
+    ?goal   a meo:Goal ;           # Shorthand expression: a = rdf:type
+            rdfs:comment           ?description ;
+            meo:isPartOfPhase      ?isPartOfPhase .
+
+    OPTIONAL                       # provide results even when no value is provided (by terminal goals)
+    {
+    ?goal   meo:hasNextOnSuccess   ?nextOnSuccess .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnFailure   ?nextOnFailure .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnException ?nextOnException .
+    }
+    # https://stackoverflow.com/questions/11234371/sparql-query-results-without-namespace
+#   BIND (strafter(xsd:string(?goal),"#")            AS ?GoalFound)
+#   BIND (strafter(xsd:string(?nextOnSuccess),"#")   AS ?GoalNextOnSuccess)
+#   BIND (strafter(xsd:string(?nextOnFailure),"#")   AS ?GoalNextOnFailure)
+#   BIND (strafter(xsd:string(?nextOnException),"#") AS ?GoalNextOnException)
+#   BIND (coalesce(?isPartOfPhase,"")                AS ?phase)
+}
+ORDER BY (?goal) # alphanumeric order results in order given by each name
+###############################################
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| goal   | nextOnSuccess | nextOnFailure | nextOnException | isPartOfPhase    | description                                                                              |
+==========================================================================================================================================================================
+| :Goal1 | :Goal2        | :Goal7        | :Goal8          | "Launch"         | "Deploy, Launch: Sailor Overboard Immediate Action"                                      |
+| :Goal2 | :Goal4        | :Goal3        | :Goal5          | "Locate"         | "Rendezvous with Sailor: Go directly to best known location"                             |
+| :Goal3 | :Goal4        | :Goal5        | :Goal5          | "Locate"         | "Search for Sailor: Sailor position not known, intermittent"                             |
+| :Goal4 | :Goal5        | :Goal5        | :Goal5          | "Track"          | "Track Sailor afloat until safe: Watch closely, not to interfere with rescue operations" |
+| :Goal5 | :Goal6        | :Goal7        | :Goal8          | "Mission Finish" | "Proceed to Recovery: Mission complete, prepare for pickup"                              |
+| :Goal6 |               |               |                 | "Recover Robot"  | "Halt and prepare for recovery: Operations complete, final success state"                |
+| :Goal7 |               |               |                 | "Recover Robot"  | "Halt and deploy recovery beacon: Unable to continue, final failure state"               |
+| :Goal8 |               |               |                 | "Recover Robot"  | "Halt and await further orders: Unexpected problem, final exception state"               |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------

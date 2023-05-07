@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" vehicleName="Unit in defensive swarm" vehicleType="UAV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/AVCL.3.1.xsd">
+	<head>
+		<meta name="title" content="HospitalShipEmDecoy2.Defender.SenseDecideAct.xml"/>
+		<meta name="description" content="AVCL mission where immediate reaction using Sense-Decide-Act cycle results in blue-on-blue robot swarm attack and unintended war crime."/>
+		<meta name="created" content="1 January 2020"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyRobotResponses.png"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyOpponentActions.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/HospitalShipEmDecoy2.Defender.SenseDecideAct.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<MissionDefinition description="Immediate reaction using Sense-Decide-Act cycle results in blue-on-blue war crime.">
+			<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>
+			<AgendaMission>
+				<GoalList>
+					<Goal id="HSEMD.reflex.11" title="Attack Response Thresholds Set" description="Signal strength needed for close-proximity activation" phase="Configure" nextOnSuccess="HSEMD.reflex.12" nextOnFailure="HSEMD.reflex.12" nextOnException="HSEMD.reflex.99.0">
+						<!-- Configuration -->
+						<OperatingArea id="AssignedOpArea">
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+					</Goal>
+					<Goal id="HSEMD.reflex.12" title="Enable Robot Swarm" description="Close-in weapon system activated" phase="Configure" nextOnSuccess="HSEMD.reflex.13" nextOnException="HSEMD.reflex.99.0">
+						<!-- Configuration -->
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.reflex.13" title="Threat Signals Received" description="Above response threshold" phase="Sense" nextOnSuccess="HSEMD.reflex.14" nextOnException="HSEMD.reflex.99.0">
+						<MonitorTransmissions title="Listening for EM threats"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.reflex.14" title="Move to Threat" description="Group response" phase="Decide" nextOnSuccess="HSEMD.reflex.17" nextOnException="HSEMD.reflex.99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="103" description="Hospital Ship"/>
+							<!--
+							<TargetVehicleID value="100" description="Launching ship"/>
+							<TargetVehicleID value="102" description="Opponent Ship"/>
+							-->
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.reflex.17" title="Robot Swarm Counterattack" description="Lethal force authorized" phase="Act" nextOnSuccess="HSEMD.reflex.99.0" nextOnException="HSEMD.reflex.99.0">
+						<Attack description="Reactive attack against EM signal source"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<!--Unauthorized attack results in hospital ship damaged, sunk-->
+					<!--Group 99 has common objective: Global Default Exception and terminal state-->
+					<Goal id="HSEMD.reflex.99.0" title="Proceed to recovery" description="Mission complete, prepare for pickup. Terminal condition." phase="Robot Recovery"/>
+				</GoalList>
+			</AgendaMission>
+		</MissionDefinition>
+	</body>
+</AVCL>

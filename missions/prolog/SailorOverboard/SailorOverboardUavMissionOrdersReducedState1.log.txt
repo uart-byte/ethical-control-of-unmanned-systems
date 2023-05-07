@@ -1,0 +1,218 @@
+;Results from running code in Allegro Debug Pane,
+
+CG-USER(1): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(2): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(3): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(4): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(5): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(6): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(7): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(8): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(9): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(10): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(11): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(12): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(13): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(14): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(15): (run) .
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(16): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(17): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(18): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.
+CG-USER(19): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Vehicle recovered.
+Yes
+No.
+CG-USER(20): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Vehicle lost.
+Yes
+No.
+CG-USER(21): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Awaiting orders.
+Yes
+No.

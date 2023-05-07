@@ -1,0 +1,139 @@
+@prefix :     <https://savage.nps.edu/EthicalControl/missions#> .
+@prefix meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/EthicalControl/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/EthicalControl/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:LifeboatTracking rdf:type owl:NamedIndividual , owl:Thing, meo:Mission ;
+  meo:startsWith :LBT1.0 ;
+  rdfs:comment "AVCL mission to provide remote presence for locating, tracking, communications and beaconing an adrift lifeboat." .
+
+:LBT1.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT2.0 ;
+  meo:hasNextOnFailure :LBT99.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Launch" ;
+  rdfs:comment "Deploy, Launch: Commit to robot support" .
+
+:LBT2.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT3.0 ;
+  meo:hasNextOnFailure :LBT99.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Transit to search area: Proceed to estimated position" .
+
+:LBT3.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT3.1 ;
+  meo:hasNextOnFailure :LBT2.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Locate" ;
+  rdfs:comment "Locate Lifeboat: Follow best search pattern" .
+
+:LBT3.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT3.2 ;
+  meo:hasNextOnFailure :LBT4.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Locate" ;
+  rdfs:comment "Report position: Alerts updated" .
+
+:LBT3.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT4.0 ;
+  meo:hasNextOnFailure :LBT4.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Locate" ;
+  rdfs:comment "Mark with Beacon: Monitor wind effects and ocean current" .
+
+:LBT4.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT4.1 ;
+  meo:hasNextOnFailure :LBT4.1 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Track Lifeboat: Monitor and communicate" .
+
+:LBT4.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT4.2 ;
+  meo:hasNextOnFailure :LBT4.2 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Maintain proximity: Overhead or afloat nearby" .
+
+:LBT4.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT4.3 ;
+  meo:hasNextOnFailure :LBT4.3 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Periodic reports: Popup or float to report, also recharge" .
+
+:LBT4.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT5.0 ;
+  meo:hasNextOnFailure :LBT7.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Track" ;
+  rdfs:comment "Continue: Repeat until conditions change" .
+
+:LBT5.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT99.0 ;
+  meo:hasNextOnFailure :LBT4.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Check relieved by other asset: Task update received?" .
+
+:LBT6.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT6.1 ;
+  meo:hasNextOnFailure :LBT6.1 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Low Fuel: Make best effort possible" .
+
+:LBT6.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT6.2 ;
+  meo:hasNextOnFailure :LBT6.2 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Remain with lifeboat? Choices: land on boat, attach to boat, or adrift nearby" .
+
+:LBT6.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT99.0 ;
+  meo:hasNextOnFailure :LBT99.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Mission Finish" ;
+  rdfs:comment "Beacon? While power remains" .
+
+:LBT7.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT2.0 ;
+  meo:hasNextOnFailure :LBT99.0 ;
+  meo:hasNextOnException :LBT99.0 ;
+  meo:isPartOfPhase "Transit" ;
+  rdfs:comment "Request Guidance? Need updated position" .
+
+:LBT99.0 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :LBT99.1 ;
+  meo:hasNextOnFailure :LBT99.2 ;
+  meo:hasNextOnException :LBT99.3 ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Proceed to recovery: Mission complete, prepare for pickup" .
+
+:LBT99.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and prepare for recovery: Operations completed, final success state" .
+
+:LBT99.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and deploy recovery beacon: Unable to operate, final failure state" .
+
+:LBT99.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "Recover Robot" ;
+  rdfs:comment "Halt and await further orders: Unplanned failure, final exception state" .
+

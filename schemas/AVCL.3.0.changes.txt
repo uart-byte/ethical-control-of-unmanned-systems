@@ -1,0 +1,43 @@
+AVCL Schema
+
+TODO
+- AVCL/@vehicleName should not be required
+- Avcl3ToAvcl2.xslt converter
+
+Fixed
+- renamed markElementType to markTargetElementType
+
+Changes
+- allow refid and empty content in Goal elements for reusability of goals
+- Empty Goal child elements allowed for reusability
+- markerType enumerations: acousticPinger, acousticScan, dyeMarker,
+	emPinger, emScan, infrared, laser, photograph, smoke, transponder
+- add phase attribute to goals
+- rename nextOnSucceed to nextOnSuccess
+- rename nextOnFail to nextOnFailure
+
+Consider
+- additional Goal types
+- further definitions of constraints
+- further definitions of conditionals
+- should initial Goal for mission be explicitly defined, since they can be in any order?  Can there be more than one?
+
+Avoided
+- default exception not designated, possibly too prone to catastrophic mission error
+  unless fallback protections provided.  For now, diagnose missing exception as part
+  of AvclToTurtle.xslt diagnostics.
+
+Mission Execution Ontology (MEO) corresponding to AVCL Schema
+- hasNextOnViolate to hasNextOnException (matching AVCL nextOnException)
+TODO 
+- add Goal property isTerminal (nextOnSuccess, nextOnFailure, nextOnException not defined)
+- confusing definition for hasNext, inconsistent with hasNextOnSuccess/Failure/Exception.
+  possible alternative is hasPreceding/hasFollowing, but that is likely better for actual execution sequences.
+
+###  https://www.nps.edu/ontologies/MissionExecutionOntology#hasNext
+meo:hasNext rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf meo:isFollowedBy ;
+            rdf:type owl:IrreflexiveProperty ;
+            rdfs:domain meo:Goal ;
+            rdfs:range meo:Goal ;
+            rdfs:comment "Goal 'B' is the next goal for Goal 'A' when 'A' directly precedes 'A' in the Mission goal tree. This property is  irreflexive; a Goal cannot return to itself (a weak form of Rule G7)." .

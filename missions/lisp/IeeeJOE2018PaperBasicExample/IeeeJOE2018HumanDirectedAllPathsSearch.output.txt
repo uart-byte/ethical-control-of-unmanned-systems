@@ -1,0 +1,69 @@
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current optimization settings evaluate
+;; (EXPLAIN-COMPILER-SETTINGS).
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+CG-USER(1):
+; Autoloading for ACL-SOCKET:MAKE-SSL-CLIENT-STREAM:
+; Fast loading C:\acl10.1express-new\code\ssl.002
+;;; Installing ssl patch, version 2.
+;   Foreign loading libeay32.dll.
+;   Foreign loading ssleay32.dll.
+;   Foreign loading sys:aclissl.dll.
+; Fast loading
+;    C:\acl10.1express-new\2020 Code\Lisp 2018 Mission All Paths\New Exhaustive Testing and Execution of 2018 JOE Mission.fasl
+CG-USER(1): (start)
+READY
+CG-USER(2): (all-paths)
+DONE
+CG-USER(3): (save-results)
+(PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4 ...)
+CG-USER(4): (pprint *all-algorithmic-paths*)
+
+((PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4
+  "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4
+  "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4
+  "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4
+  "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4
+  "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4
+  "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4
+  "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4
+  "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4
+  "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception."
+  PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure."
+  PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success."
+  PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5))
+CG-USER(5): *all-human-directed-paths*
+((X X) (X F) (X S) (F X X) (F X F) (F X S) (F F X) (F F F) (F F S) (F S X) ...)
+CG-USER(6): (pprint *all-human-directed-paths*)
+
+((X X) (X F) (X S) (F X X) (F X F) (F X S) (F F X) (F F F) (F F S) (F S X) (F S F) (F S S) (S X X) (S X F) (S X S) (S F)
+ (S S X X) (S S X F) (S S X S) (S S F X) (S S F F) (S S F S) (S S S X) (S S S F) (S S S S))
+CG-USER(7): (pprint (reverse *all-human-directed-paths*))
+
+((S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X) (S F) (S X S) (S X F) (S X X) (F S S)
+ (F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X) (X S) (X F) (X X))

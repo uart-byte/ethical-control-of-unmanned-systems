@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" vehicleName="Unit in defensive swarm" vehicleType="UAV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/AVCL.3.1.xsd">
+	<head>
+		<meta name="title" content="HospitalShipEmDecoy3.Defender.EthicalControlOODA.xml"/>
+		<meta name="description" content="AVCL mission where Orient-Observe-Decide-Act (OODA) loop tactics and Ethical Control constraints prevent automatic erroneous counterattack against 'false flag' placed on friendly ship, and thus improves defense."/>
+		<meta name="created" content="1 January 2020"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://en.wikipedia.org/wiki/False_flag"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyRobotResponses.png"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyOpponentActions.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/HospitalShipEmDecoy3.Defender.EthicalControlOODA.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<MissionDefinition description="Ethical Control constraints prevent automatic counterattack, accelerates defense.">
+			<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>
+			<AgendaMission>
+				<GoalList>
+					<Goal id="HSEMD.OODA.21" title="Attack Response Thresholds Set" description="Signal strength needed for close-proximity activation" phase="Configure" nextOnSuccess="HSEMD.OODA.22" nextOnFailure="HSEMD.OODA.22" nextOnException="HSEMD.OODA.99.0">
+						<!-- Configuration -->
+						<OperatingArea id="AssignedOpArea">
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+					</Goal>
+					<Goal id="HSEMD.OODA.22" title="Enable Robot Swarm" description="Close-in weapon system activated" phase="Configure" nextOnSuccess="HSEMD.OODA.23" nextOnException="HSEMD.OODA.99.0">
+						<!-- Configuration -->
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.23" title="Threat Signals Received" description="Above response threshold" phase="Observe" nextOnSuccess="HSEMD.OODA.24" nextOnException="HSEMD.OODA.99.0">
+						<MonitorTransmissions title="Listening for EM threats"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.24" title="Move to Threat" description="Group response" phase="Orient" nextOnSuccess="HSEMD.OODA.27" nextOnException="HSEMD.OODA.99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="103" description="Hospital Ship"/>
+							<!--
+							<TargetVehicleID value="100" description="Launching ship"/>
+							<TargetVehicleID value="102" description="Opponent Ship"/>
+							-->
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.25" title="IFFNU" description="Identify Friend Foe Neutral Unknown" phase="Orient" nextOnSuccess="HSEMD.OODA.26" nextOnFailure="HSEMD.OODA.26" nextOnException="HSEMD.OODA.99.0">
+						<SampleEnvironment description="Check local conditions and all entities in operational area"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.26" title="Confirm In-Port Counterattack?" description="Rapid-response human checkpoint" phase="Decide" nextOnSuccess="HSEMD.OODA.27" nextOnFailure="HSEMD.OODA.36" nextOnException="HSEMD.OODA.99.0">
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.27" title="Robot Swarm versus Terrorists" description="Lethal force authorized" phase="Act" nextOnSuccess="HSEMD.OODA.99.0" nextOnException="HSEMD.OODA.99.0">
+						<Attack description="Terrorist boat stopped, sunk"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.36" title="Hospital Ship Attack Denied" description="Lethal force NOT authorized" phase="Decide" nextOnSuccess="HSEMD.OODA.37" nextOnException="HSEMD.OODA.99.0">
+						<Patrol description="Fall back and regroup"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.OODA.37" title="Search for Intruders" description="All defense forces alerted" phase="Act" nextOnSuccess="HSEMD.OODA.99.0" nextOnException="HSEMD.OODA.99.0">
+						<Search datumType="area" requiredPD="0.5" description="Rapid response, ethical restraint">
+							<Target name="Terrorist Boat" id="TerroristBoat" description="Fleeing or stationary"/>
+						</Search>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!--Ethical Control OODA Orientation IFFNU discriminates friendly from threat-->
+					<!--Group 99 has common objective: Global Default Exception and terminal state-->
+					<Goal id="HSEMD.OODA.99.0" title="Proceed to recovery" description="Mission complete, prepare for pickup. Terminal condition." phase="Robot Recovery"/>
+				</GoalList>
+			</AgendaMission>
+		</MissionDefinition>
+	</body>
+</AVCL>

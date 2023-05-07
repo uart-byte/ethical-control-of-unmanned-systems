@@ -1,0 +1,71 @@
+Perform Mission Execution Ontology query queries/MissionQuery_01_GoalBranches.rq
+  using turtle form of AVCL mission      missions/turtle/LifeboatTrackingConverted.ttl
+  to produce output log file             queries/LifeboatTrackingConverted.MissionQuery_01_GoalBranches.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_01_GoalBranches.rq
+# Query to list all Goals with corresponding description information and branching logic.
+
+###############################################
+
+SELECT ?goal ?nextOnSuccess ?nextOnFailure ?nextOnException ?isPartOfPhase ?description # ?GoalFound ?phase
+
+WHERE
+{ 
+    ?goal   a meo:Goal ;           # Shorthand expression: a = rdf:type
+            rdfs:comment           ?description ;
+            meo:isPartOfPhase      ?isPartOfPhase .
+
+    OPTIONAL                       # provide results even when no value is provided (by terminal goals)
+    {
+    ?goal   meo:hasNextOnSuccess   ?nextOnSuccess .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnFailure   ?nextOnFailure .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnException ?nextOnException .
+    }
+    # https://stackoverflow.com/questions/11234371/sparql-query-results-without-namespace
+#   BIND (strafter(xsd:string(?goal),"#")            AS ?GoalFound)
+#   BIND (strafter(xsd:string(?nextOnSuccess),"#")   AS ?GoalNextOnSuccess)
+#   BIND (strafter(xsd:string(?nextOnFailure),"#")   AS ?GoalNextOnFailure)
+#   BIND (strafter(xsd:string(?nextOnException),"#") AS ?GoalNextOnException)
+#   BIND (coalesce(?isPartOfPhase,"")                AS ?phase)
+}
+ORDER BY (?goal) # alphanumeric order results in order given by each name
+###############################################
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| goal     | nextOnSuccess | nextOnFailure | nextOnException | isPartOfPhase    | description                                                                     |
+===================================================================================================================================================================
+| :LBT1.0  | :LBT2.0       | :LBT99.0      | :LBT99.0        | "Launch"         | "Deploy, Launch: Commit to robot support"                                       |
+| :LBT2.0  | :LBT3.0       | :LBT99.0      | :LBT99.0        | "Transit"        | "Transit to search area: Proceed to estimated position"                         |
+| :LBT3.0  | :LBT3.1       | :LBT2.0       | :LBT99.0        | "Locate"         | "Locate Lifeboat: Follow best search pattern"                                   |
+| :LBT3.1  | :LBT3.2       | :LBT4.0       | :LBT99.0        | "Locate"         | "Report position: Alerts updated"                                               |
+| :LBT3.2  | :LBT4.0       | :LBT4.0       | :LBT99.0        | "Locate"         | "Mark with Beacon: Monitor wind effects and ocean current"                      |
+| :LBT4.0  | :LBT4.1       | :LBT4.1       | :LBT99.0        | "Track"          | "Track Lifeboat: Monitor and communicate"                                       |
+| :LBT4.1  | :LBT4.2       | :LBT4.2       | :LBT99.0        | "Track"          | "Maintain proximity: Overhead or afloat nearby"                                 |
+| :LBT4.2  | :LBT4.3       | :LBT4.3       | :LBT99.0        | "Track"          | "Periodic reports: Popup or float to report, also recharge"                     |
+| :LBT4.3  | :LBT5.0       | :LBT7.0       | :LBT99.0        | "Track"          | "Continue: Repeat until conditions change"                                      |
+| :LBT5.0  | :LBT99.0      | :LBT4.0       | :LBT99.0        | "Mission Finish" | "Check relieved by other asset: Task update received?"                          |
+| :LBT6.0  | :LBT6.1       | :LBT6.1       | :LBT99.0        | "Mission Finish" | "Low Fuel: Make best effort possible"                                           |
+| :LBT6.1  | :LBT6.2       | :LBT6.2       | :LBT99.0        | "Mission Finish" | "Remain with lifeboat? Choices: land on boat, attach to boat, or adrift nearby" |
+| :LBT6.2  | :LBT99.0      | :LBT99.0      | :LBT99.0        | "Mission Finish" | "Beacon? While power remains"                                                   |
+| :LBT7.0  | :LBT2.0       | :LBT99.0      | :LBT99.0        | "Transit"        | "Request Guidance? Need updated position"                                       |
+| :LBT99.0 | :LBT99.1      | :LBT99.2      | :LBT99.3        | "Recover Robot"  | "Proceed to recovery: Mission complete, prepare for pickup"                     |
+| :LBT99.1 |               |               |                 | "Recover Robot"  | "Halt and prepare for recovery: Operations completed, final success state"      |
+| :LBT99.2 |               |               |                 | "Recover Robot"  | "Halt and deploy recovery beacon: Unable to operate, final failure state"       |
+| :LBT99.3 |               |               |                 | "Recover Robot"  | "Halt and await further orders: Unplanned failure, final exception state"       |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------

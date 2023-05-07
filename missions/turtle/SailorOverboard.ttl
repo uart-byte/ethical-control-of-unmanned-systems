@@ -1,0 +1,69 @@
+@prefix :     <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions#> .
+@prefix meo:  <https://savage.nps.edu/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:SailorOverboard rdf:type owl:NamedIndividual , owl:Thing ;
+  meo:startsWith :Goal1 ;
+  rdfs:comment "AVCL mission to perform SAILOR OVERBOARD operations, carried out in concert with shipboard emergency procedures." .
+
+:Goal1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :Goal2 ;
+  meo:hasNextOnFailure :Goal2 ;
+  meo:hasNextOnException :Goal5 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Deploy, Launch: Sailor Overboard Immediate Action" .
+
+:Goal2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :Goal4 ;
+  meo:hasNextOnFailure :Goal3 ;
+  meo:hasNextOnException :Goal5 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Rendezvous with Sailor: Go directly to best known location" .
+
+:Goal3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :Goal4 ;
+  meo:hasNextOnFailure :Goal5 ;
+  meo:hasNextOnException :Goal5 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Search for Sailor: Sailor position not known, intermittent" .
+
+:Goal4 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :Goal5 ;
+  meo:hasNextOnFailure :Goal5 ;
+  meo:hasNextOnException :Goal5 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Track Sailor afloat until safe: Watch closely, not to interfere with rescue operations" .
+
+:Goal5 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :Goal6 ;
+  meo:hasNextOnFailure :Goal2 ;
+  meo:hasNextOnException :Goal6 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Proceed to Recovery: Mission complete, prepare for pickup" .
+
+:Goal6 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Halt and prepare for recovery: Operations complete, final success state" .
+
+:Goal7 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Halt and deploy recovery beacon: Unable to continue, final failure state" .
+
+:Goal8 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Halt and await further orders: Unexpected problem, final exception state" .
+

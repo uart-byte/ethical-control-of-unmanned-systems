@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" vehicleName="RescueDrone" vehicleType="UAV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/AVCL.3.1.xsd">
+	<head>
+		<meta name="title" content="LifeboatTracking.xml"/>
+		<meta name="description" content="AVCL mission to provide remote presence for locating, tracking, communications and beaconing an adrift lifeboat."/>
+		<meta name="created" content="26 December 2019"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/LifeboatTrackingMission.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench/"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/LifeboatTracking.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<MissionDefinition description="Provide remote presence for locating, tracking, communications and beaconing to an adrift lifeboat.">
+                	<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>    
+                        <AgendaMission>
+				<LaunchPosition id="LaunchPosition" description="Ship position when robot is launched">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</LaunchPosition>
+				<RecoveryPosition id="RecoveryPosition" description="Ship position when ready to recover robot">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</RecoveryPosition>
+				<GoalList>
+					<!-- Commence operations -->
+					<Goal id="LBT1.0" title="Deploy, Launch" description="Commit to robot support" phase="Launch" nextOnSuccess="LBT2.0" nextOnFailure="LBT99.0" nextOnException="LBT99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea id="AssignedOpArea">
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+						<Duration value="300"/>
+						<ReportingCriteria value="onCommence"/>
+						<ReportingCriteria value="periodic"/>
+						<ReportingCriteria value="statusChanged"/>
+						<ReportingCriteria value="onComplete"/>
+					</Goal>
+					<Goal id="LBT2.0" title="Transit to search area" description="Proceed to estimated position" phase="Transit" nextOnSuccess="LBT3.0" nextOnFailure="LBT99.0" nextOnException="LBT99.0">
+						<Search datumType="point" requiredPD="0.5">
+							<Target name="Sailor in water" id="SailorInWater"/>
+						</Search>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- Group 3 Locate Lifeboat has common objective, exception -->
+					<Goal id="LBT3.0" title="Locate Lifeboat" description="Follow best search pattern" phase="Locate" nextOnSuccess="LBT3.1" nextOnFailure="LBT2.0" nextOnException="LBT99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT3.1" title="Report position" description="Alerts updated" phase="Locate" nextOnSuccess="LBT3.2" nextOnFailure="LBT4.0" nextOnException="LBT99.0">
+						<MonitorTransmissions title="Send initial position report"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT3.2" title="Mark with Beacon" description="Monitor wind effects and ocean current" phase="Locate" nextOnSuccess="LBT4.0" nextOnFailure="LBT4.0" nextOnException="LBT99.0">
+						<MarkTarget description="TODO ensure beacon/pinger in water">
+							<Marker type="dyeMarker"/>
+							<Target name="Lifeboat found" id="LifeboatFound"/>
+						</MarkTarget>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- Group 4 Track Lifeboat has common objective and exception, includes loops-->
+					<Goal id="LBT4.0" title="Track Lifeboat" description="Monitor and communicate" phase="Track" nextOnSuccess="LBT4.1" nextOnException="LBT99.0">
+						<Search datumType="point" requiredPD="0.5" description="Track lifeboat"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT4.1" title="Maintain proximity" description="Overhead or afloat nearby" phase="Track" nextOnSuccess="LBT4.2" nextOnException="LBT99.0">
+						<Rendezvous description="Safe standoff distance">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT4.2" title="Periodic reports" description="Popup or float to report, also recharge" phase="Track" nextOnSuccess="LBT4.3" nextOnException="LBT99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT4.3" title="Continue" description="Repeat until conditions change" phase="Track" nextOnSuccess="LBT5.0" nextOnFailure="LBT7.0" nextOnException="LBT99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+					</Goal>
+					<Goal id="LBT5.0" title="Check relieved by other asset" description="Task update received?" phase="Mission Finish" nextOnSuccess="LBT99.0" nextOnFailure="LBT4.0" nextOnException="LBT99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<!--Branch point: note possible human override checked prior to looping.-->
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- Group 6 Low Fuel has common objective, exception-->
+					<Goal id="LBT6.0" title="Low Fuel" description="Make best effort possible" phase="Mission Finish" nextOnSuccess="LBT6.1" nextOnException="LBT99.0">
+						<Reposition title="Prepare to finish"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT6.1" title="Remain with lifeboat?" description="Choices: land on boat, attach to boat, or adrift nearby" phase="Mission Finish" nextOnSuccess="LBT6.2" nextOnException="LBT99.0">
+						<Rendezvous title="Attach Land or Adrift" description="as close as advisable">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT6.2" title="Beacon?" description="While power remains" phase="Mission Finish" nextOnSuccess="LBT99.0" nextOnFailure="LBT99.0" nextOnException="LBT99.0">
+						<MarkTarget description="TODO ensure beacon/pinger in water">
+							<Marker type="dyeMarker"/>
+							<Target name="Lifeboat last known location" id="LifeboatLastKnownLocation"/>
+						</MarkTarget>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT7.0" title="Request Guidance?" description="Need updated position" phase="Transit" nextOnSuccess="LBT2.0" nextOnFailure="LBT99.0" nextOnException="LBT99.0">
+						<MonitorTransmissions title="Request Guidance" description="Active transmission allowed, subject to EMCON"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- *Recovery Phase*-->
+					<!--Group 99 Recovery has common objective: Global Default Exception and terminal states-->
+					<Goal id="LBT99.0" title="Proceed to recovery" description="Mission complete, prepare for pickup" phase="Recover Robot" nextOnSuccess="LBT99.1" nextOnFailure="LBT99.2" nextOnException="LBT99.3">
+						<Reposition description="Return to ship or other recovery point"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="LBT99.1" title="Halt and prepare for recovery" description="Operations completed, final success state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+					<Goal id="LBT99.2" title="Halt and deploy recovery beacon" description="Unable to operate, final failure state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+					<Goal id="LBT99.3" title="Halt and await further orders" description="Unplanned failure, final exception state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+				</GoalList>
+			</AgendaMission>
+		</MissionDefinition>
+	</body>
+</AVCL>

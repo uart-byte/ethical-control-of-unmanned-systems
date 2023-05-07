@@ -1,0 +1,38 @@
+RESULTS
+
+CG-USER(1): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+NIL
+CG-USER(2): (run)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+NIL
+CG-USER(3): (repeat)
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and await further orders!
+NIL
+CG-USER(4): (refine-last-command)
+Choose Tube and Launch!
+Did goal succeed (s), fail (f), or abort (x)?s
+Enter Water and Get GPS Fix!
+Did goal succeed (s), fail (f), or abort (x)?s
+Descend to Search Depth!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+NIL

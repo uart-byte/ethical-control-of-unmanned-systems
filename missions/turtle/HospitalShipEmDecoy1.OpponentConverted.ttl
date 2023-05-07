@@ -1,0 +1,68 @@
+@prefix :     <https://savage.nps.edu/EthicalControl/missions#> .
+@prefix meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml:  <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+@base <https://savage.nps.edu/EthicalControl/missions> . # TODO why is "missions/" appended?
+
+### Import base ontology
+<https://savage.nps.edu/EthicalControl/missions> rdf:type owl:Ontology ;
+owl:imports <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:HospitalShipEmDecoy1.Opponent rdf:type owl:NamedIndividual , owl:Thing, meo:Mission ;
+  meo:startsWith :HSEMD.Foe.1 ;
+  rdfs:comment "AVCL mission where foe plants false flag electromagnetic (EM) decoy devices to provoke blue-on-blue robot swarm attack" .
+
+:HSEMD.Foe.1 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.2 ;
+  meo:hasNextOnFailure :HSEMD.Foe.2 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Search, Observe: Find ship, surveil for weaknesses" .
+
+:HSEMD.Foe.2 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.3 ;
+  meo:hasNextOnFailure :HSEMD.Foe.3 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Assess, approach: Surreptitious entry, harbor or anchorage" .
+
+:HSEMD.Foe.3 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.4 ;
+  meo:hasNextOnFailure :HSEMD.Foe.4 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Covertly Board: EM spoofing devices attached to topside" .
+
+:HSEMD.Foe.4 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.5 ;
+  meo:hasNextOnFailure :HSEMD.Foe.5 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Standoff, Observe: Fall back to safe vantage point" .
+
+:HSEMD.Foe.5 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.6 ;
+  meo:hasNextOnFailure :HSEMD.Foe.6 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Initiate Fake Attack: Light off false EM spoofing signals" .
+
+:HSEMD.Foe.6 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:hasNextOnSuccess :HSEMD.Foe.7 ;
+  meo:hasNextOnFailure :HSEMD.Foe.7 ;
+  meo:hasNextOnException :HSEMD.Foe.7 ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Observe Reaction: Monitor response, assess damage" .
+
+:HSEMD.Foe.7 rdf:type owl:NamedIndividual , owl:Thing , meo:Goal ;
+  meo:isPartOfPhase "'undefined'" ;
+  rdfs:comment "Evade, Escape: Avoid detection, depart locale - Terminal condition" .
+

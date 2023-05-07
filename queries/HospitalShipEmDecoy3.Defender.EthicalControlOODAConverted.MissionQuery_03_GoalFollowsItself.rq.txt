@@ -1,0 +1,32 @@
+Perform Mission Execution Ontology query queries/MissionQuery_03_GoalFollowsItself.rq
+  using turtle form of AVCL mission      missions/turtle/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.ttl
+  to produce output log file             queries/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.MissionQuery_03_GoalFollowsItself.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/EthicalControl/missions> 
+
+# MissionQuery_03_GoalFollowsItself.rq
+# Find Goal instances that follow themselves, potentially creating loops in the Goal tree.
+# TODO configure ARQ to include reasoner, and turn it on, for proper operation of this query.
+# TODO future query will further check whether looping preconditions are met, preventing deadlock.
+
+SELECT ?loopingGoal
+
+WHERE
+{
+	?loopingGoal meo:isFollowedBy ?loopingGoal .
+}
+ORDER BY ?loopingGoal
+
+---------------
+| loopingGoal |
+===============
+---------------

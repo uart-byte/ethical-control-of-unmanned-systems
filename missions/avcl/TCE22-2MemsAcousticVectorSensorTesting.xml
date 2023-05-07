@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\x-nps-gitlab\EthicalControl\schemas/AVCL.3.1.xsd">
+	<!-- xsi:noNamespaceSchemaLocation="C:\x-nps-gitlab\EthicalControl\schemas/AVCL.3.1.xsd" -->
+	<!-- xsi:noNamespaceSchemaLocation="https://savage.nps.edu/EthicalControl/schemas/AVCL.3.1.xsd" -->
+	<head>
+		<meta name="title" content="TCE22-2MemsAcousticVectorSensorTesting.xml"/>
+		<meta name="description" content="NPS MEMS Acoustic Sensor TCE mission.  Participation Plan and Objectives. OBJ 1: Evaluate performance of MEMS acoustic vector sensor for detecting underwater and aerial vehicles or targets.Record acoustic signature of several sources (eg.UUVs, ROVs, Boats, UAVs, UAS, etc.). OBJ 2: Evaluate the capability of determining bearing to targets and how accurate are the bearings. Compare sensor provided bearings with the actual (controlled experiments).  OBJ 3: Evaluate the survivability of the sensors in the field (Air and Underwater)."/>
+		<meta name="created" content="23 July 2022"/>
+		<meta name="modified" content="6 August 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://www.darleydefense.com/r80d-skyraider"/>
+		<meta name="reference" content="SubUAS Naviator https://thenaviator.com"/>
+		<meta name="reference" content="Camp Pendleton Boat Basin"/>
+		<!-- https://map.openseamap.org/?zoom=17&lat=33.21657&lon=-117.40033&layers=BFTFFFFFFTF0FFFFFFFFFF -->
+		<meta name="reference" content="https://wiki.openstreetmap.org/wiki/KML"/>
+		<meta name="reference" content="https://wiki.openstreetmap.org/wiki/UMap/Guide"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/TCE22-2MemsAcousticVectorSensorTesting.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<UnitsOfMeasure distance="yards" angle="degrees" mass="kilograms" time="seconds"/>
+		<!-- TODO Vehicle vehicleName="Naviator" vehicleType="UAV,UUV" -->
+		<MissionAgenda description=".">
+			<GoalList>
+				<Goal id="Goal1" title="Deploy, Launch" description="Launch robot" phase="Launch" nextOnSuccess="Goal2" nextOnFailure="Goal99" nextOnException="Goal99">
+					<Reposition description="Leave dock, proceed to basin"/>
+					<!-- TODO generic Risk needed for personnel clear
+					<Risk riskName="Personnel clear" mitigation="visual confirmation" mandatory="true"/> -->
+				</Goal>
+				<Goal id="Goal2" title="Perform racetrack in Delmar Boat Basin" description="Provide acoustic signals to MEMS sensor" phase="Airborne Patrol Phase" nextOnSuccess="Goal3" nextOnFailure="Goal99" nextOnException="Goal99">
+					<Search datumType="area" requiredPD="0.5">
+						<Target name="Orbit using long rectangular track" id="Racetrack"/>
+					</Search>
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+					<Duration value="6000"/>
+				</Goal>
+				<Goal id="Goal3" title="Perform racetrack in Delmar Boat Basin" description="Provide acoustic signals to MEMS sensor" phase="Submerged Patrol Phase" nextOnSuccess="Goal99" nextOnFailure="Goal99" nextOnException="Goal99">
+					<Search datumType="area" requiredPD="0.5">
+						<Target name="Orbit using long rectangular track" refid="Racetrack"/>
+					</Search>
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+					<Duration value="6000"/>
+				</Goal>
+				<Goal id="Goal99" title="Return and recover" description="Retrieve if possible" phase="Recover Robot" nextOnSuccess="Goal99.1_TerminalSuccess" nextOnFailure="Goal99.2_TerminalFailute" nextOnException="Goal99.3_TerminalFailure">
+					<!-- TODO generic Risk needed for personnel clear
+					<Risk riskName="Personnel clear" mitigation="visual confirmation" mandatory="true"/> -->
+				</Goal>
+				<Goal id="Goal99.1_TerminalSuccess" title="Halt and perform post-mission shutdown" phase="Recover Robot" description="Operations complete, final success state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+				<Goal id="Goal99.2_TerminalFailute" title="Halt and activate recovery beacon" phase="Recover Robot" description="Unable to continue, final failure state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+				<Goal id="Goal99.3_TerminalFailure" title="Halt and await further orders" phase="Recover Robot" description="Unexpected problem, final exception state">
+					<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+				</Goal>
+			</GoalList>
+			<LaunchPosition id="LaunchPosition" description="Ship position when robot is launched">
+				<LatitudeLongitude id="MemsStation" latitude="N33°12.889'" longitude="W117°23.915'"/>
+			</LaunchPosition>
+			<RecoveryPosition id="RecoveryPosition" description="Ship position when ready to recover robot">
+				<!-- TODO refid="MemsStation" not working since latitude, longitude are required attributes -->
+				<LatitudeLongitude id="MemsStation2" latitude="N33°12.889'" longitude="W117°23.915'"/>
+			</RecoveryPosition>
+		</MissionAgenda>
+		<!-- TODO represent concurrent operation: MEMS sensor on dock, recording data -->
+		<OperatingArea id="NpsMemsOperatingArea" description="Approximate rectangle, corner points from OpenStreetMap">
+			<urlMap>https://map.openseamap.org/?zoom=17&amp;lat=33.21657&amp;lon=-117.40033&amp;layers=BFTFFFFFFTF0FFFFFFFFFF</urlMap>
+			<!-- ampersands escaped as &amp; in XML source  files-->
+			<!-- URI normalization https://en.wikipedia.org/wiki/URI_normalization -->
+			<Polygon>
+				<LatitudeLongitude id="MemsSW" description="Mems SW corner" latitude="N33°12.886'" longitude="W117°23.933'"/>
+				<LatitudeLongitude id="MemsNW" description="Mems NW corner" latitude="N33°12.922'" longitude="W117°23.953'"/>
+				<LatitudeLongitude id="MemsNE" description="Mems NE corner" latitude="N33°12.965'" longitude="W117°23.873'"/>
+				<LatitudeLongitude id="MemsSE" description="Mems SE corner" latitude="N33°12.931'" longitude="W117°23.844'"/>
+			</Polygon>
+		</OperatingArea>
+	</body>
+</AVCL>

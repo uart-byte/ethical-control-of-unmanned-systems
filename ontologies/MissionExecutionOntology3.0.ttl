@@ -1,0 +1,763 @@
+@prefix : <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+@prefix meo: <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> .
+
+<https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#accomplishes
+meo:accomplishes rdf:type owl:ObjectProperty ;
+                 rdfs:domain meo:EndCondition ;
+                 rdfs:range meo:IntendedOutcome ;
+                 rdfs:comment "The identified EndCondition must be accomplished to satisfy the identified IntendedOutcome." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canAchieve
+meo:canAchieve rdf:type owl:ObjectProperty ;
+               rdfs:domain meo:Vehicle ;
+               rdfs:range meo:IntendedOutcome ;
+               owl:propertyChainAxiom ( meo:hasFeature
+                                        meo:canFulfill
+                                      ) ;
+               rdfs:comment "A Vehicle meets one or more IntendedOutcome instances, meaning the Vehicle has at least one VehicleFeature instance that \"canFulfill\" each IntendedOutcome (\"canAchieve\" is implied by the composition of \"hasFeature\" and \"canFulfill\")." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:canAchieve ;
+   owl:annotatedProperty owl:propertyChainAxiom ;
+   owl:annotatedTarget ( meo:hasFeature
+                         meo:canFulfill
+                       ) ;
+   rdfs:comment """A Vehicle meets a GoalRequirement if and only if it has a VehicleFeature that can fulfill that GoalRequirement.
+
+[NOTE: Here we have expressed the chain \"hasVehicleFeature o canFulfill\" as a SubProptertyOf meetsRequirements . We have not found how to express the reverse assertion in Protege to obtain equivalency. Perhaps it should be acceptable to have a Vehicle that is said to directly meet a GoalRequirement (through relation meetsRequirement] without the added detail of an explicit VehicleFeature that canFulfill that GoalRequirement?]""" ;
+   rdfs:label "V3 (partial)"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill
+meo:canFulfill rdf:type owl:ObjectProperty ;
+               rdfs:domain meo:VehicleFeature ;
+               rdfs:range meo:IntendedOutcome ;
+               rdfs:comment "A VehicleFeature can fulfill one or more IntendedOutcome instances." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:canFulfill ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:IntendedOutcome ;
+   rdfs:comment "A VehicleFeature can only fulfill GoalRequirements." ;
+   rdfs:label "F1"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canIdentify
+meo:canIdentify rdf:type owl:ObjectProperty ;
+                rdfs:domain meo:Vehicle ;
+                rdfs:range meo:Constraint ;
+                owl:propertyChainAxiom ( meo:hasFeature
+                                         meo:canMeasure
+                                       ) ;
+                rdfs:comment "A Vehicle can identify one or more Constraint instances, meaning that the Vehicle has the technical ability to make and discern measurements relating to a Constraint (e.g., an impending position exception, an impending depth exception, etc.)." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:canIdentify ;
+   owl:annotatedProperty owl:propertyChainAxiom ;
+   owl:annotatedTarget ( meo:hasFeature
+                         meo:canMeasure
+                       ) ;
+   rdfs:comment "If a Vehicle has a VehicleFeature that can test a Constraint, then that Vehicle can identify that Constraint." ;
+   rdfs:label "V4"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure
+meo:canMeasure rdf:type owl:ObjectProperty ;
+               rdfs:domain meo:VehicleFeature ;
+               rdfs:range meo:EndCondition ;
+               rdfs:comment "A VehicleFeature can measure phenomena necessary to address one or more EndCondition instances, meaning the VehicleFeature has the capability to measure and discern the conditions stated in each EndCondition." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:canMeasure ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:EndCondition ;
+   rdfs:comment "A VehicleFeature can only test Constraints." ;
+   rdfs:label "F2"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeet
+meo:canMeet rdf:type owl:ObjectProperty ;
+            owl:inverseOf <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy> ;
+            rdfs:domain meo:Vehicle ;
+            rdfs:range meo:Goal ;
+            rdfs:comment "A Vehicle can meet one or more Goal instances, meaning the Vehicle has the physical capabilities to perform actions that can achieve the Goal. This is an indication of achievability, not actual achievement." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canPerform
+meo:canPerform rdf:type owl:ObjectProperty ;
+               owl:inverseOf meo:isPerformableBy ;
+               rdfs:domain meo:Vehicle ;
+               rdfs:range meo:Mission ;
+               rdfs:comment "A Vehicle can perform one or more Mission instances, meaning the Vehicle can meet (\"canMeet\") all of the Goals associated with the Mission through the \"includes\" relation." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains
+meo:constrains rdf:type owl:ObjectProperty ;
+               owl:propertyChainAxiom ( meo:constrains
+                                        meo:includes
+                                      ) ;
+               rdfs:comment "A Constraint applies to one or more Missions and/or one or more Goals." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:constrains ;
+   owl:annotatedProperty owl:propertyChainAxiom ;
+   owl:annotatedTarget ( meo:constrains
+                         meo:includes
+                       ) ;
+   rdfs:comment "A Constraint that applies to a Mission must also apply to all of the Goals that Mission includes." ;
+   rdfs:label "C3"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsGoal
+meo:constrainsGoal rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf meo:constrains ;
+                   owl:inverseOf meo:hasGoalConstraint ;
+                   rdfs:domain meo:Constraint ;
+                   rdfs:range meo:Goal .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsMission
+meo:constrainsMission rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf meo:constrains ;
+                      owl:inverseOf meo:hasMissionConstraint ;
+                      rdfs:domain meo:Constraint ;
+                      rdfs:range meo:Mission .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint
+meo:hasConstraint rdf:type owl:ObjectProperty ;
+                  rdfs:range meo:Constraint ;
+                  owl:propertyChainAxiom ( meo:includes
+                                           [ owl:inverseOf meo:constrains
+                                           ]
+                                         ) ;
+                  rdfs:comment "A Mission or Goal has one or more Constraint instances, meaning the Mission or Goal must be concerned about the conditions expressed in the Constraint instances in the execution of the associated mission or goal.." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:hasConstraint ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Constraint ;
+   rdfs:comment "A Mission can be constrained only by Constraints." ;
+   rdfs:label "M3"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition
+meo:hasEndCondition rdf:type owl:ObjectProperty ;
+                    rdfs:domain meo:Goal ;
+                    rdfs:range meo:EndCondition ;
+                    rdfs:comment "Every Goal has a specific EndCondition, which results in either SUCCESS FAILURE or EXCEPTION, based on execution of actions associated with Goal achievement, under any associated Constraint instances." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:hasEndCondition ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:EndCondition ;
+   rdfs:comment """A Goal's end condition (ending state) must be an EndCondition.
+
+[NOTE: In planning, this represents *possible* end conditions for a Goal; the actual end condition will not be known until mission execution.]""" ;
+   rdfs:label "G2"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature
+meo:hasFeature rdf:type owl:ObjectProperty ;
+               rdfs:domain meo:Vehicle ;
+               rdfs:range meo:VehicleFeature ;
+               rdfs:comment "A Vehicle has one or more VehicleFeature instances." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:hasFeature ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:VehicleFeature ;
+   rdfs:comment "The only allowable features of a Vehicle are VehicleFeature." ;
+   rdfs:label "V1"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasGoalConstraint
+meo:hasGoalConstraint rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf meo:hasConstraint ;
+                      rdfs:domain meo:Goal ;
+                      rdfs:range meo:Constraint ;
+                      rdfs:comment "The hasGoalConstraint property relates a Goal instance to one or more Constraint instances." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasMissionConstraint
+meo:hasMissionConstraint rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf meo:hasConstraint ;
+                         rdfs:domain meo:Mission ;
+                         rdfs:range meo:Constraint ;
+                         rdfs:comment "The hasMissionConstraint property relates a Mission instance to one or more Constraint instances." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal
+meo:hasNextGoal rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf meo:isFollowedBy ;
+                rdf:type owl:IrreflexiveProperty ;
+                rdfs:domain meo:Goal ;
+                rdfs:range meo:Goal ;
+                rdfs:comment "Goal 'B' is the next goal for Goal 'A' when 'A' directly precedes 'A' in the Mission goal tree. This property is  irreflexive; a Goal cannot return to itself (a weak form of Rule G7)." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:hasNextGoal ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget meo:isFollowedBy ;
+   rdfs:comment "A Goal follows another Goal if it is the next Goal." ;
+   rdfs:label "G8"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:hasNextGoal ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Goal ;
+   rdfs:comment "A Goal can only have other Goals next." ;
+   rdfs:label "G3"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnException
+meo:hasNextGoalOnException rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf meo:hasNextGoal ;
+                           rdfs:domain meo:Goal ;
+                           rdfs:range meo:Goal ;
+                           rdfs:comment "The Goal to perform following a EXCEPTION EndCondition on the current Goal." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnFailure
+meo:hasNextGoalOnFailure rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf meo:hasNextGoal ;
+                         rdfs:domain meo:Goal ;
+                         rdfs:range meo:Goal ;
+                         rdfs:comment "The Goal to perform following a FAILURE EndCondition on the current Goal." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnSuccess
+meo:hasNextGoalOnSuccess rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf meo:hasNextGoal ;
+                         rdfs:domain meo:Goal ;
+                         rdfs:range meo:Goal ;
+                         rdfs:comment "The Goal to perform following a SUCCESS EndCondition on the current Goal." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes
+meo:includes rdf:type owl:ObjectProperty ;
+             rdfs:domain meo:Mission ;
+             rdfs:range meo:Goal ;
+             owl:propertyChainAxiom ( meo:startsWith
+                                      meo:isFollowedBy
+                                    ) ;
+             rdfs:comment "A Mission \"includes\" one or more Goal instances. An initial Goal instance is linked to the mission through the \"startsWith\" relation. The Goals are linked to each other through the \"hasNext\" set of properties (hasNextOnSuccess, hasNextOnFailure, hasNextOnException), describing a goal tree for the Mission." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:includes ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Goal ;
+   rdfs:comment "A Mission can only include Goals." ;
+   rdfs:label "M2"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:includes ;
+   owl:annotatedProperty owl:propertyChainAxiom ;
+   owl:annotatedTarget ( meo:startsWith
+                         meo:isFollowedBy
+                       ) ;
+   rdfs:comment """All Goals in a Mission must *potentially* follow the starting Goal (satisfiability vice entailment).
+
+[NOTE: Here we express that the property chain \"startsWith o follows\" implies includes. Need to see if there is a way to express the reverse containment for equivalency.]""" ;
+   rdfs:label "G10 (partial)"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy
+meo:isFollowedBy rdf:type owl:ObjectProperty ,
+                          owl:TransitiveProperty ;
+                 rdfs:domain meo:Goal ;
+                 rdfs:range meo:Goal ;
+                 rdfs:comment """A Goal 'B' follows another Goal 'A' if it occurs below Goal 'A' in the Mission goal tree. A Goal instance cannot occur in its set of \"follows\" goals (the tree of goals must be acyclic). Property \"follows\" is transitive [ontology rule G9].
+
+TODO: Make isFollowedBy a synonym for hasNextGoal (except, we want isFollowedBy to be transitive and subproperty hasNextGoal to be irreflexive -- the reasoners will not handle a single property being both irreflexive and transitive)..""" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:isFollowedBy ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Goal ;
+   rdfs:comment "A Goal can only be followed by another Goal." ;
+   rdfs:label "G6"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isInitialGoal
+meo:isInitialGoal rdf:type owl:ObjectProperty ;
+                  rdfs:domain meo:Goal ;
+                  rdfs:range meo:Mission ;
+                  rdfs:comment "A Goal is identified as the first goal of a Mission (i.e., the initial tasking to be performed by the assigned vehicle)." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy
+meo:isPerformableBy rdf:type owl:ObjectProperty ;
+                    rdfs:domain meo:Mission ;
+                    rdfs:range meo:Vehicle ;
+                    rdfs:comment "A Mission can be performed by a Vehicle if the Vehicle \"canPerform\" the Mission or, equivalently, that the Vehicle \"canMeet\" all of the Goal instances in the \"includes\" relation for the Mission or, equivalently, that the Vehicle \"hasFeature\" VehicleFeature instances that \"canFulfill\" all of the IntendedOutcome instances required by all of the Goal instances in the \"includes\" relation for the mission. This is an indication of possibility of successful performance, not necessarily achievement of the intended outcomes of each goal in the mission." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:isPerformableBy ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Vehicle ;
+   rdfs:comment "A Mission can only be performed by a Vehicle." ;
+   rdfs:label "M5"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy
+meo:mustSatisfy rdf:type owl:ObjectProperty ;
+                rdfs:domain meo:Goal ;
+                rdfs:range meo:IntendedOutcome ;
+                rdfs:comment "A Goal must satisfy one or more IntendedOutcome instances for the Goal to be achieved successfully." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:mustSatisfy ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:IntendedOutcome ;
+   rdfs:comment "A Goal can only require a GoalRequirement." ;
+   rdfs:label "G1"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith
+meo:startsWith rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf meo:includes ;
+               rdfs:domain meo:Mission ;
+               rdfs:range meo:Goal ;
+               rdfs:comment "A Mission \"startsWith\" a specific Goal instance. A Mission must have at least one Goal in its goal tree." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:startsWith ;
+   owl:annotatedProperty rdfs:subPropertyOf ;
+   owl:annotatedTarget meo:includes ;
+   rdfs:comment "A Mission must include the Goal that it starts with." ;
+   rdfs:label "M4"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:startsWith ;
+   owl:annotatedProperty rdfs:range ;
+   owl:annotatedTarget meo:Goal ;
+   rdfs:comment "A Mission can only start with a Goal." ;
+   rdfs:label "M1"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/canPerformAllGoals
+<https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/canPerformAllGoals> rdf:type owl:ObjectProperty ;
+                                                                                               owl:versionInfo "TODO" .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy
+<https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isTerminalGoal
+meo:isTerminalGoal rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:boolean ;
+                   rdfs:comment "Indicates if a Goal instance has follow-on goals (true or false) indicated by one or more hasNextGoal properties. I.e., if a Goal instance has no hasNextGoal properties, then it is a terminal goal." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase
+<https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase> rdf:type owl:DatatypeProperty ;
+                                                                                          rdfs:range xsd:string ;
+                                                                                          rdfs:comment "Mission phase associated with this agenda goal." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/version
+<https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/version> rdf:type owl:DatatypeProperty ;
+                                                                                    rdfs:range xsd:string ;
+                                                                                    owl:versionInfo "TODO define versioning scheme"^^xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint
+meo:Constraint rdf:type owl:Class ;
+               rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                 owl:onProperty meo:constrains ;
+                                 owl:allValuesFrom [ rdf:type owl:Class ;
+                                                     owl:unionOf ( meo:Goal
+                                                                   meo:Mission
+                                                                 )
+                                                   ]
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty meo:constrains ;
+                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                 owl:onClass [ rdf:type owl:Class ;
+                                               owl:unionOf ( meo:Goal
+                                                             meo:Mission
+                                                           )
+                                             ]
+                               ] ;
+               rdfs:comment "A Constraint is a condition placed on a Mission or a Goal. The Constraint must be satisfied for the associated Mission or Goal to be achievable. A Mission may have multiple Constraint instances. A Constraint on a Mission applies to all of the Goals in the Mission. A Constraint on a Goal applies only to that Goal." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Constraint ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:constrains ;
+                         owl:allValuesFrom [ rdf:type owl:Class ;
+                                             owl:unionOf ( meo:Goal
+                                                           meo:Mission
+                                                         )
+                                           ]
+                       ] ;
+   rdfs:comment """A Constraint can apply to a Mission or Goal (and nothing else, which is expressed in the defined range for relation appliesTo).
+
+[NOTE: Perhaps there should just be a cardinality requirement (min 1)  on the union of Mission and Goal in the appliesTo relation: if the Constraint applies to a Mission, it will apply to all Goals of the Mission by inference; otherwise, it is defined on a Goal. On the other hand, this means we cannot define Constraints without having a defined Mission or Goal instance, which may not be what we want.]""" ;
+   rdfs:label "C1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Constraint ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:constrains ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( meo:Goal
+                                                     meo:Mission
+                                                   )
+                                     ]
+                       ] ;
+   rdfs:comment """A Constraint must apply to at least one Goal.
+
+[NOTE: Perhaps this should just be a cardinality requirement on the union of Mission and Goal in the appliesTo relation: if the Constraint applies to a Mission, it will apply to all Goals of the Mission by inference; if it applies to a Goal, then the rule here is met. Recommend removing this rule and forcing cardinality of 1 on the appliesTo relation in the class definition, although this also means we cannot define Constraints without having a defined Mission or Goal instance, which may not be what we want either.]""" ;
+   rdfs:label "C2"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION
+meo:EXCEPTION rdf:type owl:Class ;
+              rdfs:subClassOf meo:EndCondition ;
+              rdfs:comment "The EXCEPTION EndCondition indicates a Goal did not complete due to run-time determination that an associated Constraint was not satisfied." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition
+meo:EndCondition rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:unionOf ( meo:EXCEPTION
+                                                     meo:FAILURE
+                                                     meo:SUCCESS
+                                                   )
+                                     ] ;
+                 rdfs:comment "EndCondition enumeration values describe the result of executing a Goal instance in a mission.  An allowed value is either SUCCESS, FAILURE, or EXCEPTION." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE
+meo:FAILURE rdf:type owl:Class ;
+            rdfs:subClassOf meo:EndCondition ;
+            rdfs:comment "The FAILURE EndCondition indicates that a Goal instance completed but failed to meet one or more associated IntendedOutcome requirements." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal
+meo:Goal rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Class ;
+                           owl:unionOf ( [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasEndCondition ;
+                                                                  owl:allValuesFrom meo:EXCEPTION
+                                                                ]
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasNextGoalOnException ;
+                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass meo:Goal
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ]
+                                         [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasEndCondition ;
+                                                                  owl:allValuesFrom meo:FAILURE
+                                                                ]
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasNextGoalOnFailure ;
+                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass meo:Goal
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ]
+                                         [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasEndCondition ;
+                                                                  owl:allValuesFrom meo:SUCCESS
+                                                                ]
+                                                                [ rdf:type owl:Restriction ;
+                                                                  owl:onProperty meo:hasNextGoalOnSuccess ;
+                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                  owl:onClass meo:Goal
+                                                                ]
+                                                              ) ;
+                                           rdf:type owl:Class
+                                         ]
+                                       )
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty meo:hasConstraint ;
+                           owl:allValuesFrom meo:Constraint
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty meo:hasEndCondition ;
+                           owl:allValuesFrom meo:EndCondition
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty meo:isFollowedBy ;
+                           owl:allValuesFrom meo:Goal
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty meo:mustSatisfy ;
+                           owl:allValuesFrom meo:IntendedOutcome
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty meo:hasEndCondition ;
+                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass meo:EndCondition
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase> ;
+                           owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:string
+                         ] ;
+         rdfs:comment "A Goal is an operational objective the mission is intended to achieve." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Goal ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:mustSatisfy ;
+                         owl:allValuesFrom meo:IntendedOutcome
+                       ] ;
+   rdfs:comment "A Goal may require 0 or more GoalRequirements." ;
+   rdfs:label "G1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Goal ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:hasEndCondition ;
+                         owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass meo:EndCondition
+                       ] ;
+   rdfs:comment """A Goal's ending condition (state) can end with at most one EndCondition.
+
+[NOTE: This statement would seem to apply more to the final state of the Goal during Mission execution. In planning, there must be consideration of what happens following Goal success, failure, or faces an imminent exception. That is, what is the next Goal for the Vehicle to perform under each of those end conditions?]""" ;
+   rdfs:label "G2"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome
+meo:IntendedOutcome rdf:type owl:Class ;
+                    rdfs:comment "IntendedOutcome is a condition that must be met for the associated Goal to be achieved successfully." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission
+meo:Mission rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:hasConstraint ;
+                              owl:allValuesFrom meo:Constraint
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:isPerformableBy ;
+                              owl:allValuesFrom meo:Vehicle
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:includes ;
+                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass meo:Goal
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:startsWith ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass meo:Goal
+                            ] ;
+            rdfs:comment "Mission is a set of Goals to be performed by a Vehicle, under one or more Constraint instances associated with the Mission or with individual Goals in the Mission." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Mission ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:hasConstraint ;
+                         owl:allValuesFrom meo:Constraint
+                       ] ;
+   rdfs:comment "A Mission can have 0 or more Constraints." ;
+   rdfs:label "M3"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Mission ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:isPerformableBy ;
+                         owl:allValuesFrom meo:Vehicle
+                       ] ;
+   rdfs:comment "A Mission can be performable by 0 or more Vehicles." ;
+   rdfs:label "M5"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Mission ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:includes ;
+                         owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass meo:Goal
+                       ] ;
+   rdfs:comment "A Mission must include one or more goals." ;
+   rdfs:label "M2"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Mission ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:startsWith ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass meo:Goal
+                       ] ;
+   rdfs:comment "A Mission must start with exactly one Goal." ;
+   rdfs:label "M1"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS
+meo:SUCCESS rdf:type owl:Class ;
+            rdfs:subClassOf meo:EndCondition ;
+            rdfs:comment "The SUCCESS EndCondition indicates that a Goal instance completed and succeeded in meeting all associated IntendedOutcome requirements." .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle
+meo:Vehicle rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:canAchieve ;
+                              owl:allValuesFrom meo:IntendedOutcome
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:canIdentify ;
+                              owl:allValuesFrom meo:Constraint
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:canMeet ;
+                              owl:allValuesFrom meo:Goal
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:canPerform ;
+                              owl:allValuesFrom meo:Mission
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty meo:hasFeature ;
+                              owl:allValuesFrom meo:VehicleFeature
+                            ] ;
+            rdfs:comment "A Vehicle is a physical device for performing a Mission, requiring the Vehicle to be able to meet Mission goals, under associated Contraints, using VehicleFeature instances that can meet assigned IntendedOutcome instances by being able to measure conformance to the associated Constraints." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:Vehicle ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:hasFeature ;
+                         owl:allValuesFrom meo:VehicleFeature
+                       ] ;
+   rdfs:comment "A Vehicle can have 0 or more VehicleFeatures." ,
+                "isPerformableBy and canPerform are inversely equivalent." ;
+   rdfs:label "V1" ,
+              "V2"
+ ] .
+
+
+###  https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature
+meo:VehicleFeature rdf:type owl:Class ;
+                   rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                     owl:onProperty meo:canFulfill ;
+                                     owl:allValuesFrom meo:IntendedOutcome
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty meo:canMeasure ;
+                                     owl:allValuesFrom meo:EndCondition
+                                   ] ;
+                   rdfs:comment "A VehicleFeature is a capability associated with a Vehicle that is able to fulfill IntendedOutcome instances required by Goals in a Mission, and is able to test the conditions defined in each Mission or Goal Constraint to determine if an exception to the constraint will occur." .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:VehicleFeature ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:canFulfill ;
+                         owl:allValuesFrom meo:IntendedOutcome
+                       ] ;
+   rdfs:comment "A VehicleFeature may be able to fulfill 0 or more GoalRequirements." ;
+   rdfs:label "F1"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource meo:VehicleFeature ;
+   owl:annotatedProperty rdfs:subClassOf ;
+   owl:annotatedTarget [ rdf:type owl:Restriction ;
+                         owl:onProperty meo:canMeasure ;
+                         owl:allValuesFrom meo:EndCondition
+                       ] ;
+   rdfs:comment "A VehicleFeature may be able to test 0 or more constraints." ;
+   rdfs:label "F2"
+ ] .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+owl:topObjectProperty owl:versionInfo 3.1 .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( meo:Constraint
+                meo:EndCondition
+                meo:Goal
+                meo:IntendedOutcome
+                meo:Mission
+                meo:Vehicle
+                meo:VehicleFeature
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( meo:EXCEPTION
+                meo:FAILURE
+                meo:SUCCESS
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

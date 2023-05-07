@@ -1,0 +1,63 @@
+Perform Mission Execution Ontology query queries/MissionQuery_01_GoalBranches.rq
+  using turtle form of AVCL mission      missions/turtle/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.ttl
+  to produce output log file             queries/HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted.MissionQuery_01_GoalBranches.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_01_GoalBranches.rq
+# Query to list all Goals with corresponding description information and branching logic.
+
+###############################################
+
+SELECT ?goal ?nextOnSuccess ?nextOnFailure ?nextOnException ?isPartOfPhase ?description # ?GoalFound ?phase
+
+WHERE
+{ 
+    ?goal   a meo:Goal ;           # Shorthand expression: a = rdf:type
+            rdfs:comment           ?description ;
+            meo:isPartOfPhase      ?isPartOfPhase .
+
+    OPTIONAL                       # provide results even when no value is provided (by terminal goals)
+    {
+    ?goal   meo:hasNextOnSuccess   ?nextOnSuccess .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnFailure   ?nextOnFailure .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnException ?nextOnException .
+    }
+    # https://stackoverflow.com/questions/11234371/sparql-query-results-without-namespace
+#   BIND (strafter(xsd:string(?goal),"#")            AS ?GoalFound)
+#   BIND (strafter(xsd:string(?nextOnSuccess),"#")   AS ?GoalNextOnSuccess)
+#   BIND (strafter(xsd:string(?nextOnFailure),"#")   AS ?GoalNextOnFailure)
+#   BIND (strafter(xsd:string(?nextOnException),"#") AS ?GoalNextOnException)
+#   BIND (coalesce(?isPartOfPhase,"")                AS ?phase)
+}
+ORDER BY (?goal) # alphanumeric order results in order given by each name
+###############################################
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| goal             | nextOnSuccess    | nextOnFailure    | nextOnException  | isPartOfPhase    | description                                                                             |
+==========================================================================================================================================================================================
+| :HSEMD.OODA.21   | :HSEMD.OODA.22   | :HSEMD.OODA.22   | :HSEMD.OODA.99.0 | "Configure"      | "Attack Response Thresholds Set: Signal strength needed for close-proximity activation" |
+| :HSEMD.OODA.22   | :HSEMD.OODA.23   | :HSEMD.OODA.23   | :HSEMD.OODA.99.0 | "Configure"      | "Enable Robot Swarm: Close-in weapon system activated"                                  |
+| :HSEMD.OODA.23   | :HSEMD.OODA.24   | :HSEMD.OODA.24   | :HSEMD.OODA.99.0 | "Observe"        | "Threat Signals Received: Above response threshold"                                     |
+| :HSEMD.OODA.24   | :HSEMD.OODA.27   | :HSEMD.OODA.27   | :HSEMD.OODA.99.0 | "Orient"         | "Move to Threat: Group response"                                                        |
+| :HSEMD.OODA.25   | :HSEMD.OODA.26   | :HSEMD.OODA.26   | :HSEMD.OODA.99.0 | "Orient"         | "IFFNU: Identify Friend Foe Neutral Unknown"                                            |
+| :HSEMD.OODA.26   | :HSEMD.OODA.27   | :HSEMD.OODA.36   | :HSEMD.OODA.99.0 | "Decide"         | "Confirm In-Port Counterattack? Rapid-response human checkpoint"                        |
+| :HSEMD.OODA.27   | :HSEMD.OODA.99.0 | :HSEMD.OODA.99.0 | :HSEMD.OODA.99.0 | "Act"            | "Robot Swarm versus Terrorists: Lethal force authorized"                                |
+| :HSEMD.OODA.36   | :HSEMD.OODA.37   | :HSEMD.OODA.37   | :HSEMD.OODA.99.0 | "Decide"         | "Hospital Ship Attack Denied: Lethal force NOT authorized"                              |
+| :HSEMD.OODA.37   | :HSEMD.OODA.99.0 | :HSEMD.OODA.99.0 | :HSEMD.OODA.99.0 | "Act"            | "Search for Intruders: All defense forces alerted"                                      |
+| :HSEMD.OODA.99.0 |                  |                  |                  | "Robot Recovery" | "Proceed to recovery: Mission complete, prepare for pickup. Terminal condition."        |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

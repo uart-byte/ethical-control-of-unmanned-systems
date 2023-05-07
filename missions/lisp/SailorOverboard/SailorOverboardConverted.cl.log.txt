@@ -1,0 +1,42 @@
+; Fast loading C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\missions\lisp\SailorOverboard\SailorOverboardConverted.fasl
+CG-USER(1): (run)
+Deploy, Launch - Sailor Overboard immediate Action
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor - Go directly to best known location
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor afloat until safe - Watch closely, not to interfere with rescue operations
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to Recovery - Mission complete, prepare for pickup
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery - Operations complete, final success state
+NIL
+CG-USER(2): (run)
+Deploy, Launch - Sailor Overboard immediate Action
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor - Go directly to best known location
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor  - Sailor position not known, intermittent
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor afloat until safe - Watch closely, not to interfere with rescue operations
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to Recovery - Mission complete, prepare for pickup
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and prepare for recovery - Operations complete, final success state
+NIL
+
+CG-USER(3): (rerun phaseGoal2)
+Rendezvous with Sailor - Go directly to best known location
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor afloat until safe - Watch closely, not to interfere with rescue operations
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to Recovery - Mission complete, prepare for pickup
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery - Operations complete, final success state
+NIL
+CG-USER(4): (run)
+Deploy, Launch - Sailor Overboard immediate Action
+Did goal succeed (s), fail (f), or abort (x)?x
+Proceed to Recovery - Mission complete, prepare for pickup
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and prepare for recovery - Operations complete, final success state
+NIL

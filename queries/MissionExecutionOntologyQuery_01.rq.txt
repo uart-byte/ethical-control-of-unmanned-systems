@@ -1,0 +1,54 @@
+Perform Mission Execution Ontology metaquery queries/MissionExecutionOntologyQuery_01.rq
+  using Mission Execution Ontology itself    ontologies/MissionExecutionOntology3.0.ttl
+  to produce output file                     queries/MissionExecutionOntologyQuery_01.rq.txt:
+
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# @base <https://savage.nps.edu/EthicalControl/missions> 
+
+# MissionExecutionOntologyQuery_01.rq    Metaquery to list all properties with corresponding domains and ranges in Mission Execution Ontology.
+
+###############################################
+
+SELECT distinct ?property ?domain ?range
+WHERE
+{
+    ?property rdfs:range  ?range .
+    ?property rdfs:domain ?domain .
+}
+ORDER by ASC(?property) # alphabetize
+
+###############################################
+-------------------------------------------------------------------------
+| property                   | domain             | range               |
+=========================================================================
+| meo:accomplishes           | meo:EndCondition   | meo:IntendedOutcome |
+| meo:canAchieve             | meo:Vehicle        | meo:IntendedOutcome |
+| meo:canFulfill             | meo:VehicleFeature | meo:IntendedOutcome |
+| meo:canIdentify            | meo:Vehicle        | meo:Constraint      |
+| meo:canMeasure             | meo:VehicleFeature | meo:EndCondition    |
+| meo:canMeet                | meo:Vehicle        | meo:Goal            |
+| meo:canPerform             | meo:Vehicle        | meo:Mission         |
+| meo:constrainsGoal         | meo:Constraint     | meo:Goal            |
+| meo:constrainsMission      | meo:Constraint     | meo:Mission         |
+| meo:hasEndCondition        | meo:Goal           | meo:EndCondition    |
+| meo:hasFeature             | meo:Vehicle        | meo:VehicleFeature  |
+| meo:hasGoalConstraint      | meo:Goal           | meo:Constraint      |
+| meo:hasMissionConstraint   | meo:Mission        | meo:Constraint      |
+| meo:hasNextGoal            | meo:Goal           | meo:Goal            |
+| meo:hasNextGoalOnException | meo:Goal           | meo:Goal            |
+| meo:hasNextGoalOnFailure   | meo:Goal           | meo:Goal            |
+| meo:hasNextGoalOnSuccess   | meo:Goal           | meo:Goal            |
+| meo:includes               | meo:Mission        | meo:Goal            |
+| meo:isFollowedBy           | meo:Goal           | meo:Goal            |
+| meo:isInitialGoal          | meo:Goal           | meo:Mission         |
+| meo:isPerformableBy        | meo:Mission        | meo:Vehicle         |
+| meo:mustSatisfy            | meo:Goal           | meo:IntendedOutcome |
+| meo:startsWith             | meo:Mission        | meo:Goal            |
+-------------------------------------------------------------------------

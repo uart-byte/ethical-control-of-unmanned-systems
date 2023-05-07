@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.0" vehicleName="Opponent small boat" vehicleType="USV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/AVCL.3.0.xsd">
+	<head>
+		<meta name="title" content="HospitalShipEmDecoy1.Opponent.xml"/>
+		<meta name="description" content="AVCL mission where foe plants false flag electromagnetic (EM) decoy devices to provoke blue-on-blue robot swarm attack"/>
+		<meta name="created" content="31 December 2019"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyOpponentActions.png"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/HospitalShipEmDecoyRobotResponses.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/HospitalShipEmDecoy1.Opponent.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<MissionDefinition description="Plant 'false flag' electromagnetic (EM) decoy devices to provoke blue-on-blue robot swarm attack.  Although this mission is likely to be manned by human opponents, AVCL representations still work.">
+			<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>
+			<AgendaMission>
+				<GoalList>
+					<Goal id="HSEMD.Foe.1" title="Search, Observe" description="Find ship, surveil for weaknesses" nextOnSuccess="HSEMD.Foe.2" nextOnFailure="HSEMD.Foe.2" nextOnException="HSEMD.Foe.7">
+						<Search datumType="point" requiredPD="0.5">
+							<Target name="Hospital Ship" id="HospitalShip" description="Moored or at anchor"/>
+						</Search>
+						<OperatingArea id="AssignedOpArea">
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+					</Goal>
+					<Goal id="HSEMD.Foe.2" title="Assess, approach" description="Surreptitious entry, harbor or anchorage" nextOnSuccess="HSEMD.Foe.3" nextOnException="HSEMD.Foe.7">
+						<Rendezvous description="">
+							<TargetVehicleID value="102" description="Opponent Ship"/>
+							<TargetVehicleID value="103" description="Hospital Ship"/>
+							<!--
+							<TargetVehicleID value="100" description="Launching ship"/>
+							<TargetVehicleID value="101" description="This robot"/>
+							-->
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.Foe.3" title="Covertly Board" description="EM spoofing devices attached to topside" nextOnSuccess="HSEMD.Foe.4" nextOnException="HSEMD.Foe.7">
+						<MarkTarget title="Attach devices">
+							<Marker type="emPinger"/>
+							<Target name="Hospital Ship" refid="HospitalShip"/>
+						</MarkTarget>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.Foe.4" title="Standoff, Observe" description="Fall back to safe vantage point" nextOnSuccess="HSEMD.Foe.5" nextOnException="HSEMD.Foe.7">
+						<Reposition description="Covert observation location"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.Foe.5" title="Initiate Fake Attack" description="Light off false EM spoofing signals" nextOnSuccess="HSEMD.Foe.6" nextOnException="HSEMD.Foe.7">
+						<Attack description="False target"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="HSEMD.Foe.6" title="Observe Reaction" description="Monitor response, assess damage" nextOnSuccess="HSEMD.Foe.7" nextOnException="HSEMD.Foe.7">
+						<MonitorTransmissions description="All responses"/>
+					</Goal>
+					<Goal id="HSEMD.Foe.7" title="Evade, Escape" description="Avoid detection, depart locale - Terminal condition ">
+						<Reposition description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Reposition>
+					</Goal>
+				</GoalList>
+			</AgendaMission>
+		</MissionDefinition>
+	</body>
+</AVCL>

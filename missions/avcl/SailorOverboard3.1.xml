@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://savage.nps.edu/EthicalControl/schemas/AVCL.3.1.xsd">
+	<head>
+		<meta name="title" content="SailorOverboard3.1.xml"/>
+		<meta name="description" content="AVCL mission to perform SAILOR OVERBOARD operations, carried out in concert with shipboard emergency procedures. Test mission for AVCL revision version 3.1."/>
+		<meta name="created" content="19 November 2019"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="Image" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/SailorOverboard8PhaseMission.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/SailorOverboard3.1.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>
+	    <!-- TODO Vehicle vehicleName="RescueDrone" vehicleType="UAV"  -->
+		<MissionAgenda description="Single unmanned air/surface vehicle actions to complement human response when performing  “SAILOR OVERBOARD” operations, carried out in concert with shipboard emergency procedures. Multiple UAVs/USVs can be employed in parallel with ships/aircraft, each following mission orders.">
+				<LaunchPosition id="LaunchPosition" description="Ship position when robot is launched">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</LaunchPosition>
+				<RecoveryPosition id="RecoveryPosition" description="Ship position when ready to recover robot">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</RecoveryPosition>
+				<GoalList>
+					<Goal id="Goal1" title="Deploy, Launch" description="Sailor Overboard Immediate Action" phase="Launch" nextOnSuccess="Goal2" nextOnFailure="Goal7" nextOnException="Goal8">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="Sailor in water"/>
+						</Rendezvous>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+						<Duration value="300"/>
+						<ReportingCriteria value="onCommence"/>
+						<ReportingCriteria value="periodic"/>
+						<ReportingCriteria value="statusChanged"/>
+						<ReportingCriteria value="onComplete"/>
+					</Goal>
+					<Goal id="Goal2" title="Rendezvous with Sailor" description="Go directly to best known location" phase="Locate" nextOnSuccess="Goal4" nextOnFailure="Goal3" nextOnException="Goal5">
+						<Search datumType="point" requiredPD="0.5">
+							<Target name="Sailor in water" id="SailorInWater"/>
+						</Search>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal3" title="Search for Sailor " description="Sailor position not known, intermittent" phase="Locate" nextOnSuccess="Goal4" nextOnFailure="Goal5" nextOnException="Goal5">
+						<MarkTarget description="TODO ensure beacon/pinger in water">
+							<Marker type="dyeMarker"/>
+							<Target name="Sailor in water" id="SailorInWater2" description="TODO need refid to avoid duplicatess and have single reference"/>
+						</MarkTarget>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal4" title="Track Sailor afloat until safe" description="Watch closely, not to interfere with rescue operations" phase="Track" nextOnSuccess="Goal5" nextOnFailure="Goal5" nextOnException="Goal5">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal5" title="Proceed to Recovery" description="Mission complete, prepare for pickup" phase="Mission Finish" nextOnSuccess="Goal6" nextOnFailure="Goal7" nextOnException="Goal8">
+						<Reposition description="Return to ship or other recovery point"/>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal6" title="Halt and prepare for recovery" phase="Recover Robot" description="Operations complete, final success state">
+						<Rendezvous description="">
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal7" title="Halt and deploy recovery beacon" phase="Recover Robot" description="Unable to continue, final failure state">
+						<Rendezvous description="">
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="Goal8" title="Halt and await further orders" phase="Recover Robot" description="Unexpected problem, final exception state">
+						<Rendezvous description="">
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<Risk riskName="RE11.4.1_UnderstandingReasoningMethodsLimitations" mitigation="watchstander training" mandatory="true"/>
+						<OperatingArea>
+							<Point>
+								<LatitudeLongitude latitude="0" longitude="0"/>
+							</Point>
+						</OperatingArea>
+						<Duration value="6000"/>
+					</Goal>
+				</GoalList>
+		</MissionAgenda>
+	</body>
+</AVCL>

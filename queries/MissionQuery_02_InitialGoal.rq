@@ -1,0 +1,28 @@
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_02_InitialGoal.rq
+# Query Mission to find initial Goal that it startsWith.
+
+SELECT ?Mission ?InitialGoal ?isPartOfPhase ?goalDescription
+
+WHERE
+{
+	?Mission a meo:Mission ;   # Shorthand expression: a = rdf:type
+             meo:startsWith    ?InitialGoal .
+
+    OPTIONAL                   # provide results even when no value is provided
+    {
+      ?InitialGoal meo:isPartOfPhase  ?isPartOfPhase ;
+                   rdfs:comment       ?goalDescription .
+    }
+}
+ORDER BY ?InitialGoal # should be singleton

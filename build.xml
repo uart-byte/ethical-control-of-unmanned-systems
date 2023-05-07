@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2000-2022 held by the author(s).  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer
+      in the documentation and/or other materials provided with the
+      distribution.
+    * Neither the names of the Naval Postgraduate School (NPS)
+      Modeling Virtual Environments and Simulation (MOVES) Institute
+      (http://www.nps.edu and http://www.MovesInstitute.org)
+      nor the names of its contributors may be used to endorse or
+      promote products derived from this software without specific
+      prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<project name="Ethical Control of Unmanned Systems" default="" basedir=".">
+    <description>Builds, tests, and runs the Ethical Control of Unmanned Systems project.</description>
+
+    <!-- private configuration properties:  server names, user names and passwords ====================== -->
+
+    <property name=  "access.properties.filename"      value="nbproject/private/access.properties"/>
+    <property file="${access.properties.filename}"/> <!-- loads the properties defined in the (local, blocked) .properties file -->
+
+    <!-- ======================================================================================== -->
+    
+    <!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE/9.8.0-5 -->
+	<!-- https://www.saxonica.com/documentation9.5/using-xsl/commandline.html -->
+    <property name="saxon.dir"        location="lib" description="relative path"/>
+    <property name="saxon.jar"           value="saxon9he.jar"/>
+    
+    <property name="stylesheets.dir"     value="stylesheets" description="relative path"/>
+    
+    <property environment="env"/>
+
+    <!-- ANT Contrib archive at http://sourceforge.net/projects/ant-contrib/files    (v1.0b3) -->
+    <!-- must have ant-contrib-1.0b3.jar in ANT_HOME/lib (or else specify path)               -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    
+    <property name="arq" location="${env.JENA_HOME}/bat/arq.bat" description="executable invocation, bat/arq.bat or bin/arq"/>
+   
+    <property name="avcl.dir"                 value="missions/avcl"   description="relative path to avcl missions"/>
+    <property name="lisp.dir"                 value="missions/lisp"   description="relative path to converted lisp missions"/>
+    <property name="prolog.dir"               value="missions/prolog" description="relative path to converted prolog missions"/>
+    <property name="ontologies.dir"           value="ontologies"      description="relative path to ontologies"/>
+    <property name="queries.dir"              value="queries"         description="relative path to queries"/>
+    <property name="turtle.dir"               value="missions/turtle" description="relative path to converted turtle triples"/>
+    <property name="MissionExecutionOntology" value="MissionExecutionOntology3.0.ttl"/>
+
+    <!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE/9.8.0-5 -->
+	<!-- https://www.saxonica.com/documentation9.5/using-xsl/commandline.html -->
+    <property name="saxon.dir"        location="../x3d/tools/jar" description="relative path from archive examples/Subdirectory"/>
+    <property name="saxon.jar"           value="saxon9he.jar"/>
+
+    <!-- https://robot.obolibrary.org and https://github.com/ontodev/robot-tutorial -->
+    <!-- US2TS session: https://us2ts.org/program-tool-ecosystem#session-program    -->
+    <property name="robot.jar"           value="robot.jar"    description="ROBOT is an ontology tool."/>
+    <property name="robot" location="lib/robot.bat" description="executable invocation, lib/robot.bat"/>
+
+    <!-- ======================================================================================== -->
+
+    <macrodef name="convertAvclToLisp" description="convert AvclMission.xml to AvclMissionConverted.cl">
+        <attribute name="avclMission"/>
+        <sequential>
+            <echo message="convertAvclToLisp ${avcl.dir}/@{avclMission}.xml to ${lisp.dir}/@{avclMission}Converted.cl using ${stylesheets.dir}/AvclToLisp.xslt"/>
+            <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+            <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+            <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+            <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+            <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+                <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+                <!-- <arg value="-t"/> saxon version and timing information -->
+                <arg value="-s:${avcl.dir}/@{avclMission}.xml"/>
+                <arg value="-o:${lisp.dir}/@{avclMission}Converted.cl"/>
+                <arg value="-xsl:${stylesheets.dir}/AvclToLisp.xslt"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="convertAvclToProlog" description="convert AvclMission.xml to AvclMissionConverted.pl">
+        <attribute name="avclMission"/>
+        <attribute name="prologVersion" default="AllegroCommonLisp"/> <!-- AllegroCommonLisp or ISO -->
+        <sequential>
+            <echo message="convertAvclToLisp ${avcl.dir}/@{avclMission}.xml to ${prolog.dir}/@{avclMission}Converted.pl using ${stylesheets.dir}/AvclToProlog.xslt"/>
+            <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+            <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+            <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+            <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+            <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+                <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+                <!-- <arg value="-t"/> saxon version and timing information -->
+                <arg value="-s:${avcl.dir}/@{avclMission}.xml"/>
+                <arg value="-o:${prolog.dir}/@{avclMission}Converted.pl"/>
+                <arg value="-xsl:${stylesheets.dir}/AvclToProlog.xslt"/>
+                <arg value="prologVersion=@{prologVersion}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="convertAvclToMeoTurtle" description="convert AvclMission.xml to AvclMissionConverted.ttl">
+        <attribute name="avclMission"/>
+        <sequential>
+            <echo message="validate mission @{avclMission}.xml using referenced AVCL schema..."/>
+            <schemavalidate file="${avcl.dir}/@{avclMission}.xml" lenient="false" failonerror="true" fullchecking="true">
+                <!-- <xmlcatalog refid="X3dCatalog"/> -->
+            </schemavalidate>
+                        
+            <echo message="convertAvclToMeoTurtle ${avcl.dir}/@{avclMission}.xml to ${turtle.dir}/@{avclMission}Converted.ttl using ${stylesheets.dir}/AvclToTurtleMeo3.0.xslt"/>
+            <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+            <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+            <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+            <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+            <echo message="@{avclMission}.xml conversion to ${turtle.dir}/@{avclMission}Converted.ttl using ${stylesheets.dir}/AvclToTurtleMeo3.0.xslt"/>
+            <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+                <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+                <!-- <arg value="-t"/> saxon version and timing information -->
+                <arg value="-s:${avcl.dir}/@{avclMission}.xml"/>
+                <arg value="-o:${turtle.dir}/@{avclMission}Converted.ttl"/>
+                <arg value="-xsl:${stylesheets.dir}/AvclToTurtleMeo3.0.xslt"/>
+            </java>
+        </sequential>
+    </macrodef>
+    
+    <macrodef name="runQuery" description="Invoke arq sparql engine on passed sparql query, report results">
+        <attribute name="ontology"  default="${MissionExecutionOntology}" description="AVCL Ontology of interest"/>
+        <attribute name="query"     default="" description="SPARQL query file to apply"/>
+        <attribute name="query.ext" default="rq" description="SPARQL query file extension, default .rq"/>
+        <attribute name="graph.dir" default="${turtle.dir}" description="relative path for AVCL .ttl scene triples"/>
+        <attribute name="graph"     default="" description="filename of AVCL .ttl scene triples to query"/>
+        <attribute name="graph.ext" default="ttl" description="RDF/OWL graph model extension, default .ttl"/>
+        
+        <sequential>
+            <if>
+                <not>
+                    <equals arg1="@{graph}" arg2="" trim="true"/>
+                </not>
+                <then>
+                    <!-- graph file (turtle) included -->
+                    <echo message="==========================="/>
+                    <!-- this property didn't work on series of missions because a property doesn't get reset
+                    <property name="queryResultFile" value="${queries.dir}/@{graph}.@{query}.@{query.ext}.txt"/> -->
+                    
+                    <echo message="SPARQL query @{query}.@{query.ext} performed on mission @{graph}.@{graph.ext}"/>
+                    <echo/>
+                    <echo message="Perform Mission Execution Ontology query ${queries.dir}/@{query}.@{query.ext}"/>
+                    <echo message="  using turtle form of AVCL mission      @{graph.dir}/@{graph}.@{graph.ext}"/>
+                    <echo message="  to produce output log file             ${queries.dir}/@{graph}.@{query}.@{query.ext}.txt:"/>
+                    <echo message="==========================="/>
+                    <concat destfile="${queries.dir}/@{graph}.@{query}.@{query.ext}.txt" append="false"
+                                  >Perform Mission Execution Ontology query ${queries.dir}/@{query}.@{query.ext}
+  using turtle form of AVCL mission      @{graph.dir}/@{graph}.@{graph.ext}
+  to produce output log file             ${queries.dir}/@{graph}.@{query}.@{query.ext}.txt
+===========================
+</concat>
+                    <loadfile property=  "@{query}.file.txt" srcFile="${queries.dir}/@{query}.@{query.ext}"/>
+                    <echo      message="${@{query}.file.txt}"/><!-- contents of file, note stored as unique property -->
+                    <concat destfile="${queries.dir}/@{graph}.@{query}.@{query.ext}.txt" append="true">${@{query}.file.txt}</concat>
+
+                    <echo message="Query results:"/>
+                    <echo message="arq --data=${ontologies.dir}/@{ontology} --query=${queries.dir}/@{query}.@{query.ext} --graph=@{graph.dir}/@{graph}.@{graph.ext}"/>
+                    <exec executable="${arq}"  dir="." vmlauncher="false">
+                        <!-- https://jena.apache.org/documentation/query/cmds.html -->
+                        <arg value="--data"/>
+                        <arg value="${ontologies.dir}/@{ontology}"/>
+                        <arg value="--query"/>
+                        <arg value="${queries.dir}/@{query}.@{query.ext}"/>
+                        <arg value="--graph"/>
+                        <arg value="@{graph.dir}/@{graph}.@{graph.ext}"/>
+                        <redirector output="${queries.dir}/@{graph}.@{query}.@{query.ext}.txt" alwayslog="true" append="true"/>
+                    </exec>
+                    <!-- Note that constructs like graph="HelloWorld.x3d" do not work, since ARQ (and indeed SPARQL) does not accept arbitrary XML such as .x3d -->
+                </then>
+                <else>
+                    <!-- graph file not included, hence metaquery against ontology itself -->
+                    <echo message="==========================="/>
+                    <echo message="Perform Mission Execution Ontology metaquery ${queries.dir}/@{query}.@{query.ext}"/>
+                    <echo message="  using Mission Execution Ontology itself    ${ontologies.dir}/@{ontology}"/>
+                    <echo message="  to produce output file                     ${queries.dir}/@{query}.@{query.ext}.txt:"/>
+                    <concat destfile="${queries.dir}/@{query}.@{query.ext}.txt" append="false"
+                                  >Perform Mission Execution Ontology metaquery ${queries.dir}/@{query}.@{query.ext}
+  using Mission Execution Ontology itself    ${ontologies.dir}/@{ontology}
+  to produce output file                     ${queries.dir}/@{query}.@{query.ext}.txt:
+
+</concat>
+                    <echo message="==========================="/>
+                    <loadfile property=  "@{query}.file.txt" srcFile="${queries.dir}/@{query}.@{query.ext}"/>
+                    <echo      message="${@{query}.file.txt}"/><!-- contents of file, note stored as unique property -->
+                    <concat destfile="${queries.dir}/@{query}.@{query.ext}.txt" append="true">${@{query}.file.txt}</concat>
+
+                    <echo message="Metaquery results:"/>
+                    <echo message="arq --data=${ontologies.dir}/@{ontology} --query=${queries.dir}/@{query}.@{query.ext}"/>
+                    <exec executable="${arq}"  dir="." vmlauncher="false">
+                        <!-- https://jena.apache.org/documentation/query/cmds.html -->
+                        <arg value="--data"/>
+                        <arg value="${ontologies.dir}/@{ontology}"/>
+                        <arg value="--query"/>
+                        <arg value="${queries.dir}/@{query}.@{query.ext}"/>
+                        <!-- no graph -->
+                        <redirector output="${queries.dir}/@{query}.@{query.ext}.txt" alwayslog="true" append="true"/>
+                    </exec>
+                </else>
+            </if>
+            <!-- ARQ query table ends in horizontal rule -->
+            <echo />
+        </sequential>
+    </macrodef>
+
+    <!-- ======================================================================================== -->
+    
+    <target name="all" depends="convert.all,SPARQL.query.tests.all,test.all.missions.python,zip"/>
+
+    <target name="convert.all" depends="convertAvclToMeoTurtle.examples.all,convertAvclToLisp.examples.all,convertAvclToProlog.examples.all"/>
+
+    <target name="deploy" description="build all and upload" depends="all,upload"/>
+    
+    <target name="build" description="shortcut to build all mission checks" depends="convertAvclToMeoTurtle.examples.all,SPARQL.query.tests.all"/>
+    
+    <target name="build.SailorOverboard" depends="">
+        <echo message="Convert SailorOverboard.xml to SailorOverboard.ttl using AvclToTurtleMeo3.0.xslt stylesheet"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information -->
+            <arg value="-s:missions/avcl/SailorOverboard.xml"/>
+            <arg value="-o:${turtle.dir}/SailorOverboard.ttl"/>
+            <arg value="-xsl:stylesheets/AvclToTurtleMeo3.0.xslt"/>
+        </java>
+        <!-- depends on correct setting of default file in target -->
+        <!-- semantics build.xml/build.HelloWorld depends on correct setting of default file HelloWorld.x3d in target
+        <ant dir="${stylesheets.dir}" antfile="build.xml" target="test.X3dToTurtle.xslt.one" inheritAll="false"/> -->
+        <!--
+        <echo   message="test converted result:"/>
+        <runQuery query="X3dHelloWorldQuery_01" graph="examples/HelloWorld"/>
+        -->
+    </target>
+    
+    <target name="convertAvclToLisp.examples.all" description="convert each AVCL mission to LISP source code">
+        <echo message="remove compiled Allegro Common Lisp ACL files (if any)"/>
+        <delete verbose="true" failonerror="false">
+            <fileset dir="missions/lisp">
+                <include name="*.fasl"/><!-- compiled Allegro Common Lisp ACL -->
+            </fileset>
+        </delete>
+        <echo message="convert all AVCL missions to Lisp source code"/>
+        <convertAvclToLisp avclMission="SailorOverboard"/>
+    <!--<copy file="${lisp.dir}/SailorOverboardConverted.cl" todir="${lisp.dir}/SailorOverboard/" verbose="true"/>-->
+        <convertAvclToLisp avclMission="LifeboatTracking"/>
+        <convertAvclToLisp avclMission="PiratesSeizingMerchantDefense"/>
+        <convertAvclToLisp avclMission="HospitalShipEmDecoy1.Opponent"/>
+        <convertAvclToLisp avclMission="HospitalShipEmDecoy2.Defender.SenseDecideAct"/>
+        <convertAvclToLisp avclMission="HospitalShipEmDecoy3.Defender.EthicalControlOODA"/>
+        <echo message="...convertAvclToLisp.examples.all complete"/>
+        <echo/>
+    </target>
+    
+    <target name="convertAvclToLisp.example" description="convert single AVCL mission to Lisp source code">
+        <echo message="convert AVCL mission to LISP source code"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information -->
+            <arg value="-s:missions/avcl/SailorOverboard.xml"/>
+            <arg value="-o:missions/lisp/SailorOverboardConverted.cl"/>
+            <arg value="-xsl:${stylesheets.dir}/AvclToLisp.xslt"/>
+        </java>
+    </target>
+    
+    <target name="convertAvclToProlog.Iso.example" description="convert single AVCL mission to Prolog source code">
+        <echo message="convert AVCL mission to LISP source code"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information -->
+            <arg value="-s:missions/avcl/SailorOverboard.xml"/>
+            <arg value="-o:missions/prolog/SailorOverboardConverted.pl"/>
+            <arg value="-xsl:${stylesheets.dir}/AvclToProlog.xslt"/>
+            <arg value="prologVersion=@{prologVersion}"/>
+        </java>
+    </target>
+    
+    <target name="convertAvclToProlog.example" description="convert single AVCL mission to Prolog source code">
+        <echo message="convert AVCL mission to LISP source code"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information -->
+            <arg value="-s:missions/avcl/SailorOverboard.xml"/>
+            <arg value="-o:missions/prolog/SailorOverboardConverted.pl"/>
+            <arg value="-xsl:${stylesheets.dir}/AvclToProlog.xslt"/>
+        </java>
+    </target>
+    
+    <target name="convertAvclToProlog.examples.all" description="convert each AVCL mission to Prolog source code">
+        <echo message="remove compiled Allegro Common Lisp ACL files (if any)"/>
+        <delete verbose="true" failonerror="false">
+            <fileset dir="missions/prolog">
+                <include name="*.fasl"/><!-- compiled Allegro Common Lisp ACL -->
+            </fileset>
+        </delete>
+        <echo message="convert all AVCL missions to Prolog source code"/>
+        <convertAvclToProlog avclMission="SailorOverboard"/>
+        <convertAvclToProlog avclMission="LifeboatTracking"/>
+        <convertAvclToProlog avclMission="PiratesSeizingMerchantDefense"/>
+        <convertAvclToProlog avclMission="HospitalShipEmDecoy1.Opponent"/>
+        <convertAvclToProlog avclMission="HospitalShipEmDecoy2.Defender.SenseDecideAct"/>
+        <convertAvclToProlog avclMission="HospitalShipEmDecoy3.Defender.EthicalControlOODA"/>
+        <echo message="...convertAvclToProlog.examples.all complete"/>
+        <echo/>
+    </target>
+    
+    <target name="convertAvclToMeoTurtle.examples.all" description="convert each AVCL mission to MeoTurtle source code">
+        <echo message="convert all AVCL missions to MeoTurtle source code"/>
+        <convertAvclToMeoTurtle avclMission="SailorOverboard"/>
+        <convertAvclToMeoTurtle avclMission="LifeboatTracking"/>
+        <convertAvclToMeoTurtle avclMission="PiratesSeizingMerchantDefense"/>
+        <convertAvclToMeoTurtle avclMission="HospitalShipEmDecoy1.Opponent"/>
+        <convertAvclToMeoTurtle avclMission="HospitalShipEmDecoy2.Defender.SenseDecideAct"/>
+        <convertAvclToMeoTurtle avclMission="HospitalShipEmDecoy3.Defender.EthicalControlOODA"/>
+    </target>
+    
+    <target name="convertAvclToMeoTurtle.example" description="convert single AVCL mission to MeoTurtle source code">
+        <echo message="convert AVCL mission to MeoTurtle source code"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline                           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information -->
+            <arg value="-s:missions/avcl/SailorOverboard.xml"/>
+            <arg value="-o:${turtle.dir}/SailorOverboardConverted.ttl"/>
+            <arg value="-xsl:${stylesheets.dir}/AvclToTurtleMeo3.0.xslt"/>
+        </java>
+    </target>
+    
+    <target name="get.abcl" description="get Armed Bear Common Lisp (ABCL) jar">
+        <get src="https://repo1.maven.org/maven2/org/armedbear/lisp/abcl/1.0.0/abcl-1.0.0.jar" dest="lib/abcl.jar" verbose="true"/>
+    </target>
+        
+    <target name="run.lisp.abcl" description="run Armed Bear Common Lisp (ABCL)">
+        <echo message="Armed Bear Common Lisp (ABCL) https://common-lisp.net/project/armedbear"/>
+        <property name="abcl.dir" value="lib" description="local path to Armed Bear Common Lisp (ABCL)"/>
+        <!-- C:\languages\java\abcl-bin-1.6.0 -->
+        <property name="abcl.jar" value="abcl.jar" description="open source jar for Armed Bear Common Lisp (ABCL)"/>
+        <java jar="${abcl.dir}/${abcl.jar}" fork="true">
+            <arg value="--help"/>
+        </java>
+        
+        <property name="lisp.mission" value="missions/lisp/SailorOverboardConverted.cl"/>
+        <echo message="java -jar abcl.jar --load ${lisp.mission}"/>
+        <echo message="  user invocation: (run)"/>
+    <!--<echo message="  :cd missions/lisp"/>
+        <echo message="  :ld SailorOverboardConverted.cl"/>
+        <echo message="  (run)"/> -->
+        <java jar="${abcl.dir}/${abcl.jar}" fork="true">
+            <arg value="--load"/>
+            <arg value="${lisp.mission}"/>
+            <arg value="-- (run)"/>
+        <!--<arg value="- -batch"/>-->
+        </java>
+        <!-- TODO automated test invocation -->
+    </target>
+        
+    <target name="run.prolog.gnu" description="run GNU Prolog">
+        <echo message="GNU Prolog http://www.gprolog.org"/>
+        <property name="gnuprolog.dir" value="C:\languages\GNU-Prolog\bin" description="local path to GNU Prolog"/>
+        <property name="gnuprolog.exe" value="gprolog.exe" description="executable for GNU Prolog"/>
+        <exec executable="${gnuprolog.exe}"  dir="${gnuprolog.dir}" vmlauncher="false">
+            <arg value="--version"/>
+        </exec>
+        <exec executable="${gnuprolog.exe}"  dir="${gnuprolog.dir}" vmlauncher="false">
+            <arg value="--help"/>
+        </exec>
+        <property name="prolog.mission" location="missions/prolog/SailorOverboardConverted.pl"/>
+        <echo message="$prolog.mission=${prolog.mission}"/>
+        <exec executable="${gnuprolog.exe}"  dir="${gnuprolog.dir}" vmlauncher="false">
+            <arg value="--consult-file"/>
+            <arg value="${prolog.mission}"/>
+        </exec>
+        <!--
+        <echo message=":cd missions/lisp/SailorOverboard"/>
+        <echo message=":ld SailorOverboardConverted.cl"/>
+        <java jar="${abcl.dir}/${abcl.jar}" fork="true">
+            <arg value="-help"/>
+            <arg value="-batch"/>
+            <arg value="missions/lisp/SailorOverboard/SailorOverboardConverted.cl"/>
+        </java>
+        -->
+        <!-- TODO automated test invocation -->
+    </target>
+
+    <target name="SPARQL.query.test.single" depends="" description="Test X3D Ontology using Apache Jena arq" >
+        <runQuery query="MissionQuery_02_InitialGoal" graph="LifeboatTrackingConverted"/>
+        <!--
+        <runQuery query="MissionQuery_02_InitialGoal" graph="LifeboatTrackingConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches" graph="SailorOverboardConverted"/>
+        <runQuery query="MissionExecutionOntologyQuery_01" graph="ontologies/MissionExecutionOntology"/>
+        -->
+    </target>
+
+    <target name="SPARQL.query.tests.all" depends="" description="Test X3D Ontology using Apache Jena arq" >
+        <echo   message="==========================="/>
+        <echo   message="arq --version"/>
+        <echo />
+        <exec executable="${arq}"  dir="." vmlauncher="false">
+            <arg value="--version"/>
+        </exec>
+        <echo />
+        <echo   message="arq --help"/>
+        <echo />
+        <exec executable="${arq}"  dir="." vmlauncher="false">
+            <!-- https://jena.apache.org/documentation/query/cmds.html -->
+            <arg value="--help"/>
+        </exec>
+        <echo   message="==========================="/>
+        <echo   message="Metaqueries against the ontology itself:"/>
+        <runQuery query="MissionExecutionOntologyQuery_01"/><!-- default extension .rq -->
+        <echo   message="==========================="/>
+        <echo   message="Mission queries:"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="SailorOverboardConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="LifeboatTrackingConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="PiratesSeizingMerchantDefenseConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="HospitalShipEmDecoy1.OpponentConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="HospitalShipEmDecoy2.Defender.SenseDecideActConverted"/>
+        <runQuery query="MissionQuery_01_GoalBranches"  graph="HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted"/>
+        
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="SailorOverboardConverted"/>
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="LifeboatTrackingConverted"/>
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="PiratesSeizingMerchantDefenseConverted"/>
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="HospitalShipEmDecoy1.OpponentConverted"/>
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="HospitalShipEmDecoy2.Defender.SenseDecideActConverted"/>
+        <runQuery query="MissionQuery_02_InitialGoal"  graph="HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted"/>
+        
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="SailorOverboardConverted"/>
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="LifeboatTrackingConverted"/>
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="PiratesSeizingMerchantDefenseConverted"/>
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="HospitalShipEmDecoy1.OpponentConverted"/>
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="HospitalShipEmDecoy2.Defender.SenseDecideActConverted"/>
+        <runQuery query="MissionQuery_03_GoalFollowsItself"  graph="HospitalShipEmDecoy3.Defender.EthicalControlOODAConverted"/>
+    </target>
+
+    <target name="SPARQL.query.robot.examples" depends="" description="Test X3D Ontology using direct invocation of ROBOT tool" >
+        <echo message="Test X3D Ontology queries using direct invocation of ROBOT tool"/>
+        <echo message="https://robot.obolibrary.org/"/>
+        <echo message="${robot} help"/>
+        <exec executable="${robot}"  dir="." vmlauncher="false">
+            <arg value="help"/>
+        </exec>
+        <echo/>
+        <echo message="==========================="/>
+        <echo message="${robot} PiratesSeizingMerchantDefenseConverted.ttl MissionQuery_03_GoalFollowsItself.rq"/>
+        <exec executable="${robot}"  dir="." vmlauncher="false">
+            <arg value="query"/>
+            <arg value="--input"/>
+            <arg value="missions/turtle/LifeboatTrackingConverted.ttl"/>
+            <arg value="--query"/>
+            <arg value="queries/MissionQuery_03_GoalFollowsItself.rq"/>
+            <arg value="queries/LifeboatTrackingConverted.MissionQuery_03_GoalFollowsItself.robot.rq.txt"/><!-- result -->
+        </exec>
+        <echo/>
+        <echo message="==========================="/>
+        <echo message="${robot} PiratesSeizingMerchantDefenseConverted.ttl MissionQuery_03_GoalFollowsItself.rq"/>
+        <exec executable="${robot}"  dir="." vmlauncher="false">
+            <arg value="query"/>
+            <arg value="--input"/>
+            <arg value="missions/turtle/PiratesSeizingMerchantDefenseConverted.ttl"/>
+            <arg value="--query"/>
+            <arg value="queries/MissionQuery_03_GoalFollowsItself.rq"/>
+            <arg value="queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_03_GoalFollowsItself.robot.rq.txt"/><!-- result -->
+        </exec>
+        <!-- TODO fix
+        <property name="robotQueryOutput" file="queries/PiratesSeizingMerchantDefenseConverted.MissionQuery_03_GoalFollowsItself.robot.rq.txt"/>
+        <echo mesage="${robotQueryOutput}"/>
+        -->
+        <echo/>
+        <echo message="==========================="/>
+    </target>
+
+    <target name="clean.owldoc" depends="" description="clean owl documentation produced by protege" >
+        <delete verbose="true" failonerror="false" dir="documentation/owldoc"/>
+    </target>
+
+    <target name="clean" description="clean odds and ends, also .zip archive" >
+        <!-- do not clean documentation as part of zip: depends="clean.owldoc" -->
+    </target>
+
+    <target name="zip" depends="clean" description="create EthicalControlArchive.zip to facilitate developent" >
+        <zip destfile="EthicalControlArchive.zip">
+            <zipfileset dir="." prefix="EthicalControl">
+                <include name="*.html"/>
+                <include name="*.md"/>
+                <include name="*.txt"/>
+                <include name="*.spp"/>
+                <include name="*.xml"/>
+                <include name="license.*"/><!-- TODO -->
+            </zipfileset>
+            <zipfileset dir="documentation" prefix="EthicalControl/documents">
+                <include name="**/*.png"/>
+                <include name="**/*.jpg"/>
+                <include name="**/*.md"/>
+                <include name="**/*.pdf"/>
+                <include name="**/*.pptx"/>
+                <include name="**/*.md"/>
+                <include name="**/*.txt"/>
+                <include name="owldoc/**/*.*"/><!-- produced by Protege - big! -->
+                <exclude name="videos/*.*"/>
+                <exclude name="**/*signature*.*"/>
+            </zipfileset>
+            <zipfileset dir="lib" prefix="EthicalControl/lib">
+                <include name="*.jar"/>
+            </zipfileset>
+            <zipfileset dir="missions" prefix="EthicalControl/missions">
+                <include name="**/*"/>
+                <exclude name="**/~*"/>
+            </zipfileset>
+            <zipfileset dir="ontologies" prefix="EthicalControl/ontologies">
+                <include name="**/*"/>
+                <exclude name="**/~*"/>
+            </zipfileset>
+            <zipfileset dir="queries" prefix="EthicalControl/queries">
+                <include name="**/*"/>
+            </zipfileset>
+            <zipfileset dir="schemas" prefix="EthicalControl/schemas">
+                <include name="**/*"/>
+                <exclude name="**/~*"/>
+            </zipfileset>
+            <zipfileset dir="stylesheets" prefix="EthicalControl/stylesheets">
+                <include name="**/*"/>
+                <exclude name="**/~*"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="scp.askUsernamePassword.savage"
+        description="If needed, ask for username, password">
+        <if>
+            <not>
+                <and>
+                    <isset property="username.savage"/>
+                    <isset property="password.savage"/>
+                </and>
+            </not>
+            <then>
+                <echo  message="username.savage, password.savage not obtained via file ${access.properties.filename}"/>
+                <input message="username.savage:"
+                   addproperty="username.savage" />
+                <input message="password.savage:"
+                   addproperty="password.savage" />
+                <echo  message="username.savage=${username.savage}"/>
+                <echo  message="password.savage=################"/>
+                <!--<echo  message="password.savage=${password.savage}"/> debug -->
+            </then>
+            <else>
+                <echo  message="username.savage, password.savage obtained from file ${access.properties.filename}"/>
+            </else>
+        </if>
+    </target>
+
+    <target name="upload" depends="zip,scp.uploadEthicalControl.savage"/>
+
+    <target name="scp.uploadEthicalControl.savage" depends="scp.askUsernamePassword.savage"
+        description="scp upload of updated Savage EthicalControl website, including .zip">
+        <echo  message="scp upload catalog and javadoc pages to sftp://${sftpServer.savage}${sftpDirectory.savage.EthicalControl}"/>
+        <scp remotetodir="${username.savage}@${sftpServer.savage}:${sftpDirectory.savage.EthicalControl}"  password="${password.savage}"
+             verbose="true" filemode="664" dirmode="775">
+            <fileset dir=".">
+                <include name="**/*"/>
+                <include name="**/*.rq"/>
+                <exclude name="**/*.fasl"/>
+                <exclude name="**/*.zip"/>
+                <exclude name="**/~*"/>
+                <exclude name="access.properties"/>
+                <exclude name=".gitignore"/>
+                <exclude name="_archive"/>
+                <exclude name="documentation/videos/**/*"/>
+                <exclude name="nbproject/private"/>
+            </fileset>
+            <!-- save zip for last to expedite deployment of key products -->
+            <fileset dir=".">
+                <include name="**/*.zip"/>
+                <exclude name="access.properties"/>
+                <exclude name=".gitignore"/>
+                <exclude name="_archive"/>
+                <exclude name="nbproject/private"/>
+            </fileset>
+        </scp>
+        <echo  message="upload available at https://${sftpServer.savage}/${sftpDirectory.savage.EthicalControl}"/>
+        <echo  message="scp.uploadEthicalControl.savage ssh-sftp target complete"/>
+    </target>
+
+    <target name="scp.uploadEthicalControl.savage.videos" depends="scp.askUsernamePassword.savage"
+        description="scp upload of updated Savage EthicalControl website, including .zip">
+        <echo  message="scp upload catalog and javadoc pages to sftp://${sftpServer.savage}${sftpDirectory.savage.EthicalControl}"/>
+        <scp remotetodir="${username.savage}@${sftpServer.savage}:${sftpDirectory.savage.EthicalControl}/documentation/videos"  password="${password.savage}"
+             verbose="true" filemode="664" dirmode="775">
+            <fileset dir=".">
+                <include name="documentation/videos/EthicalControlUnmannedSystems.DataCentricSecurity.2020April16.mp4"/>
+                <include name="documentation/videos/EthicalControlUnmannedSystems.NdiaUnderseaWarfare.September2020.mp4"/>
+                <include name="documentation/videos/EthicalControlUnmannedSystems.PythonMissionTestingDemoCefaluDecember2020"/>
+                <include name="documentation/videos/EthicalControlUnmannedSystemsOverview.Cruser.2020May4.mp4"/>
+                <include name="documentation/videos/EthicalControlUnmannedSystemsOverview.UVAS2020Reprise.2020April6.mp4"/>
+                <include name="documentation/videos/NDIA_USW_undersea_2020_airforce-blue_web2.png"/>
+            </fileset>
+        </scp>
+        <echo  message="upload available at https://${sftpServer.savage}/${sftpDirectory.savage.EthicalControl}"/>
+        <echo  message="scp.uploadEthicalControl.savage.videos ssh-sftp target complete"/>
+    </target>
+    
+    <target name="view.gitlab.site" description="view online version control archive in web browser (Netbeans only)">
+        <echo message="https://gitlab.nps.edu/Savage/EthicalControl"/>
+        <nbbrowse url="https://gitlab.nps.edu/Savage/EthicalControl"/>
+    </target>
+    
+    <target name="view.website" description="view online version control archive in web browser (Netbeans only)">
+        <echo message="https://savage.nps.edu/EthicalControl"/>
+        <nbbrowse url="https://savage.nps.edu/EthicalControl"/>
+    </target>
+    
+    <target name="view.owldoc.local" description="view local OWL documentation from Protege in web browser (Netbeans only)">
+        <echo message="view local OWL documentation from Protege in web browser (Netbeans only)"/>
+        <nbbrowse file="documentation/owldoc/index.html"/>
+    </target>
+    
+    <target name="view.lisp.ablc" description="view ABCL site (Netbeans only)">
+        <echo message="view Armed Bear Common Lisp (ABCL) https://common-lisp.net/project/armedbear"/>
+        <nbbrowse url="https://common-lisp.net/project/armedbear"/>
+    </target>
+    
+    <target name="view.prolog.gnu" description="view Gnu Prolog site (Netbeans only)">
+        <echo message="view GNU Prolog http://www.gprolog.org"/>
+        <nbbrowse url="http://www.gprolog.org"/>
+    </target>
+    
+    <target name="view.doc.common.lisp" description="view documentation Common Lisp the Language (Netbeans only)">
+        <echo message="view documentation Common Lisp the Language https://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html"/>
+        <nbbrowse url="https://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html"/>
+    </target>
+
+    <target name="test.all.missions.python">
+        <echo>python -version</echo>
+        <exec executable="python"  dir="." vmlauncher="false">
+            <arg value="--version"/>
+        </exec>
+        <exec executable="python"  dir="." vmlauncher="false">
+            <arg value="missions/python/MissionExecutionEngine.py"/>
+            <arg value="--help"/>
+        </exec>
+        <exec executable="python"  dir="." vmlauncher="false">
+            <arg value="missions/python/MissionExecutionEngine.py"/>
+            <arg value="--exhaustively-test-all-standard-library-missions"/>
+            <arg value="--exhaustive-testing-max-runs-per-mission"/>
+            <arg value="2000"/><!-- debatable, what is best? want to find significant errors so verbose is OK -->
+        </exec>
+        <!-- verbose results are OK, they go into the build log for ongoing comparison/confirmation -->
+    </target>
+    
+    <target name="test.MeoDadmNamingRulesVerification">
+        
+        <echo message="MeoDadmNamingVerification ${ontologies.dir}/MissionExecutionOntology3.1-DADM.owl using ${stylesheets.dir}/MeoDadmNamingVerification.xslt"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet         -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information 
+            <arg value="-suppressXsltNamespaceCheck:on"/>-->
+            <arg value=  "-s:${ontologies.dir}/MissionExecutionOntology3.1-DADM.owl"/>
+            <arg value="-xsl:${stylesheets.dir}/MeoDadmNamingVerification.xslt"/>
+        </java>
+        <echo message="DADM naming verification complete."/>
+    </target>
+    
+    <target name="build.MeoDadmRiskElementsToAvclSchema">
+        
+        <echo message="MeoDadmRiskElementsToAvclSchema ${ontologies.dir}/MissionExecutionOntology3.1.owl using ${stylesheets.dir}/MeoDadmRiskElementsToAvclSchema.xslt"/>
+        <!-- https://www.saxonica.com/documentation/#!using-xsl/commandline           -->
+        <!-- java net.sf.saxon.Transform -s:source -o:output  -xsl:stylesheet         -->
+        <!-- $(SAXON) -t -s:HelloWorld.x3d -o:HelloWorld.html -xsl:../X3dToXhtml.xslt -->
+        <!-- note reordering of parameters for source, output contrary to Saxon documentation! -->
+       <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+            <arg value="-warnings:recover"/> <!-- recover after writing a warning message -->
+            <!-- <arg value="-t"/> saxon version and timing information 
+            <arg value="-suppressXsltNamespaceCheck:on"/>-->
+            <arg value=  "-s:${ontologies.dir}/MissionExecutionOntology3.1.owl"/>
+            <arg value="-xsl:${stylesheets.dir}/MeoDadmRiskElementsToAvclSchema.xslt"/>
+        </java>
+        <echo message="DADM AVCL schema enumerations build complete."/>
+    </target>
+    
+</project>

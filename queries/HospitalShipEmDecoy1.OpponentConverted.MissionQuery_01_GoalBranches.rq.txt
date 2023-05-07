@@ -1,0 +1,60 @@
+Perform Mission Execution Ontology query queries/MissionQuery_01_GoalBranches.rq
+  using turtle form of AVCL mission      missions/turtle/HospitalShipEmDecoy1.OpponentConverted.ttl
+  to produce output log file             queries/HospitalShipEmDecoy1.OpponentConverted.MissionQuery_01_GoalBranches.rq.txt
+===========================
+PREFIX :     <https://savage.nps.edu/EthicalControl/missions#>
+PREFIX meo:  <https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# TODO does @base simplify the variable outputs?
+# @base <https://savage.nps.edu/ontologies/MissionExecutionOntology/missions> 
+
+# MissionQuery_01_GoalBranches.rq
+# Query to list all Goals with corresponding description information and branching logic.
+
+###############################################
+
+SELECT ?goal ?nextOnSuccess ?nextOnFailure ?nextOnException ?isPartOfPhase ?description # ?GoalFound ?phase
+
+WHERE
+{ 
+    ?goal   a meo:Goal ;           # Shorthand expression: a = rdf:type
+            rdfs:comment           ?description ;
+            meo:isPartOfPhase      ?isPartOfPhase .
+
+    OPTIONAL                       # provide results even when no value is provided (by terminal goals)
+    {
+    ?goal   meo:hasNextOnSuccess   ?nextOnSuccess .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnFailure   ?nextOnFailure .
+    }
+    OPTIONAL
+    {
+    ?goal   meo:hasNextOnException ?nextOnException .
+    }
+    # https://stackoverflow.com/questions/11234371/sparql-query-results-without-namespace
+#   BIND (strafter(xsd:string(?goal),"#")            AS ?GoalFound)
+#   BIND (strafter(xsd:string(?nextOnSuccess),"#")   AS ?GoalNextOnSuccess)
+#   BIND (strafter(xsd:string(?nextOnFailure),"#")   AS ?GoalNextOnFailure)
+#   BIND (strafter(xsd:string(?nextOnException),"#") AS ?GoalNextOnException)
+#   BIND (coalesce(?isPartOfPhase,"")                AS ?phase)
+}
+ORDER BY (?goal) # alphanumeric order results in order given by each name
+###############################################
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+| goal         | nextOnSuccess | nextOnFailure | nextOnException | isPartOfPhase | description                                                          |
+=========================================================================================================================================================
+| :HSEMD.Foe.1 | :HSEMD.Foe.2  | :HSEMD.Foe.2  | :HSEMD.Foe.7    | "'undefined'" | "Search, Observe: Find ship, surveil for weaknesses"                 |
+| :HSEMD.Foe.2 | :HSEMD.Foe.3  | :HSEMD.Foe.3  | :HSEMD.Foe.7    | "'undefined'" | "Assess, approach: Surreptitious entry, harbor or anchorage"         |
+| :HSEMD.Foe.3 | :HSEMD.Foe.4  | :HSEMD.Foe.4  | :HSEMD.Foe.7    | "'undefined'" | "Covertly Board: EM spoofing devices attached to topside"            |
+| :HSEMD.Foe.4 | :HSEMD.Foe.5  | :HSEMD.Foe.5  | :HSEMD.Foe.7    | "'undefined'" | "Standoff, Observe: Fall back to safe vantage point"                 |
+| :HSEMD.Foe.5 | :HSEMD.Foe.6  | :HSEMD.Foe.6  | :HSEMD.Foe.7    | "'undefined'" | "Initiate Fake Attack: Light off false EM spoofing signals"          |
+| :HSEMD.Foe.6 | :HSEMD.Foe.7  | :HSEMD.Foe.7  | :HSEMD.Foe.7    | "'undefined'" | "Observe Reaction: Monitor response, assess damage"                  |
+| :HSEMD.Foe.7 |               |               |                 | "'undefined'" | "Evade, Escape: Avoid detection, depart locale - Terminal condition" |
+---------------------------------------------------------------------------------------------------------------------------------------------------------

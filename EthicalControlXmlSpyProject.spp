@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="AVCL Missions .xml .ttl" ExtStr="xml;">
+		<File FilePath="missions\avcl\HospitalShipEmDecoy1.Opponent.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\HospitalShipEmDecoy2.Defender.SenseDecideAct.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\HospitalShipEmDecoy3.Defender.EthicalControlOODA.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\LifeboatTracking.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\PiratesSeizingMerchantDefense.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\SailorOverboard.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\SailorOverboard3.1.xml" HomeFolder="Yes"/>
+		<File FilePath="missions\avcl\TCE22-2MemsAcousticVectorSensorTesting.xml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="Ontologies and Schemas" ExtStr="dtd;dcd;xdr;biz;xsd;ttl,.txt">
+		<File FilePath="schemas\AVCL.3.0.changes.txt" HomeFolder="Yes"/>
+		<File FilePath="schemas\AVCL.3.0.xsd" HomeFolder="Yes"/>
+		<File FilePath="schemas\AVCL.3.1.changes.txt" HomeFolder="Yes"/>
+		<File FilePath="schemas\AVCL.3.1.xsd" HomeFolder="Yes"/>
+		<File FilePath="ontologies\MissionExecutionOntology3.0.rdf" HomeFolder="Yes"/>
+		<File FilePath="ontologies\MissionExecutionOntology3.0.ttl" HomeFolder="Yes"/>
+		<File FilePath="ontologies\MissionExecutionOntology3.1-DADM.tests.txt" HomeFolder="Yes"/>
+		<File FilePath="ontologies\MissionExecutionOntology3.1-DADM.ttl" HomeFolder="Yes"/>
+		<File FilePath="ontologies\MissionExecutionOntology3.1.owl" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="Queries" ExtStr=".ttl,.rq,.txt">
+		<File FilePath="queries\MissionExecutionOntologyQuery_01.rq" HomeFolder="Yes"/>
+		<File FilePath="queries\MissionQuery_01_GoalBranches.rq" HomeFolder="Yes"/>
+		<File FilePath="queries\MissionQuery_02_InitialGoal.rq" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="XSLT transformations" ExtStr="xsl;xslt;md;txt">
+		<File FilePath="stylesheets\AvclToLisp.xslt" HomeFolder="Yes"/>
+		<File FilePath="stylesheets\AvclToProlog.xslt" HomeFolder="Yes"/>
+		<File FilePath="stylesheets\AVCLToTurtle.xslt" HomeFolder="Yes"/>
+		<File FilePath="stylesheets\README.md" HomeFolder="Yes"/>
+	</Folder>
+</Project>

@@ -1,0 +1,6 @@
+*.~vsdx
+*.fasl
+access.properties
+/nbproject/private/
+/archive/
+/ontologies/DimensionsAutonomousDecisionMaking/private

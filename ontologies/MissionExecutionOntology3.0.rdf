@@ -1,0 +1,984 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology"
+     xml:base="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology"
+     xmlns:meo="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#accomplishes -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#accomplishes">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <rdfs:comment>The identified EndCondition must be accomplished to satisfy the identified IntendedOutcome.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canAchieve -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canAchieve">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>A Vehicle meets one or more IntendedOutcome instances, meaning the Vehicle has at least one VehicleFeature instance that &quot;canFulfill&quot; each IntendedOutcome (&quot;canAchieve&quot; is implied by the composition of &quot;hasFeature&quot; and &quot;canFulfill&quot;).</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canAchieve"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#propertyChainAxiom"/>
+        <owl:annotatedTarget rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill"/>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Vehicle meets a GoalRequirement if and only if it has a VehicleFeature that can fulfill that GoalRequirement.
+
+[NOTE: Here we have expressed the chain &quot;hasVehicleFeature o canFulfill&quot; as a SubProptertyOf meetsRequirements . We have not found how to express the reverse assertion in Protege to obtain equivalency. Perhaps it should be acceptable to have a Vehicle that is said to directly meet a GoalRequirement (through relation meetsRequirement] without the added detail of an explicit VehicleFeature that canFulfill that GoalRequirement?]</rdfs:comment>
+        <rdfs:label>V3 (partial)</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <rdfs:comment>A VehicleFeature can fulfill one or more IntendedOutcome instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <rdfs:comment>A VehicleFeature can only fulfill GoalRequirements.</rdfs:comment>
+        <rdfs:label>F1</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canIdentify -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canIdentify">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>A Vehicle can identify one or more Constraint instances, meaning that the Vehicle has the technical ability to make and discern measurements relating to a Constraint (e.g., an impending position exception, an impending depth exception, etc.).</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canIdentify"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#propertyChainAxiom"/>
+        <owl:annotatedTarget rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure"/>
+        </owl:annotatedTarget>
+        <rdfs:comment>If a Vehicle has a VehicleFeature that can test a Constraint, then that Vehicle can identify that Constraint.</rdfs:comment>
+        <rdfs:label>V4</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>A VehicleFeature can measure phenomena necessary to address one or more EndCondition instances, meaning the VehicleFeature has the capability to measure and discern the conditions stated in each EndCondition.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>A VehicleFeature can only test Constraints.</rdfs:comment>
+        <rdfs:label>F2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeet -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeet">
+        <owl:inverseOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Vehicle can meet one or more Goal instances, meaning the Vehicle has the physical capabilities to perform actions that can achieve the Goal. This is an indication of achievability, not actual achievement.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canPerform -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canPerform">
+        <owl:inverseOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:comment>A Vehicle can perform one or more Mission instances, meaning the Vehicle can meet (&quot;canMeet&quot;) all of the Goals associated with the Mission through the &quot;includes&quot; relation.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains">
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>A Constraint applies to one or more Missions and/or one or more Goals.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#propertyChainAxiom"/>
+        <owl:annotatedTarget rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Constraint that applies to a Mission must also apply to all of the Goals that Mission includes.</rdfs:comment>
+        <rdfs:label>C3</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsGoal -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsGoal">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+        <owl:inverseOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasGoalConstraint"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsMission -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrainsMission">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+        <owl:inverseOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasMissionConstraint"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint">
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+            <rdf:Description>
+                <owl:inverseOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+            </rdf:Description>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>A Mission or Goal has one or more Constraint instances, meaning the Mission or Goal must be concerned about the conditions expressed in the Constraint instances in the execution of the associated mission or goal..</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <rdfs:comment>A Mission can be constrained only by Constraints.</rdfs:comment>
+        <rdfs:label>M3</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>Every Goal has a specific EndCondition, which results in either SUCCESS FAILURE or EXCEPTION, based on execution of actions associated with Goal achievement, under any associated Constraint instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>A Goal&apos;s end condition (ending state) must be an EndCondition.
+
+[NOTE: In planning, this represents *possible* end conditions for a Goal; the actual end condition will not be known until mission execution.]</rdfs:comment>
+        <rdfs:label>G2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <rdfs:comment>A Vehicle has one or more VehicleFeature instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <rdfs:comment>The only allowable features of a Vehicle are VehicleFeature.</rdfs:comment>
+        <rdfs:label>V1</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasGoalConstraint -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasGoalConstraint">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <rdfs:comment>The hasGoalConstraint property relates a Goal instance to one or more Constraint instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasMissionConstraint -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasMissionConstraint">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <rdfs:comment>The hasMissionConstraint property relates a Mission instance to one or more Constraint instances.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>Goal &apos;B&apos; is the next goal for Goal &apos;A&apos; when &apos;A&apos; directly precedes &apos;A&apos; in the Mission goal tree. This property is  irreflexive; a Goal cannot return to itself (a weak form of Rule G7).</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+        <rdfs:comment>A Goal follows another Goal if it is the next Goal.</rdfs:comment>
+        <rdfs:label>G8</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Goal can only have other Goals next.</rdfs:comment>
+        <rdfs:label>G3</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnException -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnException">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>The Goal to perform following a EXCEPTION EndCondition on the current Goal.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnFailure -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnFailure">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>The Goal to perform following a FAILURE EndCondition on the current Goal.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnSuccess -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnSuccess">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoal"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>The Goal to perform following a SUCCESS EndCondition on the current Goal.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+        </owl:propertyChainAxiom>
+        <rdfs:comment>A Mission &quot;includes&quot; one or more Goal instances. An initial Goal instance is linked to the mission through the &quot;startsWith&quot; relation. The Goals are linked to each other through the &quot;hasNext&quot; set of properties (hasNextOnSuccess, hasNextOnFailure, hasNextOnException), describing a goal tree for the Mission.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Mission can only include Goals.</rdfs:comment>
+        <rdfs:label>M2</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2002/07/owl#propertyChainAxiom"/>
+        <owl:annotatedTarget rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+        </owl:annotatedTarget>
+        <rdfs:comment>All Goals in a Mission must *potentially* follow the starting Goal (satisfiability vice entailment).
+
+[NOTE: Here we express that the property chain &quot;startsWith o follows&quot; implies includes. Need to see if there is a way to express the reverse containment for equivalency.]</rdfs:comment>
+        <rdfs:label>G10 (partial)</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Goal &apos;B&apos; follows another Goal &apos;A&apos; if it occurs below Goal &apos;A&apos; in the Mission goal tree. A Goal instance cannot occur in its set of &quot;follows&quot; goals (the tree of goals must be acyclic). Property &quot;follows&quot; is transitive [ontology rule G9].
+
+TODO: Make isFollowedBy a synonym for hasNextGoal (except, we want isFollowedBy to be transitive and subproperty hasNextGoal to be irreflexive -- the reasoners will not handle a single property being both irreflexive and transitive)..</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Goal can only be followed by another Goal.</rdfs:comment>
+        <rdfs:label>G6</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isInitialGoal -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isInitialGoal">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:comment>A Goal is identified as the first goal of a Mission (i.e., the initial tasking to be performed by the assigned vehicle).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:comment>A Mission can be performed by a Vehicle if the Vehicle &quot;canPerform&quot; the Mission or, equivalently, that the Vehicle &quot;canMeet&quot; all of the Goal instances in the &quot;includes&quot; relation for the Mission or, equivalently, that the Vehicle &quot;hasFeature&quot; VehicleFeature instances that &quot;canFulfill&quot; all of the IntendedOutcome instances required by all of the Goal instances in the &quot;includes&quot; relation for the mission. This is an indication of possibility of successful performance, not necessarily achievement of the intended outcomes of each goal in the mission.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <rdfs:comment>A Mission can only be performed by a Vehicle.</rdfs:comment>
+        <rdfs:label>M5</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy">
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <rdfs:comment>A Goal must satisfy one or more IntendedOutcome instances for the Goal to be achieved successfully.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+        <rdfs:comment>A Goal can only require a GoalRequirement.</rdfs:comment>
+        <rdfs:label>G1</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith">
+        <rdfs:subPropertyOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        <rdfs:domain rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <rdfs:range rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Mission &quot;startsWith&quot; a specific Goal instance. A Mission must have at least one Goal in its goal tree.</rdfs:comment>
+    </owl:ObjectProperty>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+        <rdfs:comment>A Mission must include the Goal that it starts with.</rdfs:comment>
+        <rdfs:label>M4</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#range"/>
+        <owl:annotatedTarget rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <rdfs:comment>A Mission can only start with a Goal.</rdfs:comment>
+        <rdfs:label>M1</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/canPerformAllGoals -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/canPerformAllGoals">
+        <owl:versionInfo>TODO</owl:versionInfo>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy -->
+
+    <owl:ObjectProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isMetBy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isTerminalGoal -->
+
+    <owl:DatatypeProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isTerminalGoal">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>Indicates if a Goal instance has follow-on goals (true or false) indicated by one or more hasNextGoal properties. I.e., if a Goal instance has no hasNextGoal properties, then it is a terminal goal.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase -->
+
+    <owl:DatatypeProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Mission phase associated with this agenda goal.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/version -->
+
+    <owl:DatatypeProperty rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/version">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TODO define versioning scheme</owl:versionInfo>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A Constraint is a condition placed on a Mission or a Goal. The Constraint must be satisfied for the associated Mission or Goal to be achievable. A Mission may have multiple Constraint instances. A Constraint on a Mission applies to all of the Goals in the Mission. A Constraint on a Goal applies only to that Goal.</rdfs:comment>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Constraint can apply to a Mission or Goal (and nothing else, which is expressed in the defined range for relation appliesTo).
+
+[NOTE: Perhaps there should just be a cardinality requirement (min 1)  on the union of Mission and Goal in the appliesTo relation: if the Constraint applies to a Mission, it will apply to all Goals of the Mission by inference; otherwise, it is defined on a Goal. On the other hand, this means we cannot define Constraints without having a defined Mission or Goal instance, which may not be what we want.]</rdfs:comment>
+        <rdfs:label>C1</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#constrains"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Constraint must apply to at least one Goal.
+
+[NOTE: Perhaps this should just be a cardinality requirement on the union of Mission and Goal in the appliesTo relation: if the Constraint applies to a Mission, it will apply to all Goals of the Mission by inference; if it applies to a Goal, then the rule here is met. Recommend removing this rule and forcing cardinality of 1 on the appliesTo relation in the class definition, although this also means we cannot define Constraints without having a defined Mission or Goal instance, which may not be what we want either.]</rdfs:comment>
+        <rdfs:label>C2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION">
+        <rdfs:subClassOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>The EXCEPTION EndCondition indicates a Goal did not complete due to run-time determination that an associated Constraint was not satisfied.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION"/>
+                    <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE"/>
+                    <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS"/>
+                </owl:unionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:comment>EndCondition enumeration values describe the result of executing a Goal instance in a mission.  An allowed value is either SUCCESS, FAILURE, or EXCEPTION.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE">
+        <rdfs:subClassOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>The FAILURE EndCondition indicates that a Goal instance completed but failed to meet one or more associated IntendedOutcome requirements.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnException"/>
+                                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnFailure"/>
+                                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasNextGoalOnSuccess"/>
+                                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isFollowedBy"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology/isPartOfPhase"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A Goal is an operational objective the mission is intended to achieve.</rdfs:comment>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#mustSatisfy"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Goal may require 0 or more GoalRequirements.</rdfs:comment>
+        <rdfs:label>G1</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasEndCondition"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Goal&apos;s ending condition (state) can end with at most one EndCondition.
+
+[NOTE: This statement would seem to apply more to the final state of the Goal during Mission execution. In planning, there must be consideration of what happens following Goal success, failure, or faces an imminent exception. That is, what is the next Goal for the Vehicle to perform under each of those end conditions?]</rdfs:comment>
+        <rdfs:label>G2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome">
+        <rdfs:comment>IntendedOutcome is a condition that must be met for the associated Goal to be achieved successfully.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Mission is a set of Goals to be performed by a Vehicle, under one or more Constraint instances associated with the Mission or with individual Goals in the Mission.</rdfs:comment>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasConstraint"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Mission can have 0 or more Constraints.</rdfs:comment>
+        <rdfs:label>M3</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#isPerformableBy"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Mission can be performable by 0 or more Vehicles.</rdfs:comment>
+        <rdfs:label>M5</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#includes"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Mission must include one or more goals.</rdfs:comment>
+        <rdfs:label>M2</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#startsWith"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Mission must start with exactly one Goal.</rdfs:comment>
+        <rdfs:label>M1</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS">
+        <rdfs:subClassOf rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+        <rdfs:comment>The SUCCESS EndCondition indicates that a Goal instance completed and succeeded in meeting all associated IntendedOutcome requirements.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canAchieve"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canIdentify"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeet"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canPerform"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A Vehicle is a physical device for performing a Mission, requiring the Vehicle to be able to meet Mission goals, under associated Contraints, using VehicleFeature instances that can meet assigned IntendedOutcome instances by being able to measure conformance to the associated Constraints.</rdfs:comment>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#hasFeature"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A Vehicle can have 0 or more VehicleFeatures.</rdfs:comment>
+        <rdfs:comment>isPerformableBy and canPerform are inversely equivalent.</rdfs:comment>
+        <rdfs:label>V1</rdfs:label>
+        <rdfs:label>V2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature -->
+
+    <owl:Class rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A VehicleFeature is a capability associated with a Vehicle that is able to fulfill IntendedOutcome instances required by Goals in a Mission, and is able to test the conditions defined in each Mission or Goal Constraint to determine if an exception to the constraint will occur.</rdfs:comment>
+    </owl:Class>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canFulfill"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A VehicleFeature may be able to fulfill 0 or more GoalRequirements.</rdfs:comment>
+        <rdfs:label>F1</rdfs:label>
+    </owl:Axiom>
+    <owl:Axiom>
+        <owl:annotatedSource rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        <owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#canMeasure"/>
+                <owl:allValuesFrom rdf:resource="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+        <rdfs:comment>A VehicleFeature may be able to test 0 or more constraints.</rdfs:comment>
+        <rdfs:label>F2</rdfs:label>
+    </owl:Axiom>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#topObjectProperty">
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.1</owl:versionInfo>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Constraint"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EndCondition"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Goal"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#IntendedOutcome"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Mission"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#Vehicle"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#VehicleFeature"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#EXCEPTION"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#FAILURE"/>
+            <rdf:Description rdf:about="https://savage.nps.edu/EthicalControl/ontologies/MissionExecutionOntology#SUCCESS"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

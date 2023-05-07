@@ -1,0 +1,250 @@
+International Allegro CL Free Express Edition
+10.1 [32-bit Windows] (Jan 9, 2019 10:44)
+Copyright (C) 1985-2019, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Allegro CL 10.1 Express user
+
+Loaded options from C:\Users\brutzman\Documents\allegro-ide-options.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current optimization settings evaluate (EXPLAIN-COMPILER-SETTINGS).
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+CG-USER(1): 
+; Autoloading for ACL-SOCKET:MAKE-SSL-CLIENT-STREAM:
+; Fast loading C:\Program Files (x86)\ad10.1express\Allegro CL 10.1 Free Express Edition\code\ssl.002
+;;; Installing ssl patch, version 2.
+; Fast loading
+;    C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\missions\lisp\IeeeJOE2018PaperBasicExample\ExhaustiveTestingAndExecution.fasl
+CG-USER(1): (start)
+READY
+CG-USER(2): (all-paths)
+DONE
+CG-USER(3): (save-results)
+(PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3
+ "Search Area B!" "Exception." PHASE4 ...)
+CG-USER(5): (results)
+
+((PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Success." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Failure." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5)
+ (PHASE1 "Search Area A!" "Failure." PHASE3 "Search Area B!" "Success." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5)
+ (PHASE1 "Search Area A!" "Success." PHASE2 "Sample environment!" "Failure." PHASE5) (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Exception." PHASE5)
+ (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Failure." PHASE5) (PHASE1 "Search Area A!" "Exception." PHASE4 "Rendezvous with Vehicle2!" "Success." PHASE5))
+CG-USER(6): 
+CG-USER(6): (set-all-abbreviated-paths)
+NIL
+CG-USER(7): (pprint *abbreviated-algorithmic-paths*)
+
+((X S) (X F) (X X) (S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S)
+ (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S)
+ (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+CG-USER(8): 
+CG-USER(8): (pprint *all-human-directed-paths*)
+
+((X X) (X F) (X S) (F X X) (F X F) (F X S) (F F X) (F F F) (F F S) (F S X) (F S F)
+ (F S S) (S X X) (S X F) (S X S) (S F) (S S X X) (S S X F) (S S X S) (S S F X)
+ (S S F F) (S S F S) (S S S X) (S S S F) (S S S S))
+CG-USER(9): 
+CG-USER(9): (setf *current-paths-to-goal* *abbreviated-algorithmic-paths*)
+((X S) (X F) (X X) (S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) ...)
+CG-USER(10): (run-all)
+
+Search Area A!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((X S) (X F) (X X) (S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S)
+ (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S)
+ (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((X F) (X X) (S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F)
+ (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F)
+ (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((X X) (S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X)
+ (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X)
+ (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Proceed to recovery!
+
+((S F) (F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X)
+ (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X)
+ (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F S S) (F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X) (S X S)
+ (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X)
+ (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F S F) (F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X) (S X S) (S X F)
+ (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S)
+ (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F S X) (F F S) (F F F) (F F X) (F X S) (F X F) (F X X) (S X S) (S X F) (S X X)
+ (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F)
+ (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F F S) (F F F) (F F X) (F X S) (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S)
+ (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F F F) (F F X) (F X S) (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F)
+ (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F F X) (F X S) (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F)
+ (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F X S) (F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X)
+ (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F X F) (F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S)
+ (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((F X X) (S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F)
+ (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S X S) (S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X)
+ (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S X F) (S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X)
+ (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S X X) (S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S)
+ (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S S S) (S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F)
+ (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S S F) (S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S S X) (S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S F S) (S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S F F) (S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S F X) (S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S X S) (S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S X F) (S S X X))
+Search Area A!
+Sample environment!
+Search Area B!
+Rendezvous with Vehicle2!
+Proceed to recovery!
+
+((S S X X))
+DONE

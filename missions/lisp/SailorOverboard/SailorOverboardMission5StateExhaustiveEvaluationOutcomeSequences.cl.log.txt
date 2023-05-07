@@ -1,0 +1,47 @@
+Here is initial output that has an error, i.e. Phase 2 definition having exception incorrectly defined as phase4.
+
+;    C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\lisp\SailorOverboard\SailorOverboardMissionExhaustiveEvaluationOutcomeSequences.fasl
+CG-USER(1): (run)
+
+((PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Exception." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Success." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Exception." PHASE4 "Track Sailor Afloat Until Safe!" "Exception."
+  PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Exception." PHASE4 "Track Sailor Afloat Until Safe!" "Failed."
+  PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Exception." PHASE4 "Track Sailor Afloat Until Safe!" "Success."
+  PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Exception." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Exception."
+  PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Failed."
+  PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Success."
+  PHASE5)
+ (PHASE1 "Deploy!" "Failed." PHASE5) (PHASE1 "Deploy!" "Exception." PHASE5))
+
+===================================
+
+Here is modified output that has Phase 2 definition having exception correctly defined as phase5.
+
+;    C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\lisp\SailorOverboard\SailorOverboardMissionExhaustiveEvaluationOutcomeSequences.fasl
+CG-USER(1): (run)
+
+((PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Exception." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Success." PHASE4
+  "Track Sailor Afloat Until Safe!" "Success." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Exception." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Failed." PHASE3 "Search for Sailor!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Exception." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Success." PHASE4 "Track Sailor Afloat Until Safe!" "Success." PHASE5)
+ (PHASE1 "Deploy!" "Success." PHASE2 "Rendezvous with Sailor!" "Exception." PHASE5) (PHASE1 "Deploy!" "Failed." PHASE5)
+ (PHASE1 "Deploy!" "Exception." PHASE5))

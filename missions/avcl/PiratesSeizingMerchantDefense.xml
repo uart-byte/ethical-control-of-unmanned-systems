@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVCL version="3.1" vehicleName="RescueDrone" vehicleType="UAV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/AVCL.3.1.xsd">
+	<!-- vehicleType="USV" is also possible -->
+	<head>
+		<meta name="title" content="PiratesSeizingMerchantDefense.xml"/>
+		<meta name="description" content="AVCL mission to overtake pirate small-boat gang attempting to capture threatened merchant ship, provide warning and counterattack if escalation of hostilities is warranted."/>
+		<meta name="created" content="27 December 2019"/>
+		<meta name="modified" content="16 July 2022"/>
+		<meta name="creator" content="Don Brutzman"/>
+		<meta name="reference" content="https://wiki.nps.edu/display/NOW/Ethical+Control+of+Unmanned+Systems"/>
+		<meta name="reference" content="https://gitlab.nps.edu/Savage/EthicalControl/raw/master/missions/PiratesSeizingMerchantDefense.png"/>
+		<meta name="generator" content="Altova XMLSpy, https://www.altova.com"/>
+		<meta name="generator" content="Apache NetBeans, https://netbeans.apache.org"/>
+		<meta name="generator" content="NPS Autonomous Unmanned Vehicle (AUV) Workbench, https://savage.nps.edu/AuvWorkbench"/>
+		<meta name="identifier" content="https://gitlab.nps.edu/Savage/EthicalControl/tree/master/missions/avcl/PiratesSeizingMerchantDefense.xml"/>
+		<meta name="license" content="../license.html"/>
+	</head>
+	<body>
+		<MissionDefinition description="Approach: Overtake pirate small-boat gang attempting to capture threatened merchant ship. Escalation: Warn pirate small-boat gang to stand down and move away, otherwise lethal force imminent. CounterAttack: force pirate small-boat gang withdrawal from threatened merchant ship.">
+			<UnitsOfMeasure distance="meters" angle="degrees" mass="kilograms" time="seconds"/>
+			<AgendaMission>
+				<LaunchPosition id="LaunchPosition" description="Ship position when robot is launched">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</LaunchPosition>
+				<RecoveryPosition id="RecoveryPosition" description="Ship position when ready to recover robot">
+					<LatitudeLongitude latitude="0" longitude="0"/>
+				</RecoveryPosition>
+				<GoalList>
+					<!--*Initiation Phase* to commence operations-->
+					<Goal id="PSMD11.0" title="Deploy, Launch" description="Commit to robot support" phase="Launch" nextOnSuccess="PSMD12.0" nextOnFailure="PSMD99.0" nextOnException="PSMD99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="100" description="Launching ship"/>
+							<TargetVehicleID value="101" description="This robot"/>
+							<!--
+							<TargetVehicleID value="102" description="Recovery Ship"/>
+							<TargetVehicleID value="103" description="Merchant Ship"/>
+							-->
+						</Rendezvous>
+						<OperatingArea id="AssignedOpArea">
+							<Point>
+								<LatitudeLongitude latitude="36.62" longitude="121.506"/>
+								<!--36°36′11″N 121°53′37″W-->
+							</Point>
+						</OperatingArea>
+						<Duration value="300"/>
+						<ReportingCriteria value="onCommence"/>
+						<ReportingCriteria value="periodic"/>
+						<ReportingCriteria value="statusChanged"/>
+						<ReportingCriteria value="onComplete"/>
+					</Goal>
+					<!--*Approach Phase* to overtake pirate small-boat gang attempting to capture threatened merchant ship-->
+					<Goal id="PSMD12.0" title="Transit to hostile area" description="Proceed to estimated position" phase="Transit" nextOnSuccess="PSMD13.0" nextOnFailure="PSMD99.0" nextOnException="PSMD99.0">
+						<Search datumType="point" requiredPD="0.5">
+							<Target name="Merchant Ship" id="MerchantShip" description="Fleeing or stationary"/>
+						</Search>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- Group 13 Locate Merchant has common objective, exception -->
+					<Goal id="PSMD13.0" title="Locate Merchant" description="Use best search pattern, then follow moving ship and boats" phase="Transit" nextOnSuccess="PSMD13.1" nextOnFailure="PSMD21.0" nextOnException="PSMD99.0">
+						<Rendezvous description="">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD13.1" title="Report position" description="Alerts updated" phase="Transit" nextOnSuccess="PSMD13.2" nextOnFailure="PSMD13.2" nextOnException="PSMD99.0">
+						<MonitorTransmissions title="Send initial position report"/>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD13.2" title="Mark with Beacon" description="Monitor wind effects and ocean current" phase="Transit" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD21.0" nextOnException="PSMD99.0">
+						<MarkTarget description="TODO ensure beacon/pinger in water">
+							<Marker type="dyeMarker"/>
+							<Target name="Merchant Ship Contact" id="MerchantShipContact"/>
+						</MarkTarget>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<!-- Group 14 Track Merchant has common objective and exception, includes loops-->
+					<Goal id="PSMD14.0" title="Track Merchant" description="Monitor and communicate" phase="Track" nextOnSuccess="PSMD14.1" nextOnFailure="PSMD14.1" nextOnException="PSMD99.0">
+						<Search datumType="point" requiredPD="0.5" description="Track Merchant"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD14.1" title="Maintain proximity" description="Beyond range of small arms" phase="Track" nextOnSuccess="PSMD14.2" nextOnException="PSMD99.0">
+						<Rendezvous description="Safe standoff distance">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD14.2" title="Periodic reports" description="Situation reports, changing status" phase="Track" nextOnSuccess="PSMD14.3" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD14.3" title="Continue until further orders" description="Repeat until conditions change" phase="Track" nextOnSuccess="PSMD14.9" nextOnFailure="PSMD21.0" nextOnException="PSMD99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+					</Goal>
+					<Goal id="PSMD14.9" title="Check posture changed?" description="Task update received?" phase="Track" nextOnSuccess="PSMD30.0" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<!--Branch point: note possible human override checked prior to looping.-->
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- Group 21 Request Guidance? and Group 22 Low Fuel have common objective, exception-->
+					<Goal id="PSMD21.0" title="Request Guidance?" description="Need updated position" phase="Transit" nextOnSuccess="PSMD12.0" nextOnFailure="PSMD99.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions title="Request Guidance" description="Active transmission allowed, subject to EMCON"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD22.0" title="Low Fuel" description="Make best effort possible" phase="Mission Finish" nextOnSuccess="PSMD22.1" nextOnException="PSMD99.0">
+						<Reposition title="Prepare to finish"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD22.1" title="Remain with Merchant?" description="Choices: land on boat, attach to boat, or adrift nearby" phase="Mission Finish" nextOnSuccess="PSMD22.2" nextOnException="PSMD99.0">
+						<Rendezvous title="Attach, Land or Adrift" description="as close as advisable">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Lifeboat"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD22.2" title="Beacon?" description="While power remains" phase="Mission Finish" nextOnSuccess="PSMD99.0" nextOnFailure="PSMD99.0" nextOnException="PSMD99.0">
+						<MarkTarget description="TODO ensure beacon/pinger in water">
+							<Marker type="dyeMarker"/>
+							<Target name="Lifeboat last known location" id="LifeboatLastKnownLocation"/>
+						</MarkTarget>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- *Warning Phase* to warn pirate small-boat gang to stand down and move away, otherwise lethal force imminent-->
+					<Goal id="PSMD30.0" title="Warning Phase" description="Close interaction with pirates, merchant ship" phase="Warning" nextOnSuccess="PSMD31.0" nextOnException="PSMD99.0"/>
+					<Goal id="PSMD31.0" title="Confirm Mission Authorities" description="Check constraints and defensive responses" phase="Warning" nextOnSuccess="PSMD32.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<!-- Group 32 IFFNU has common objective, exception-->
+					<Goal id="PSMD32.0" title="IFFNU" description="Identify Friend Foe Neutral Unknown" phase="Classify" nextOnSuccess="PSMD32.1" nextOnFailure="PSMD32.1" nextOnException="PSMD99.0">
+						<SampleEnvironment description="Check local conditions and all entities in operational area"/>
+					</Goal>
+					<Goal id="PSMD32.1" title="Photograph all close contacts" description="Pass within range of small arms" phase="Classify" nextOnSuccess="PSMD32.2" nextOnException="PSMD99.0">
+						<MarkTarget description="Record EM signals, take photos for classification">
+							<Marker type="photograph"/>
+							<Marker type="emScan"/>
+							<Target name="Pirate Boat 1" id="PirateBoat1"/>
+							<Target name="Pirate Boat 2" id="PirateBoat2"/>
+							<Target name="Pirate Boat 3" id="PirateBoat3"/>
+							<!-- possibly more pirates -->
+							<Target name="Merchant Ship" refid="MerchantShip"/>
+							<!-- possibly merchant ship life raft(s) -->
+						</MarkTarget>
+					</Goal>
+					<Goal id="PSMD32.2" title="Classify, send contact reports" description="Based on target behavior or signal/image match" phase="Classify" nextOnSuccess="PSMD32.3" nextOnException="PSMD99.0">
+						<!--Does Classify computation require a separate  standoff task?-->
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<Goal id="PSMD32.3" title="Confirm IFFNU classifications" description="Requires approval by human commander before proceeding further" phase="Classify" nextOnSuccess="PSMD33.0" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<!-- Group 33 Commence Warnings? decision tree has common objective, exception-->
+					<Goal id="PSMD33.0" title="Commence Warnings" description="May provoke pirate response" phase="Engagement" nextOnSuccess="PSMD33.1" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<Goal id="PSMD33.1" title="Notify Merchant" description="Keep crew informed, even if they cannot transmit" phase="Engagement" nextOnSuccess="PSMD34.0" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact operational commander"/>
+					</Goal>
+					<!-- Group 34 Send Warning Messages has common objective, exception-->
+					<Goal id="PSMD34.0" title="Send Warning Messages" description="Communicate to pirates, all parties" phase="Warning" nextOnSuccess="PSMD34.1" nextOnFailure="PSMD34.1" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD34.1" title="Send multiple message paths" description="Loudspeaker, flashing light, siren, drop smoke, bridge-bridge radio" phase="Warning" nextOnSuccess="PSMD34.2" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD34.2" title="Maintain proximity" description="Just outside range of small arms" phase="Warning" nextOnSuccess="PSMD34.3" nextOnException="PSMD99.0">
+						<Rendezvous description="Safe standoff distance">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Merchant Ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD34.3" title="Periodic reports" description="Situation reports, changing status" phase="Warning" nextOnSuccess="PSMD34.4" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD34.4" title="Continue until further orders" description="First repeat for all designated pirates" phase="Warning" nextOnSuccess="PSMD35.0" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+					</Goal>
+					<!-- Group 35 Observe pirate response has common objective, exception-->
+					<Goal id="PSMD35.0" title="Observe pirate response" description="Monitor and report back to own ship" phase="Hostilities Imminent" nextOnSuccess="PSMD35.1" nextOnFailure="PSMD35.1" nextOnException="PSMD99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD35.1" title="Pirates retreat?" description="Stay with merchant, report if response changes" phase="Hostilities Imminent" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD35.2" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD35.2" title="Pirates attack?" description="Stay with merchant, counterattack if response changes" phase="Hostilities Imminent" nextOnSuccess="PSMD40.0" nextOnFailure="PSMD35.3" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD35.3" title="Maintain proximity" description="Just outside range of small arms" phase="Hostilities Imminent" nextOnSuccess="PSMD35.4" nextOnException="PSMD99.0">
+						<Rendezvous description="Safe standoff distance">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Merchant Ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD35.4" title="Periodic reports" description="Situation reports, changing status - note ship may have EMCON radio silence" phase="Hostilities Imminent" nextOnSuccess="PSMD35.5" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD35.5" title="Continue until further orders" description="Repeat until conditions change" phase="Hostilities Imminent" nextOnSuccess="PSMD36.0" nextOnException="PSMD99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD36.0" title="Check posture changed?" description="Task update received" phase="Hostilities Imminent" nextOnSuccess="PSMD37.0" nextOnFailure="PSMD35.0" nextOnException="PSMD14.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD37.0" title="Fire Warning Shot" description="Warning shots remain an available option for human commanders. Lethal force is authorized." phase="Hostilities Imminent" nextOnSuccess="PSMD31.0" nextOnFailure="PSMD31.0" nextOnException="PSMD99.0">
+						<Attack title="Attack pirate boats" description="Use of Lethal Force is authorized"/>
+					</Goal>
+					<!-- *Interdiction Phase* Counterattack to force pirate small-boat gang withdrawal from threatened merchant ship-->
+					<Goal id="PSMD40.0" title="Attack" description="Close interaction with pirates, merchant ship" phase="Counter Attack" nextOnSuccess="PSMD41.0" nextOnFailure="PSMD41.0" nextOnException="PSMD99.0"/>
+					<Goal id="PSMD41.0" title="Attack Pirate Boats in priority order" description="Rapidly engage, shoot to disable or kill. Lethal force still authorized." phase="Counter Attack" nextOnSuccess="PSMD41.1" nextOnException="PSMD99.0">
+						<Attack title="Attack pirate boats" description="Use of Lethal Force is authorized"/>
+					</Goal>
+					<Goal id="PSMD41.1" title="Pirates retreat?" description="Stay with merchant, report if response changes" phase="Counter Attack" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD41.2" nextOnException="PSMD99.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD41.2" title="Pirates attacking?" description="Stay with merchant, counterattack if response changes" phase="Counter Attack" nextOnSuccess="PSMD41.3" nextOnException="PSMD42.0">
+						<MonitorTransmissions description="Contact pirates"/>
+					</Goal>
+					<Goal id="PSMD41.3" title="Maintain proximity" description="Just outside range of small arms" phase="Counter Attack" nextOnSuccess="PSMD41.4" nextOnException="PSMD99.0">
+						<Rendezvous description="Safe standoff distance">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Merchant Ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD41.4" title="Periodic reports" description="Situation reports, changing status - note ship may have EMCON radio silence" phase="Counter Attack" nextOnSuccess="PSMD41.5" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD41.5" title="Continue until further orders" description="Repeat until conditions change" phase="Counter Attack" nextOnSuccess="PSMD36.0" nextOnException="PSMD99.0">
+						<Patrol description="Perform any periodic requirements">
+							<!--TODO should be agendaGoalType allowing OperatingArea-->
+						</Patrol>
+						<OperatingArea refid="AssignedOpArea"/>
+					</Goal>
+					<Goal id="PSMD42.0" title="Low or no ammunition: need to disengage?" description="Hold ammunition in reseve, or else fight to the finish" phase="Counter Attack" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD41.3" nextOnException="PSMD90.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD43.0" title="Check for guidance, resume tracking or continue attacking?" description="Humans monitoring attack can interrupt or override" phase="Counter Attack" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD41.0" nextOnException="PSMD90.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!-- *Recovery Phase*-->
+					<Goal id="PSMD90.0" title="Check relieved by other asset" description="Continue tracking merchant unless further task update recieved" phase="Mission Finish" nextOnSuccess="PSMD14.0" nextOnFailure="PSMD14.0" nextOnException="PSMD99.0">
+						<MonitorTransmissions xsi:type="monitorTransmissionsElementType" description="Track sailor in water"/>
+						<Duration value="6000"/>
+					</Goal>
+					<!--Group 99 has common objective: Global Default Exception and terminal states-->
+					<Goal id="PSMD99.0" title="Proceed to recovery" description="Mission complete, prepare for pickup" phase="Recover Robot" nextOnSuccess="PSMD99.1" nextOnFailure="PSMD99.2" nextOnException="PSMD99.3">
+						<Reposition description="Return to ship or other recovery point"/>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="6000"/>
+					</Goal>
+					<Goal id="PSMD99.1" title="Halt and prepare for recovery" description="Operations completed, final success state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery Ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+					<Goal id="PSMD99.2" title="Halt and deploy recovery beacon" description="Unable to operate, final failure state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+					<Goal id="PSMD99.3" title="Halt and await further orders" description="Unplanned failure, final exception state" phase="Recover Robot">
+						<Rendezvous description="Recovery by ship">
+							<TargetVehicleID value="101" description="This robot"/>
+							<TargetVehicleID value="102" description="Recovery ship"/>
+						</Rendezvous>
+						<OperatingArea refid="AssignedOpArea"/>
+						<Duration value="0"/>
+					</Goal>
+				</GoalList>
+			</AgendaMission>
+		</MissionDefinition>
+	</body>
+</AVCL>

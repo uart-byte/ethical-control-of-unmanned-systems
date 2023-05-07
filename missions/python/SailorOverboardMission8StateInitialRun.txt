@@ -1,0 +1,223 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\jon> cd D:\EthicalControl\missions\python
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and deploy recovery beacon!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and deploy recovery beacon!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and deploy recovery beacon!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Halt and prepare for recovery!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and deploy recovery beacon!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?f
+Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Rendezvous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?f
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python>
+PS D:\EthicalControl\missions\python> python.exe .\SailorOverboardMission8State.py
+Deploy!
+Did goal succeed (s), fail (f), or abort (x)?x
+Halt and await further orders!
+PS D:\EthicalControl\missions\python>

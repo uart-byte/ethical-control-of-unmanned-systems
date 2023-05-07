@@ -1,0 +1,36 @@
+International Allegro CL Free Express Edition
+10.1 [32-bit Windows] (Jan 9, 2019 10:44)
+Copyright (C) 1985-2019, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Allegro CL 10.1 Express user
+
+Loaded options from C:\Users\rober\OneDrive\Documents\allegro-ide-options.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current optimization settings evaluate
+;; (EXPLAIN-COMPILER-SETTINGS).
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+CG-USER(1): 
+; Autoloading for ACL-SOCKET:MAKE-SSL-CLIENT-STREAM:
+; Fast loading C:\acl10.1express-new\code\ssl.002
+;;; Installing ssl patch, version 2.
+;   Foreign loading libeay32.dll.
+;   Foreign loading ssleay32.dll.
+;   Foreign loading sys:aclissl.dll.
+; Fast loading C:\acl10.1express-new\2019 code\New Robot External Agent 2018 MIssion.fasl
+CG-USER(1): (run)
+"Mission aborted. Vehicle recovered"
+CG-USER(2): (run)
+NIL
+CG-USER(3): (run)
+"Mission complete."
+CG-USER(4): (results)
+(PHASE5 "Proceed to recovery!" (PHASE4 "Rendezvous with Vehicle2!" (PHASE1 "Search Area A!" NIL)))
+
+============
+19 NOV 2019
+
+CG-USER(1): (run)
+(PHASE5 "Proceed to recovery!" (PHASE4 "Rendezvous with Vehicle2!" (PHASE3 "Search Area B!" (PHASE1 "Search Area A!" NIL))))

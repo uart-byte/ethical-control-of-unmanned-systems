@@ -1,0 +1,71 @@
+International Allegro CL Free Express Edition
+10.1 [32-bit Windows] (Jan 9, 2019 10:44)
+Copyright (C) 1985-2019, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Allegro CL 10.1 Express user
+
+Loaded options from C:\Users\brutzman\Documents\allegro-ide-options.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current optimization settings evaluate
+;; (EXPLAIN-COMPILER-SETTINGS).
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+CG-USER(1): 
+; Autoloading for ACL-SOCKET:MAKE-SSL-CLIENT-STREAM:
+; Fast loading C:\Program Files (x86)\ad10.1express\Allegro CL 10.1 Free Express Edition\code\ssl.002
+;;; Installing ssl patch, version 2.
+; Fast loading C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.fasl
+;   Fast loading C:\Program Files (x86)\ad10.1express\Allegro CL 10.1 Free Express Edition\code\PROLOG.fasl
+CG-USER(1): ; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState3.cl" 232) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState3.cl"
+; starting at file character position 232:
+Warning: compile-file found "REQUIRE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState3.cl" 250) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState3.cl"
+; starting at file character position 250:
+Warning: compile-file found "SHADOWING-IMPORT" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState3.cl" 282) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState3.cl"
+; starting at file character position 282:
+Warning: compile-file found "USE-PACKAGE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; Fast loading
+;    C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState3.fasl
+CG-USER(1): (run)
+Phase 1 report: Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2 report: Rendevous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4 report: Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 5 report: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 6 report: Vehicle recovered.
+Yes
+No.
+CG-USER(2): (run)
+CG-USER(2): (run)
+Phase 1 report: Deploy!
+Did goal succeed (s), fail (f), or abort (x)?2
+Phase 1 report: Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2 report: Rendevous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Phase 3 report: Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4 report: Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 5 report: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 6 report: Vehicle recovered.
+Yes
+No.
+CG-USER(3): (run)
+Phase 1 report: Deploy!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2 report: Rendevous with Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4 report: Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 5 report: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Phase 8 report: Awaiting orders.
+Yes

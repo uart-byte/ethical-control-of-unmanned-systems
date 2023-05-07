@@ -1,0 +1,220 @@
+AVCL Schema 3.1
+
+Renamed GoalType (within Goal) as GoalActions.  Added Supply and Task as additional goal types.
+
+Added Risk Elements as options for each Goal and GoalList
+
+Rendezvous TargetShip now optional
+
+Deprecations
+- rename AvoidArea             to AvoidanceArea
+- rename MissionPreparation    to MissionCommands
+
+Changes to body
+- moved: GeoOrigin   from head to body
+- rename AgendaMission         to MissionAgenda
+- rename MissionResults        to MissionTelemetryLog
+- rename GuidedMunitionMission to MissionGuidedMunition
+- relax attributes as optional, wherever appropriate
+- modified content model to include Location and Vehicle, TODO add them
+
+Can a Vehicle refer to a Mission and a Location (probably), or does a Mission refer to a Vehicle and a Location (probably not)?
+
+Does a Location solely contain GeoOrigin, or can GeoOrigin appear with a Mission?
+
+TODO Location can be point, line, area, or volume
+
+TODO MissionTelemetryLog contain optional TimeOffset, DisPduStream
+
+TODO MissionArchive can contain Vehicle+ Mission+
+
+==============================================================================
+
+prior: AVCL Schema 3.0
+
+TODO
+- AVCL/@vehicleName should not be required
+- Avcl3ToAvcl2.xslt converter
+
+Fixed
+- renamed markElementType to markTargetElementType
+
+Changes
+- allow refid and empty content in Goal elements for reusability of goals
+- Empty Goal child elements allowed for reusability
+- markerType enumerations: acousticPinger, acousticScan, dyeMarker,
+	emPinger, emScan, infrared, laser, photograph, smoke, transponder
+- add phase attribute to goals
+- rename nextOnSucceed to nextOnSuccess
+- rename nextOnFail to nextOnFailure
+
+Consider
+- additional Goal types
+- further definitions of constraints
+- further definitions of conditionals
+- should initial Goal for mission be explicitly defined, since they can be in any order?  Can there be more than one?
+
+Avoided
+- default exception not designated, possibly too prone to catastrophic mission error
+  unless fallback protections provided.  For now, diagnose missing exception as part
+  of AvclToTurtle.xslt diagnostics.
+
+Mission Execution Ontology (MEO) corresponding to AVCL Schema
+- hasNextOnViolate to hasNextOnException (matching AVCL nextOnException)
+TODO 
+- add Goal property isTerminal (nextOnSuccess, nextOnFailure, nextOnException not defined)
+- confusing definition for hasNext, inconsistent with hasNextOnSuccess/Failure/Exception.
+  possible alternative is hasPreceding/hasFollowing, but that is likely better for actual execution sequences.
+
+###  https://www.nps.edu/ontologies/MissionExecutionOntology#hasNext
+meo:hasNext rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf meo:isFollowedBy ;
+            rdf:type owl:IrreflexiveProperty ;
+            rdfs:domain meo:Goal ;
+            rdfs:range meo:Goal ;
+            rdfs:comment "Goal 'B' is the next goal for Goal 'A' when 'A' directly precedes 'A' in the Mission goal tree. This property is  irreflexive; a Goal cannot return to itself (a weak form of Rule G7)." .
+
+==============================================================================
+
+Change log, version 2.1:
+    - Initial version identical to version 2.0 in order to enable change tracking via Subversion
+    - Updated element annotations and documentation, diff/merge with Savage version of AVCL schema 2.0 conducted satisfactorily
+    - Updated build and documentation procedures
+    - booleanElementType explicitly defaults to value of false
+    - Tested satisfactorily with upgrade to JAXB 2.1.13 under Java 6 and Java 7, since JAXB 2.2.* apparently incompatible with Java 6
+    - Sorted elements, simple types, complex types and groups alphabetically by name
+    - renamed LaunchPositionAH to LaunchPosition for consistency
+    - renamed Goals to Goal for clarity/correctness
+    - use attributeGroup CommonAttributes throughout to avoid duplicate definition of id, description, timestamp
+    - renamed discreteTimeResultsElementType as sampledResultsElementType for clarity
+    - fixed enumeration values and simpleType declaration for vehicleType
+    - refactor, renamed special-case Orientation and corresponding type="areaOrientationElementType" to Rotation type="areaRotationElementType",
+            also made global, avoiding name overloading with more commonly used Orientation type="orientationElementType"
+    - Rename nonNegativeIntType, positiveIntType to spell out IntegerType
+    - combined duplicated elements into single global element: MSLAltitude, Altitude, MoveLateral, MoveRotate
+    - Altitude, Depth, MSL, AGL values all made nonnegative instead of positive
+    
+    - TODO for duration-related time values, -1 means no time constraint
+    - TODO clarity on Marker, MarkerCharacteristic and MarkTarget elements
+    - TODO move element annotations from ref="ElementName" definitions to name="ElementName" definitions
+
+==============================================================================
+
+Change log, version 2.0:
+    - metaDataType to metaType for meta element, metaCommandType for MetaCommand element
+    - moving various element names to top of file for more global exposure.  Using ref 
+      to reference exact other globally named elements.  Some element names are
+      defined by other elementTypes and were not moved.  Comments were left above these
+      cases, or, in the case of single unique (one time only) element declarations.
+    - refactored some commonly named elements and their types so that they too
+      could be pulled out and defined globally
+	- made vehicleType required
+    - change agendaGoalElementType from Goal to Goals (returns a list of Goals)
+    - change ugvScriptCommandsType for MakeKnots and MakeSpeed to speedElementType to match
+      the other three vehicle types
+    - specify an avclVersion type to enumeration AVCL version in the AVCL element.  Note: version 2.0
+      is not backwards compatible with version 1.0.  However, any version after 2.0 will be backwards
+      compatible with 2.0.
+      
+    * TODO:  1) Conversion stylesheet Avcl1.0ToAvcl2.0.xslt
+             2) Refactor commonly named elements having different types to 
+                instead have different names.  Both elements and types should 
+                start with the common name and then append vehicle type.  
+             3) Create table with element and attribute name changes as they 
+                occur, then follow up with a stylesheet to convert 1.0 content 
+                into 2.0
+             4) Annotate globally placed element declarations now?
+             
+    * Table of refactored commonly named elements and their corresponding types.
+      First (on top) is the former element name with the new name and 
+      corresponding type below:
+    
+    name="OperatingCharacteristics" type="uavOperatingCharacteristicsElementType"
+    name="OperatingCharacteristicsUAV" type="operatingCharacteristicsUAVElementType"
+    
+    name="Capability" type="uavCapabilityElementType"
+    name="CapabilityUAV" type="capabilityUAVElementType"
+    
+    name="CompositeWaypoint" type="uavCompositeWaypointCommandType"
+    name="CompositeWaypointUAV" type="compositeWaypointUAVCommandType"
+    
+    name="Loiter" type="uavLoiterCommandType"
+    name="LoiterUAV" type="loiterUAVCommandType"
+    
+    name="OperatingCharacteristics" type="ugvOperatingCharacteristicsElementType"
+    name="OperatingCharacteristicsUGV" type="operatingCharacteristicsUGVElementType"
+    
+    name="SetPosition" type="uavPositionCommandType"
+    name="SetPositionUAV" type="setPositionUAVCommandType"
+    
+    name="VerticalPosition" type="uavVerticalPositionElementType"
+    name="VerticalPositionUAV" type="verticalPositionUAVElementType"
+    
+    name="Waypoint" type="uavWaypointCommandType"
+    name="WaypointUAV" type="waypointUAVCommandType"
+    
+    name="Altitude" type="ugvVerticalPositionElementType"
+    name="AltitudeUGV" type="verticalPositionUGVElementType"
+    
+    name="Capability" type="ugvCapabilityElementType"
+    name="CapabilityUGV" type="capabilityUGVElementType"
+    
+    name="CompositeWaypoint" type="ugvCompositeWaypointCommandType"
+    name="CompositeWaypointUGV" type="compositeWaypointUGVCommandType"
+    
+    name="Loiter" type="ugvLoiterCommandType"
+    name="LoiterUGV" type="loiterUGVCommandType"
+    
+    name="SetPosition" type="ugvPositionCommandType"
+    name="SetPositionUGV" type="setPositionUGVCommandType"
+    
+    name="Waypoint" type="ugvWaypointCommandType"
+    name="WaypointUGV" type="waypointUGVCommandType"
+        
+    name="OperatingCharacteristics" type="usvOperatingCharacteristicsElementType"
+    name="OperatingCharacteristicsUSV" type="operatingCharacteristicsUSVElementType"
+    
+    name="Capability" type="usvCapabilityElementType"
+    name="CapabilityUSV" type="capabilityUSVElementType"
+    
+    name="CompositeWaypoint" type="usvCompositeWaypointCommandType"
+    name="CompositeWaypointUSV" type="compositeWaypointUSVCommandType"
+    
+    name="Loiter" type="usvLoiterCommandType"
+    name="LoiterUSV" type="loiterUSVCommandType"
+    
+    name="Propellers" type="usvPropellersOrderElementType"
+    name="PropellersUSV" type="propellersOrderUSVElementType"
+    
+    name="SetPosition" type="usvPositionCommandType"
+    name="SetPositionUSV" type="setPositionUSVCommandType"
+    
+    name="Waypoint" type="usvWaypointCommandType"
+    name="WaypointUSV" type="waypointUSVCommandType"
+    
+    name="OperatingCharacteristics" type="uuvOperatingCharacteristicsElementType"
+    name="OperatingCharacteristicsUUV" type="operatingCharacteristicsUUVElementType"
+    
+    name="Capability" type="uuvCapabilityElementType"
+    name="CapabilityUUV" type="capabilityUUVElementType"    
+    
+    name="CompositeWaypoint" type="uuvCompositeWaypointCommandType"
+    name="CompositeWaypointUUV" type="compositeWaypointUUVCommandType"
+    
+    name="Loiter" type="uuvLoiterCommandType"
+    name="LoiterUUV" type="loiterUUVCommandType"
+    
+    name="Propellers" type="uuvPropellersOrderElementType"
+    name="PropellersUUV" type="propellersOrderUUVElementType"
+    
+    name="SetPosition" type="uuvPositionCommandType"
+    name="SetPositionUUV" type="setPositionUUVCommandType"
+    
+    name="Waypoint" type="uuvWaypointCommandType"
+    name="WaypointUUV" type="waypointUUVCommandType"
+    
+    name="LaunchPosition" type="munitionLaunchPointElementType"
+    name="LaunchPositionML" type="munitionLaunchPointElementType"
+    
+    name="LaunchPosition" type="absoluteHorizontalPositionElementType"
+    name="LaunchPosition" type="absoluteHorizontalPositionElementType"

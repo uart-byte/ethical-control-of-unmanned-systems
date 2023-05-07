@@ -1,0 +1,311 @@
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="color: #0000FF">from</span> __future__ <span style="color: #0000FF">import</span> annotations <span style="color: #FF0000; font-style: italic"># this is necessary to avoid this issue:  https://stackoverflow.com/questions/33837918/type-hints-solve-circular-dependency</span>
+<span style="color: #FF0000; font-style: italic"># Please use the latest python version (which as of this writing is 3.8.5) to make sure you have all of the security patches!</span>
+<span style="color: #0000FF">import</span> sys;  <span style="color: #0000FF">assert</span> sys.version_info &gt;= (3, 8, 5)
+<span style="color: #0000FF">import</span> typing
+<span style="color: #0000FF">from</span> typing <span style="color: #0000FF">import</span> Set, List
+<span style="color: #0000FF">from</span> copy <span style="color: #0000FF">import</span> deepcopy
+<span style="color: #FF0000; font-style: italic"># import typeguard  # TODO add the required method @decorators to activate typeguard</span>
+
+
+<span style="color: #009C00">"""</span>
+
+<span style="color: #009C00">This is a python translation of the August 13th version of Prof. McGhee's lisp file "SailorOverboardMission8State.cl".</span>
+<span style="color: #009C00">This August 13th version corresponds to git commit fd098c05805d9f4262438695e55cf634963c68b0</span>
+
+<span style="color: #009C00">"""</span>
+
+
+
+
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+<span style="color: #FF0000; font-style: italic">#                        Begin Universal Mission Execution Engine                          #</span>
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+
+
+<span style="color: #FF0000; font-style: italic"># The idea with this Command class is that currently it only contains a human readable order for a human to execute manually,</span>
+<span style="color: #FF0000; font-style: italic"># but in the future it could contain an instruction to a robot instead.</span>
+<span style="color: #FF0000; font-style: italic"># This can be achieved by replacing the internal details of the Command class without having to affect the code of the MissionExecutionEngine.</span>
+<span style="color: #0000FF">class</span> <span style="color: #007575">Command</span>:
+  human_readable_order: str = <span style="color: #0000FF">None</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">__init__</span>(self, human_readable_order: str) -&gt; <span style="color: #0000FF">None</span>:
+    self.human_readable_order = human_readable_order
+
+<span style="color: #0000FF">class</span> <span style="color: #007575">Outcome</span>:
+  name: str  <span style="color: #FF0000; font-style: italic"># "s", "f", or "x"</span>
+  index: int <span style="color: #FF0000; font-style: italic">#  0 ,  1 , or  2  respectively.</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">__init__</span>(self, name: str, index: int) -&gt; <span style="color: #0000FF">None</span>:
+    self.name = name
+    self.index = index
+<span style="color: #FF0000; font-style: italic">#</span>
+OUTCOME_SUCCESS: Outcome   = Outcome(<span style="color: #009C00">"s"</span>, 0)
+OUTCOME_FAILURE: Outcome   = Outcome(<span style="color: #009C00">"f"</span>, 1)
+OUTCOME_EXCEPTION: Outcome = Outcome(<span style="color: #009C00">"x"</span>, 2)
+
+<span style="color: #FF0000; font-style: italic"># An allowed transition between one MissionPhase and a valid subsequent phase.</span>
+<span style="color: #0000FF">class</span> <span style="color: #007575">PhaseTransition</span>:
+  description: str = <span style="color: #0000FF">None</span>
+  next_phase: MissionPhase = <span style="color: #0000FF">None</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">__init__</span>(self, description: str, next_phase: MissionPhase) -&gt; <span style="color: #0000FF">None</span>:
+    self.description = description
+    self.next_phase = next_phase
+
+SuccessorList = List[PhaseTransition]
+<span style="color: #0000FF">def</span> <span style="color: #C34E00">SuccessorListCtr</span>() -&gt; SuccessorList: <span style="color: #FF0000; font-style: italic"># Ctr means Constructor</span>
+  <span style="color: #FF0000; font-style: italic"># We need a length of exactly 3, corresponding (in order) to OUTCOME_SUCCESS, OUTCOME_FAILURE, and OUTCOME_EXCEPTION.</span>
+  template: SuccessorList = [<span style="color: #0000FF">None</span>, <span style="color: #0000FF">None</span>, <span style="color: #0000FF">None</span>]
+  <span style="color: #0000FF">return</span> deepcopy(template)
+
+<span style="color: #0000FF">class</span> <span style="color: #007575">MissionPhase</span>:
+  command: Command = <span style="color: #0000FF">None</span>
+  succesor_list: SuccessorList = <span style="color: #0000FF">None</span>
+  
+  <span style="color: #FF0000; font-style: italic"># We need to use a custom "initialize" method instead of the actual constructor ("__init__")</span>
+  <span style="color: #FF0000; font-style: italic"># because we are passing in subsequent MissionPhases as parameters,</span>
+  <span style="color: #FF0000; font-style: italic"># which means that if we passed the parameters in the constructor,</span>
+  <span style="color: #FF0000; font-style: italic"># the user would have to specify the mission in reverse, starting with the terminal_phases and</span>
+  <span style="color: #FF0000; font-style: italic"># working backward to the first_phase, in order to have object handles to pass into constructors as needed.</span>
+  <span style="color: #FF0000; font-style: italic"># Using our own "initialize" method instead allows the user to construct the MissionPhase objects in forward order,</span>
+  <span style="color: #FF0000; font-style: italic"># and then initialize all of them in forward order.</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">initialize</span>(self, command: Command, upon_success: MissionPhase, upon_failure: MissionPhase, upon_exception: MissionPhase) -&gt; <span style="color: #0000FF">None</span>:
+    self.command = command
+    success_phase_transition: PhaseTransition = PhaseTransition(<span style="color: #009C00">"Success."</span>,   upon_success)
+    failure_phase_transition: PhaseTransition = PhaseTransition(<span style="color: #009C00">"Failed."</span>,    upon_failure)
+    exception_phase_transition: PhaseTransition = PhaseTransition(<span style="color: #009C00">"Exception."</span>, upon_exception)
+    self.succesor_list = SuccessorListCtr()
+    self.succesor_list[OUTCOME_SUCCESS.index] = success_phase_transition
+    self.succesor_list[OUTCOME_FAILURE.index] = failure_phase_transition
+    self.succesor_list[OUTCOME_EXCEPTION.index] = exception_phase_transition
+
+<span style="color: #FF0000; font-style: italic"># TODO this is a new data structure; document it.</span>
+<span style="color: #0000FF">class</span> <span style="color: #007575">MissionOrders</span>:
+  all_phases: Set[MissionPhase] = <span style="color: #0000FF">None</span>
+  first_phase: MissionPhase = <span style="color: #0000FF">None</span>
+  terminal_phases: Set[MissionPhase] = <span style="color: #0000FF">None</span>
+  
+  <span style="color: #FF0000; font-style: italic"># If validation fails, this method should throw an exception.</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">validate</span>(self) -&gt; <span style="color: #0000FF">None</span>:
+    <span style="color: #FF0000; font-style: italic"># Validation Step 1:</span>
+    <span style="color: #FF0000; font-style: italic"># Validate that all terminal phases have no outgoing transitions,</span>
+    <span style="color: #FF0000; font-style: italic"># and that all non-terminal phases have three outgoing transitions.</span>
+    p: MissionPhase
+    <span style="color: #0000FF">for</span> p in self.all_phases:
+      <span style="color: #0000FF">if</span> p in self.terminal_phases:
+        <span style="color: #0000FF">assert</span> p.succesor_list[0].next_phase is <span style="color: #0000FF">None</span>
+        <span style="color: #0000FF">assert</span> p.succesor_list[1].next_phase is <span style="color: #0000FF">None</span>
+        <span style="color: #0000FF">assert</span> p.succesor_list[2].next_phase is <span style="color: #0000FF">None</span>
+      <span style="color: #0000FF">else</span>:
+        <span style="color: #FF0000; font-style: italic"># non-terminal phase</span>
+        <span style="color: #0000FF">assert</span> p.succesor_list[0].next_phase is not <span style="color: #0000FF">None</span>
+        <span style="color: #0000FF">assert</span> p.succesor_list[1].next_phase is not <span style="color: #0000FF">None</span>
+        <span style="color: #0000FF">assert</span> p.succesor_list[2].next_phase is not <span style="color: #0000FF">None</span>
+    
+    <span style="color: #FF0000; font-style: italic"># Validation Step 2:</span>
+    <span style="color: #FF0000; font-style: italic"># TODO additional forms of validation, such as ensuring there are no cycles.</span>
+
+<span style="color: #0000FF">class</span> <span style="color: #007575">MissionExecutionEngine</span>:
+  mission_orders: MissionOrders
+  previous_execution_phase: MissionPhase
+  current_execution_phase: MissionPhase
+  current_phase_outcome: Outcome
+  successor_list_index: int
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">__init__</span>(self, mission_orders: MissionOrders) -&gt; <span style="color: #0000FF">None</span>:
+    self.mission_orders = mission_orders
+    self.previous_execution_phase = <span style="color: #0000FF">None</span>
+    self.current_execution_phase = mission_orders.first_phase
+    self.current_phase_outcome = <span style="color: #0000FF">None</span>
+    self.successor_list_index = -1
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">execute_phase</span>(self) -&gt; <span style="color: #0000FF">None</span>:
+    <span style="color: #0000FF">assert</span> self.current_execution_phase not in self.mission_orders.terminal_phases
+    
+    was_able_to_issue_command = self.issue_command()
+    <span style="color: #FF0000; font-style: italic"># TODO in the future, was_able_to_issue_command could be false to indicate a failure to communicate the order, e.g. due to an intranet error.</span>
+    outcome: Outcome
+    <span style="color: #0000FF">if</span> was_able_to_issue_command:
+      outcome = self.ask_outcome()
+    <span style="color: #0000FF">else</span>:
+      outcome = OUTCOME_EXCEPTION
+    self.current_phase_outcome = outcome
+    self.set_successor_list_index(outcome)
+    self.set_next_phase()
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">execute_terminal_phase</span>(self) -&gt; <span style="color: #0000FF">None</span>:
+    <span style="color: #0000FF">assert</span> self.current_execution_phase in self.mission_orders.terminal_phases
+    self.issue_command()
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">set_successor_list_index</span>(self, external_agent_response: Outcome) -&gt; <span style="color: #0000FF">None</span>:
+    self.successor_list_index = external_agent_response.index
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">set_next_phase</span>(self) -&gt; <span style="color: #0000FF">None</span>:
+    succesor_list: SuccessorList = self.current_execution_phase.succesor_list
+    phase_transition: PhaseTransition = succesor_list[self.successor_list_index]
+    next_phase: MissionPhase = phase_transition.next_phase
+    self.previous_execution_phase = self.current_execution_phase
+    self.current_execution_phase = next_phase
+    self.current_phase_outcome = <span style="color: #0000FF">None</span>
+    self.successor_list_index = -1
+
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">execute_mission</span>(self) -&gt; <span style="color: #0000FF">None</span>:
+    self.mission_orders.validate()
+    <span style="color: #0000FF">while</span> self.current_execution_phase not in self.mission_orders.terminal_phases:
+      self.execute_phase()
+    self.execute_terminal_phase()
+  
+  <span style="color: #FF0000; font-style: italic">###</span>
+  <span style="color: #FF0000; font-style: italic"># BEGIN INTERFACE BETWEEN MissionExecutionEngine AND ROBOT (OR HUMAN STANDING IN AS THE ROBOT)</span>
+  
+  <span style="color: #FF0000; font-style: italic"># Returns whether the command was successfully issued.</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">issue_command</span>(self):
+    <span style="color: #FF0000; font-style: italic"># Currently a human is standing in for the robot, so we will issue the order to them.</span>
+    english_text_order = self.current_execution_phase.command.human_readable_order
+    success = self.issue_order_to_human(english_text_order)
+    <span style="color: #0000FF">return</span> success
+  
+  <span style="color: #FF0000; font-style: italic"># Returns whether the order was successfully delivered to the human.  TODO this should return false if the screen is off (if order is conveyed by screen) or the speaker is muted (if the order is conveyed by speaker).</span>
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">issue_order_to_human</span>(self, human_readable_order: str) -&gt; <span style="color: #0000FF">None</span>:
+    <span style="color: #FF0000; font-style: italic"># Currently the "robot" is a human, so we will issue the order to them by printing it on the screen.</span>
+    print(human_readable_order)
+    success = <span style="color: #0000FF">True</span>
+    <span style="color: #0000FF">return</span> success
+  
+  <span style="color: #0000FF">def</span> <span style="color: #C34E00">ask_outcome</span>(self) -&gt; Outcome:
+    <span style="color: #0000FF">while</span> <span style="color: #0000FF">True</span>:
+      user_input: str = input(<span style="color: #009C00">"Did goal succeed (s), fail (f), or abort (x)?"</span>)
+      possible_outcome: Outcome
+      <span style="color: #0000FF">for</span> possible_outcome in [OUTCOME_SUCCESS, OUTCOME_FAILURE, OUTCOME_EXCEPTION]:
+        <span style="color: #0000FF">if</span> user_input == possible_outcome.name:
+          <span style="color: #0000FF">return</span> possible_outcome
+  
+  <span style="color: #FF0000; font-style: italic"># END INTERFACE BETWEEN MissionExecutionEngine AND ROBOT (OR HUMAN STANDING IN AS THE ROBOT)</span>
+  <span style="color: #FF0000; font-style: italic">###</span>
+  
+
+<span style="color: #009C00">"""</span>
+<span style="color: #009C00">TODO:  Implement the following optional convenience commands which help the human who is tasked with validating the MissionOrders</span>
+
+<span style="color: #009C00">(defun rerun (new-start-phase)</span>
+<span style="color: #009C00">  (setf (current-execution-phase mission-controller) new-start-phase)</span>
+<span style="color: #009C00">  (execute-mission))</span>
+
+
+<span style="color: #009C00">(defun repeat ()</span>
+<span style="color: #009C00">  (rerun (previous-execution-phase mission-controller)))</span>
+
+<span style="color: #009C00">(defun refine-last-command ()</span>
+<span style="color: #009C00">  (let* ((previous-phase (previous-execution-phase mission-controller)))</span>
+<span style="color: #009C00">    (cond ((equal previous-phase 'phase1) (rerun 'phase1.1)))))</span>
+
+<span style="color: #009C00">"""</span>
+
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+<span style="color: #FF0000; font-style: italic">#                         End Universal Mission Execution Engine                           #</span>
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+
+
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+<span style="color: #FF0000; font-style: italic">#                      Begin 8-phase Sailor Overboard Mission Orders                       #</span>
+<span style="color: #FF0000; font-style: italic"># ---------------------------------------------------------------------------------------- #</span>
+
+<span style="color: #0000FF">def</span> <span style="color: #C34E00">run_sailor_overboard_mission</span>():
+  all_phases: Set[MissionPhase] = set()
+  p: MissionPhase
+  p = phase1   = MissionPhase();  all_phases.add(p)
+  p = phase1_1 = MissionPhase();  all_phases.add(p)
+  p = phase1_2 = MissionPhase();  all_phases.add(p)
+  p = phase1_3 = MissionPhase();  all_phases.add(p)
+  p = phase2   = MissionPhase();  all_phases.add(p)
+  p = phase3   = MissionPhase();  all_phases.add(p)
+  p = phase4   = MissionPhase();  all_phases.add(p)
+  p = phase5   = MissionPhase();  all_phases.add(p)
+  p = phase6   = MissionPhase();  all_phases.add(p)
+  p = phase7   = MissionPhase();  all_phases.add(p)
+  p = phase8   = MissionPhase();  all_phases.add(p)
+  
+  
+  <span style="color: #FF0000; font-style: italic"># First Phase</span>
+  
+  phase1.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Deploy!"</span> ),
+                upon_success = phase2,
+                upon_failure = phase8,
+              upon_exception = phase8 )
+  
+  <span style="color: #FF0000; font-style: italic"># Intermediate Phases</span>
+  
+  phase1_1.initialize( command = Command(
+          human_readable_order = <span style="color: #009C00">"Choose Tube and Launch!"</span> ),
+                  upon_success = phase1_2,
+                  upon_failure = phase8,
+                upon_exception = phase8 )
+  
+  phase1_2.initialize( command = Command(
+          human_readable_order = <span style="color: #009C00">"Enter Water and Get GPS Fix!"</span> ),
+                  upon_success = phase1_3,
+                  upon_failure = phase8,
+                upon_exception = phase8 )
+  
+  phase1_3.initialize( command = Command(
+          human_readable_order = <span style="color: #009C00">"Descend to Search Depth!"</span> ),
+                  upon_success = phase2,
+                  upon_failure = phase8,
+                upon_exception = phase8 )
+  
+  phase2.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Rendezvous with Sailor!"</span> ),
+                upon_success = phase4,
+                upon_failure = phase3,
+              upon_exception = phase8 )    <span style="color: #FF0000; font-style: italic"># deviation from phase4/phase3/phase5</span>
+  
+  phase3.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Search for Sailor!"</span> ),
+                upon_success = phase4,
+                upon_failure = phase8,
+              upon_exception = phase8 )
+  
+  phase4.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Track Sailor Afloat Until Safe!"</span> ),
+                upon_success = phase5,
+                upon_failure = phase5,
+              upon_exception = phase8 )
+  
+  phase5.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Proceed to recovery!"</span> ),
+                upon_success = phase6,
+                upon_failure = phase7,
+              upon_exception = phase8 )
+
+  <span style="color: #FF0000; font-style: italic"># Terminal Phases</span>
+  
+  phase6.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Halt and prepare for recovery!"</span> ),
+                upon_success = <span style="color: #0000FF">None</span>,
+                upon_failure = <span style="color: #0000FF">None</span>,
+              upon_exception = <span style="color: #0000FF">None</span> )
+  
+  phase7.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Halt and deploy recovery beacon!"</span> ),
+                upon_success = <span style="color: #0000FF">None</span>,
+                upon_failure = <span style="color: #0000FF">None</span>,
+              upon_exception = <span style="color: #0000FF">None</span> )
+  
+  phase8.initialize( command = Command(
+        human_readable_order = <span style="color: #009C00">"Halt and await further orders!"</span> ),
+                upon_success = <span style="color: #0000FF">None</span>,
+                upon_failure = <span style="color: #0000FF">None</span>,
+              upon_exception = <span style="color: #0000FF">None</span> )
+  
+  
+  first_phase = phase1
+  terminal_phases = set([phase6, phase7, phase8])
+  
+  mission_orders = MissionOrders()
+  mission_orders.all_phases = all_phases
+  mission_orders.first_phase = first_phase
+  mission_orders.terminal_phases = terminal_phases
+  
+  engine: MissionExecutionEngine = MissionExecutionEngine( mission_orders )
+  engine.execute_mission()
+  
+run_sailor_overboard_mission()
+</pre></div>

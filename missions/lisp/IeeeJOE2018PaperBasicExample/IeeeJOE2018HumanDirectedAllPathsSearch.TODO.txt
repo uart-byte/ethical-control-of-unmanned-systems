@@ -1,0 +1,58 @@
+Latest update includes (list-run) of all decision choices at once
+for performing one complete pass through a given single mission.
+
+Added (run-all) to replay all prior tests.
+
+Goal work is top-down depth first search (DFS) method for exercising all potential missions
+  (run-all-paths) perhaps, ternary DFS
+
+Eventual shorthand format possibilities:
+
+SXF  ; serial ID label, unique path through mission, identical
+1320 ; serial number,   unique path through mission, identical
+132  ; serial number,   unique path through mission, no appended 0 terminal(s) are necessary
+
+next:
+SXX
+1330
+note that all branches are not possible due to mission sequencing
+
+current list of lists:
+
+    ((S F F) (S X F)) etc.
+
+working our way towards all possible outcomes.
+
+Can you read sequences of S F X from a file.
+
+interesting discussion on pruned ternary tree, i.e. full (exhaustive) tree is
+abridged by allowed mission paths.
+
+further interesting to consider tree traversal when conditionally constrained looping
+is occurring.  we likely need to count how many times we have visited a given node.
+- this would be part of maintained state, i.e. both the visit count for a
+  given goal and also (perhaps) the total number of goals traversed.
+- if so, these are both candidate termination conditions for a given conditional branch.
+
+14 April 2020.
+Added agent that reads list of mission-execution outcomes to decide on next steps
+when following mission ternary logic.  Next steps: add capability to run such
+lists from a file, then generate all feasible mission-decision paths exhaustively
+as a way to create full-coverage unit tests.
+
+"After 25 years of effort we now understand that useful ethically constrained
+missions can be defined and executed using only ternary propositional logic.
+We believe that it is dangerous for robots to use predicate logic since that
+allows reasoning about classes, which generally is not provable." - Bob McGhee
+
+On 4/8/2020 9:19 AM, Robert McGhee wrote:
+> Hi Don. The video is very impressive. you did a great job. one shortcoming,
+> forgive me, but this is all in the realm of philosophy. I think the presentation
+> could be improved by presenting a video of you doing what you did yesterday when
+> we were on zoom. There is no need to say anything about Lisp or to show any code.
+> just run the output. I think that demo Can result in an epiphany in the beholder. 
+> The outcome should be, “my God, this is real!”I hope this fits in to and is the
+> concluding part of a future presentation. Bob 
+
+>> Don replied:
+>> Agreed completely, this is why we are working on simulation.  The journey continues...

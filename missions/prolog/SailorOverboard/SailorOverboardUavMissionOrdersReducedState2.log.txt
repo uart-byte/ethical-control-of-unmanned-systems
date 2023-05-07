@@ -1,0 +1,124 @@
+International Allegro CL Free Express Edition
+10.1 [32-bit Windows] (Jan 9, 2019 10:44)
+Copyright (C) 1985-2019, Franz Inc., Oakland, CA, USA.  All Rights Reserved.
+
+This development copy of Allegro CL is licensed to:
+   Allegro CL 10.1 Express user
+
+Loaded options from C:\Users\brutzman\Documents\allegro-ide-options.cl.
+
+;; Optimization settings: safety 1, space 1, speed 1, debug 2.
+;; For a complete description of all compiler switches given the current optimization settings evaluate
+;; (EXPLAIN-COMPILER-SETTINGS).
+
+[changing package from "COMMON-LISP-USER" to "COMMON-GRAPHICS-USER"]
+CG-USER(1): 
+; Autoloading for ACL-SOCKET:MAKE-SSL-CLIENT-STREAM:
+; Fast loading C:\Program Files (x86)\ad10.1express\Allegro CL 10.1 Free Express Edition\code\ssl.002
+;;; Installing ssl patch, version 2.
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "MissionExecutionEngine.cl" 972) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\MissionExecutionEngine.cl"
+; starting at file character position 972:
+Warning: compile-file found "REQUIRE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; Fast loading C:\Program Files (x86)\ad10.1express\Allegro CL 10.1 Free Express Edition\code\PROLOG.fasl
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "MissionExecutionEngine.cl" 990) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\MissionExecutionEngine.cl"
+; starting at file character position 990:
+Warning: compile-file found "SHADOWING-IMPORT" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "MissionExecutionEngine.cl" 1022) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\MissionExecutionEngine.cl"
+; starting at file character position 1022:
+Warning: compile-file found "USE-PACKAGE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; Fast loading C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.fasl
+CG-USER(1): ; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 235) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 235:
+Warning: compile-file found "REQUIRE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 253) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 253:
+Warning: compile-file found "SHADOWING-IMPORT" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 285) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 285:
+Warning: compile-file found "USE-PACKAGE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 3436) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 3436:
+Warning: compile-file found "REQUIRE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 3454) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 3454:
+Warning: compile-file found "SHADOWING-IMPORT" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'(:TOP-LEVEL-FORM "SailorOverboardUavMissionOrdersReducedState2.cl" 3486) in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 3486:
+Warning: compile-file found "USE-PACKAGE" at the top-level --  see the documentation for comp:*cltl1-compile-file-toplevel-compatibility-p*
+; While FILE-COMPILING #'"SailorOverboardUavMissionOrdersReducedState2.cl" in #P"C:\\x-nps-gitlab\\NetworkOptionalWarfare\\ethicalcontrol\\testing\\prolog\\SailorOverboard\\SailorOverboardUavMissionOrdersReducedState2.cl"
+; starting at file character position 4611:
+Warning: RUN, :OPERATOR was defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now being defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+
+; starting at file character position 4649:
+Warning: UPDATE, :OPERATOR was defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now being defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+
+; starting at file character position 4689:
+Warning: MISSION-PHASE, :OPERATOR was defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now being defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+
+; starting at file character position 4738:
+Warning: OUTCOME, :OPERATOR was defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now being defined in C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+; Fast loading
+;    C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.fasl
+Warning: RUN, :OPERATOR was defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now
+         being defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+Warning: UPDATE, :OPERATOR was defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now
+         being defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+Warning: MISSION-PHASE, :OPERATOR was defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now
+         being defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+Warning: OUTCOME, :OPERATOR was defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\MissionExecutionEngine.cl and is now
+         being defined in
+         C:\x-nps-gitlab\NetworkOptionalWarfare\ethicalcontrol\testing\prolog\SailorOverboard\SailorOverboardUavMissionOrdersReducedState2.cl
+CG-USER(1): (run)
+Phase 1.1: Choose Tube and Launch!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.2: Enter Water and Get GPS Fix!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.3: Descend to Search Depth!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2: Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 3: Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4 report: Vehicle recovered.
+Yes
+No.
+CG-USER(2): (run)
+Phase 1.1: Choose Tube and Launch!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.2: Enter Water and Get GPS Fix!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.3: Descend to Search Depth!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2: Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?f
+Phase 4: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 4 report: Vehicle recovered.
+Yes
+No.
+CG-USER(3): (run)
+Phase 1.1: Choose Tube and Launch!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.2: Enter Water and Get GPS Fix!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 1.3: Descend to Search Depth!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 2: Search for Sailor!
+Did goal succeed (s), fail (f), or abort (x)?s
+Phase 3: Track Sailor Afloat Until Safe!
+Did goal succeed (s), fail (f), or abort (x)?x
+Phase 4: Proceed to recovery!
+Did goal succeed (s), fail (f), or abort (x)?x
+Phase 4 report: Awaiting orders.
+Yes
+No.
+CG-USER(4): 
